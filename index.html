@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JC Spanish — Synge Street Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #1a1a2e;
+      background-image: url('crest.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 320px auto;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-color: rgba(26, 26, 46, 0.82);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      width: 100%;
+      max-width: 480px;
+      padding: 40px 24px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Brother figure */
+    .brother-figure {
+      animation: brotherBob 4s ease-in-out infinite;
+      display: block;
+      margin: 0 auto 18px;
+      filter: drop-shadow(0 0 20px rgba(36,113,163,0.5));
+    }
+    @keyframes brotherBob {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    h1 {
+      font-family: 'Lora', serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 4px;
+      letter-spacing: -1px;
+    }
+    .sub {
+      color: rgba(255,255,255,0.38);
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    /* Cards — same as LC welcome card */
+    .nav-card {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 22px 20px;
+      margin-bottom: 14px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.2s;
+      text-align: left;
+    }
+    .nav-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(36,113,163,0.6);
+      transform: translateY(-2px);
+    }
+    .nav-card.brother-card:hover {
+      border-color: rgba(26,92,56,0.6);
+    }
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .card-icon { font-size: 1.8rem; }
+    .card-title {
+      font-family: 'Lora', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+    .card-badge {
+      margin-left: auto;
+      background: rgba(36,113,163,0.3);
+      border: 1px solid rgba(36,113,163,0.5);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .brother-card .card-badge {
+      background: rgba(26,92,56,0.3);
+      border-color: rgba(26,92,56,0.5);
+    }
+    .card-desc {
+      color: rgba(255,255,255,0.38);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      padding-left: 42px;
+    }
+
+    footer {
+      margin-top: 32px;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Same Brother SVG as jc-brother.html — blue cardigan -->
+  <svg class="brother-figure" viewBox="0 0 200 260" width="130" height="169" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="100" cy="190" rx="58" ry="72" fill="#2471a3"/>
+    <rect x="42" y="155" width="116" height="100" rx="20" fill="#2471a3"/>
+    <rect x="84" y="155" width="32" height="90" rx="4" fill="#f0ead6"/>
+    <path d="M42 165 Q55 155 72 152 L84 155 L84 245 Q62 240 42 220Z" fill="#1a5c8a"/>
+    <path d="M158 165 Q145 155 128 152 L116 155 L116 245 Q138 240 158 220Z" fill="#1a5c8a"/>
+    <ellipse cx="28" cy="195" rx="20" ry="52" fill="#2471a3"/>
+    <ellipse cx="172" cy="195" rx="20" ry="52" fill="#2471a3"/>
+    <ellipse cx="28" cy="238" rx="16" ry="14" fill="#d4956a"/>
+    <ellipse cx="172" cy="238" rx="16" ry="14" fill="#d4956a"/>
+    <rect x="86" y="128" width="28" height="32" rx="8" fill="#d4956a"/>
+    <ellipse cx="100" cy="100" rx="54" ry="60" fill="#d4956a"/>
+    <ellipse cx="100" cy="52" rx="52" ry="28" fill="#e8e2d0"/>
+    <path d="M48 72 Q44 55 50 42 Q58 28 72 24 Q86 20 100 20 Q114 20 128 24 Q142 28 150 42 Q156 55 152 72" fill="#e8e2d0"/>
+    <path d="M48 85 Q42 95 44 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
+    <path d="M152 85 Q158 95 156 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="100" cy="80" rx="44" ry="22" fill="#d4956a"/>
+    <path d="M68 90 Q82 84 96 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
+    <path d="M104 90 Q118 84 132 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="82" cy="102" rx="13" ry="10" fill="#f0ede6"/>
+    <ellipse cx="118" cy="102" rx="13" ry="10" fill="#f0ede6"/>
+    <ellipse cx="82" cy="103" rx="7" ry="8" fill="#5a3e28"/>
+    <ellipse cx="118" cy="103" rx="7" ry="8" fill="#5a3e28"/>
+    <ellipse cx="82" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
+    <ellipse cx="118" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
+    <ellipse cx="84" cy="100" rx="2" ry="2" fill="white"/>
+    <ellipse cx="120" cy="100" rx="2" ry="2" fill="white"/>
+    <ellipse cx="82" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
+    <ellipse cx="118" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
+    <path d="M97 103 Q100 100 103 103" fill="none" stroke="#7a6a5a" stroke-width="2"/>
+    <ellipse cx="100" cy="118" rx="9" ry="7" fill="#c08060"/>
+    <path d="M84 132 Q100 142 116 132" fill="none" stroke="#8a5a3a" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse cx="46" cy="105" rx="9" ry="13" fill="#c08060"/>
+    <ellipse cx="154" cy="105" rx="9" ry="13" fill="#c08060"/>
+  </svg>
+
+  <h1>The Brother</h1>
+  <p class="sub">JC Spanish · Written Production · Q17 &amp; Q18</p>
+
+  <a class="nav-card" href="jc-turbo.html">
+    <div class="card-top">
+      <span class="card-icon">⚡</span>
+      <span class="card-title">TURBO JC</span>
+      <span class="card-badge">Drill</span>
+    </div>
+    <p class="card-desc">Earn your phrases. Drill the structures you need for Q17 and Q18. Earn stars to unlock The Brother.</p>
+  </a>
+
+  <a class="nav-card brother-card" href="jc-brother.html">
+    <div class="card-top">
+      <span class="card-icon">🧓</span>
+      <span class="card-title">The Brother</span>
+      <span class="card-badge">Coach</span>
+    </div>
+    <p class="card-desc">Real exam questions. Write your answer in Spanish. He marks it against the actual JC scheme and shows you how to improve.</p>
+  </a>
+
+  <footer>© 2026 Synge Street Games: Imagination and Perseverance</footer>
+</div>
+</body>
+</html>
