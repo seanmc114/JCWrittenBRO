@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TURBO JC — Spanish</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: #16213e; }
+    .container { text-align: center; width: 100%; max-width: 620px; padding: 30px; background-color: rgba(255,255,255,0.97); border-radius: 20px; margin: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); color: #333; }
+    h1 { font-size: 3.6rem; color: #2471a3; margin-bottom: 4px; font-style: italic; letter-spacing: -1px; }
+    .subtitle { color: #888; font-size: 0.8rem; margin-bottom: 18px; letter-spacing: 1px; text-transform: uppercase; }
+    .progress-wrap { margin-bottom: 18px; }
+    .progress-label { font-size: 0.82rem; color: #666; margin-bottom: 5px; display: flex; justify-content: space-between; }
+    .progress-track { background: #eee; border-radius: 50px; height: 10px; }
+    .progress-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, #2471a3, #1abc9c); transition: width 0.4s; }
+    .star-banner { background: #eaf4fb; border: 2px solid #2471a3; border-radius: 12px; padding: 10px 16px; margin-bottom: 18px; font-size: 0.9rem; color: #1a5276; font-weight: bold; }
+    #cat-buttons { margin-bottom: 18px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+    .cat-btn { background: #eee; color: #555; font-size: 0.82rem; padding: 7px 14px; border: none; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+    .cat-btn:hover { background: #ccc; }
+    .cat-btn.active { background: #2471a3; color: white; font-weight: bold; }
+    #level-list { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 10px; }
+    .level-btn { font-size: 1rem; padding: 13px 16px; background-color: #2ecc71; color: white; border-radius: 10px; border: none; cursor: pointer; width: 92%; max-width: 340px; transition: transform 0.2s, background-color 0.2s; display: flex; justify-content: space-between; align-items: center; }
+    .level-btn:hover { background-color: #27ae60; transform: scale(1.03); }
+    .level-btn:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: none; color: #888; }
+    .level-btn.adv-zone { background-color: #8e44ad; }
+    .level-btn.adv-zone:hover { background-color: #7d3c98; }
+    .brother-btn { background: linear-gradient(135deg, #2d5a27, #3d7a35) !important; font-size: 1rem !important; justify-content: center !important; }
+    .brother-btn:hover { filter: brightness(1.1); }
+    .level-badge { font-size: 0.72rem; background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 10px; }
+    #game { display: none; margin-top: 16px; }
+    #timer { font-size: 1.35rem; color: #2471a3; margin-bottom: 14px; font-weight: bold; }
+    #questions div { margin: 12px 0; font-size: 1rem; text-align: left; }
+    #questions input { font-size: 1rem; padding: 8px 10px; width: 100%; margin-top: 5px; border: 2px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+    #questions .prompt-row { display: flex; align-items: center; gap: 6px; }
+    #questions .speak-prompt { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 0 2px; }
+    #submit { font-size: 1.3rem; padding: 13px 26px; background-color: #2471a3; color: white; border-radius: 12px; cursor: pointer; margin: 14px 4px 4px; transition: transform 0.2s, background-color 0.2s; border: none; }
+    #submit:hover { background-color: #1a5276; transform: scale(1.04); }
+    #results { margin-top: 16px; font-size: 1rem; text-align: left; }
+    .try-again, #back-button { font-size: 1.1rem; padding: 11px 22px; background-color: #2471a3; color: white; border-radius: 10px; cursor: pointer; margin: 7px 4px; border: none; transition: transform 0.2s; }
+    .try-again:hover, #back-button:hover { background-color: #1a5276; transform: scale(1.04); }
+    .perfect-celebration { font-size: 1.8rem; color: gold; margin-bottom: 12px; }
+    .unlock-msg { color: #2d5a27; font-weight: bold; font-size: 1rem; margin: 8px 0; }
+    .voice-btn-inline { background: #eee; border: 2px solid #ccc; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 0.85rem; margin-top: 5px; transition: all 0.2s; }
+    .voice-btn-inline.listening { background: #eaf4fb; border-color: #2471a3; }
+    .zone-label { font-size: 0.72rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin: 8px 0 4px; font-weight: bold; }
+    footer { margin-top: 28px; font-size: 0.72rem; color: #aaa; border-top: 1px solid #eee; padding-top: 12px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>TURBO JC</h1>
+  <p class="subtitle">Junior Cert Spanish · Written Production · Q17 & Q18</p>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Stars to unlock The Brother</span><span id="progress-pct">0%</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+  <div class="star-banner" id="star-banner">⭐ 0 stars earned — do 5 to unlock The Brother</div>
+
+  <div id="cat-buttons">
+    <button class="cat-btn active" type="button" onclick="selectCat('places',this)">🏙️ Places</button>
+    <button class="cat-btn" type="button" onclick="selectCat('people',this)">👤 People</button>
+    <button class="cat-btn" type="button" onclick="selectCat('food',this)">🍽️ Food & Routine</button>
+    <button class="cat-btn" type="button" onclick="selectCat('freetime',this)">⚽ Free Time</button>
+    <button class="cat-btn" type="button" onclick="selectCat('opinions',this)">🗣️ Opinions</button>
+  </div>
+
+  <div id="level-list"></div>
+
+  <div id="game">
+    <div id="timer">Time: 0s</div>
+    <div id="questions"></div>
+    <button id="submit" type="button">Check Answers</button>
+    <div id="results"></div>
+  </div>
+
+  <footer>© 2026 Synge Street Games: Imagination and Perseverance</footer>
+</div>
+
+<script>
+// ============================================================
+// JC SPANISH PHRASE BANK
+// Built around Q17 blog scenarios and Q18 prompted responses
+// Levels 1-4: core present tense structures
+// Levels 5-7: past tense + opinions
+// Levels 8-10: range structures — connectors, complex sentences
+// ============================================================
+const PHRASES = {
+
+  // ---- PLACES & DESCRIPTIONS (Q17 city/place scenarios) ----
+  places: [
+    {en:"It is a beautiful city on the coast",tl:"Es una ciudad preciosa en la costa",lv:1},
+    {en:"There are many interesting things to see",tl:"Hay muchas cosas interesantes que ver",lv:1},
+    {en:"It is a very big city",tl:"Es una ciudad muy grande",lv:1},
+    {en:"There is a beach near the city",tl:"Hay una playa cerca de la ciudad",lv:1},
+    {en:"The weather is very good here",tl:"El tiempo aquí es muy bueno",lv:1},
+    {en:"It is a small town in the north of Spain",tl:"Es un pueblo pequeño en el norte de España",lv:2},
+    {en:"There are lots of shops and restaurants",tl:"Hay muchas tiendas y restaurantes",lv:2},
+    {en:"The city is very clean and modern",tl:"La ciudad es muy limpia y moderna",lv:2},
+    {en:"I really like the old part of the city",tl:"Me gusta mucho el casco antiguo de la ciudad",lv:2},
+    {en:"There is a famous cathedral in the centre",tl:"Hay una catedral famosa en el centro",lv:2},
+    {en:"The city is situated on the Atlantic coast",tl:"La ciudad está situada en la costa atlántica",lv:3},
+    {en:"It is known for its seafood and its beaches",tl:"Es conocida por sus mariscos y sus playas",lv:3},
+    {en:"There are beautiful parks where you can relax",tl:"Hay parques preciosos donde puedes relajarte",lv:3},
+    {en:"The people here are very friendly and welcoming",tl:"La gente aquí es muy simpática y acogedora",lv:3},
+    {en:"I went to visit the old town with my friend",tl:"Fui a visitar el casco antiguo con mi amigo",lv:3},
+    {en:"We visited a lot of monuments and museums",tl:"Visitamos muchos monumentos y museos",lv:4},
+    {en:"The market in the city centre is very colourful",tl:"El mercado en el centro de la ciudad es muy colorido",lv:4},
+    {en:"Yesterday we went to the beach and it was fantastic",tl:"Ayer fuimos a la playa y fue fantástico",lv:4},
+    {en:"I think it is one of the most beautiful cities in Spain",tl:"Creo que es una de las ciudades más bonitas de España",lv:4},
+    {en:"The architecture is impressive and the streets are very lively",tl:"La arquitectura es impresionante y las calles son muy animadas",lv:4},
+    {en:"Although it is not very big it has a lot to offer tourists",tl:"Aunque no es muy grande tiene mucho que ofrecer a los turistas",lv:5},
+    {en:"I had never visited a Spanish city before and I loved it",tl:"Nunca había visitado una ciudad española antes y me encantó",lv:5},
+    {en:"In my opinion it is better than I expected",tl:"En mi opinión es mejor de lo que esperaba",lv:5},
+    {en:"We spent the morning exploring the old part of the city",tl:"Pasamos la mañana explorando el casco antiguo de la ciudad",lv:5},
+    {en:"The views from the top of the hill are spectacular",tl:"Las vistas desde la cima de la colina son espectaculares",lv:5},
+    {en:"Not only is the city beautiful but it is also very safe",tl:"No solo es bella la ciudad sino que también es muy segura",lv:6},
+    {en:"I would recommend this city to anyone who wants to visit Spain",tl:"Recomendaría esta ciudad a cualquiera que quiera visitar España",lv:6},
+    {en:"The mix of old and modern architecture makes it unique",tl:"La mezcla de arquitectura antigua y moderna la hace única",lv:6},
+    {en:"Having spent a week here I feel I know it well",tl:"Habiendo pasado una semana aquí siento que la conozco bien",lv:7},
+    {en:"The more time I spend here the more I fall in love with it",tl:"Cuanto más tiempo paso aquí más me enamoro de ella",lv:7},
+  ],
+
+  // ---- PEOPLE & FAMILY (describing Yago, family members, friends) ----
+  people: [
+    {en:"My friend is very tall and has dark hair",tl:"Mi amigo es muy alto y tiene el pelo moreno",lv:1},
+    {en:"He is very funny and friendly",tl:"Es muy gracioso y simpático",lv:1},
+    {en:"She has blue eyes and short hair",tl:"Tiene los ojos azules y el pelo corto",lv:1},
+    {en:"He is the same age as me",tl:"Tiene la misma edad que yo",lv:1},
+    {en:"My family is quite big",tl:"Mi familia es bastante grande",lv:1},
+    {en:"I have two brothers and one sister",tl:"Tengo dos hermanos y una hermana",lv:2},
+    {en:"My mother works as a teacher",tl:"Mi madre trabaja como profesora",lv:2},
+    {en:"He is very sporty and loves football",tl:"Es muy deportista y le encanta el fútbol",lv:2},
+    {en:"She is very kind and always helps me",tl:"Es muy amable y siempre me ayuda",lv:2},
+    {en:"My best friend is called Yago and he lives in La Coruña",tl:"Mi mejor amigo se llama Yago y vive en La Coruña",lv:2},
+    {en:"He is very intelligent and works very hard at school",tl:"Es muy inteligente y trabaja muy duro en el instituto",lv:3},
+    {en:"I get on very well with my family",tl:"Me llevo muy bien con mi familia",lv:3},
+    {en:"My father is quite tall and has brown eyes",tl:"Mi padre es bastante alto y tiene los ojos marrones",lv:3},
+    {en:"She is very sociable and has lots of friends",tl:"Es muy sociable y tiene muchos amigos",lv:3},
+    {en:"We have been friends since we were young",tl:"Somos amigos desde que éramos pequeños",lv:3},
+    {en:"In general I would say he is a very positive person",tl:"En general diría que es una persona muy positiva",lv:4},
+    {en:"Although she can be shy she is very warm once you know her",tl:"Aunque puede ser tímida es muy cariñosa cuando la conoces",lv:4},
+    {en:"My brother and I argue sometimes but we get on well",tl:"Mi hermano y yo discutimos a veces pero nos llevamos bien",lv:4},
+    {en:"He reminds me of my older brother back home in Ireland",tl:"Me recuerda a mi hermano mayor en Irlanda",lv:4},
+    {en:"She has a great sense of humour and always makes me laugh",tl:"Tiene un gran sentido del humor y siempre me hace reír",lv:4},
+    {en:"What I like most about him is that he is very honest",tl:"Lo que más me gusta de él es que es muy honesto",lv:5},
+    {en:"I admire her because she is very hard-working and determined",tl:"La admiro porque es muy trabajadora y determinada",lv:5},
+    {en:"He has changed a lot since I last saw him two years ago",tl:"Ha cambiado mucho desde la última vez que lo vi hace dos años",lv:5},
+    {en:"My grandmother lives with us and she is very important to me",tl:"Mi abuela vive con nosotros y es muy importante para mí",lv:5},
+    {en:"Despite being very busy he always finds time for his friends",tl:"A pesar de estar muy ocupado siempre encuentra tiempo para sus amigos",lv:6},
+    {en:"Not only is she a great friend but she is also like a sister to me",tl:"No solo es una gran amiga sino que también es como una hermana para mí",lv:6},
+    {en:"I think personality is more important than appearance",tl:"Creo que la personalidad es más importante que la apariencia",lv:6},
+    {en:"Having spent this time with him I feel we understand each other well",tl:"Habiendo pasado este tiempo con él siento que nos entendemos bien",lv:7},
+    {en:"The more I get to know his family the more I feel at home here",tl:"Cuanto más conozco a su familia más me siento como en casa aquí",lv:7},
+    {en:"I would say that the best quality in a friend is loyalty",tl:"Diría que la mejor cualidad en un amigo es la lealtad",lv:7},
+  ],
+
+  // ---- FOOD & DAILY ROUTINE ----
+  food: [
+    {en:"I have breakfast at eight o clock in the morning",tl:"Desayuno a las ocho de la mañana",lv:1},
+    {en:"I get up at seven o clock every day",tl:"Me levanto a las siete todos los días",lv:1},
+    {en:"Spanish food is very tasty",tl:"La comida española es muy rica",lv:1},
+    {en:"I like paella a lot",tl:"Me gusta mucho la paella",lv:1},
+    {en:"We eat dinner at three o clock in Spain",tl:"En España comemos a las tres",lv:1},
+    {en:"I have already tried tortilla española and it is delicious",tl:"Ya he probado la tortilla española y está deliciosa",lv:2},
+    {en:"The portions here are much bigger than in Ireland",tl:"Las raciones aquí son mucho más grandes que en Irlanda",lv:2},
+    {en:"I go to school by bus every morning",tl:"Voy al instituto en autobús todas las mañanas",lv:2},
+    {en:"After school I do my homework and then watch television",tl:"Después del instituto hago los deberes y luego veo la televisión",lv:2},
+    {en:"We had churros for breakfast and they were amazing",tl:"Tomamos churros para desayunar y estaban increíbles",lv:2},
+    {en:"My daily routine here is very different from Ireland",tl:"Mi rutina diaria aquí es muy diferente a la de Irlanda",lv:3},
+    {en:"People here eat much later than we do in Ireland",tl:"La gente aquí come mucho más tarde que nosotros en Irlanda",lv:3},
+    {en:"I tried gazpacho for the first time and I loved it",tl:"Probé el gazpacho por primera vez y me encantó",lv:3},
+    {en:"The fresh fish here is much better than anything I have eaten before",tl:"El pescado fresco aquí es mucho mejor que nada que haya comido antes",lv:3},
+    {en:"I usually have lunch with the family and we talk a lot",tl:"Normalmente como con la familia y hablamos mucho",lv:3},
+    {en:"Although I was nervous about trying new foods I am glad I did",tl:"Aunque estaba nervioso por probar nuevas comidas me alegra haberlo hecho",lv:4},
+    {en:"My favourite Spanish dish so far has been the seafood paella",tl:"Mi plato español favorito hasta ahora ha sido la paella de mariscos",lv:4},
+    {en:"I have gotten used to eating at Spanish times which is much later",tl:"Me he acostumbrado a comer a horas españolas que es mucho más tarde",lv:4},
+    {en:"The market was full of fresh vegetables fruit and seafood",tl:"El mercado estaba lleno de verduras frescas fruta y mariscos",lv:4},
+    {en:"I would definitely recommend trying the local food if you visit Spain",tl:"Definitivamente recomendaría probar la comida local si visitas España",lv:4},
+    {en:"What surprised me most was how important mealtimes are for families here",tl:"Lo que más me sorprendió fue lo importantes que son las comidas para las familias aquí",lv:5},
+    {en:"In Ireland we eat much earlier and usually in front of the television",tl:"En Irlanda comemos mucho antes y normalmente delante de la televisión",lv:5},
+    {en:"I have started to enjoy foods that I would never eat at home",tl:"He empezado a disfrutar de comidas que nunca comería en casa",lv:5},
+    {en:"The Spanish lifestyle with long lunches and late dinners suits me well",tl:"El estilo de vida español con almuerzos largos y cenas tardías me va bien",lv:5},
+    {en:"Not only is the food delicious but the whole experience of eating together is special",tl:"No solo está deliciosa la comida sino que toda la experiencia de comer juntos es especial",lv:6},
+    {en:"I think Irish people could learn a lot from the Spanish attitude to food",tl:"Creo que los irlandeses podrían aprender mucho de la actitud española hacia la comida",lv:6},
+    {en:"Having tried so many new dishes I feel much more adventurous about food now",tl:"Habiendo probado tantos platos nuevos me siento mucho más aventurero con la comida ahora",lv:7},
+    {en:"The more I experience Spanish food culture the more I appreciate it",tl:"Cuanto más experimento la cultura gastronómica española más la aprecio",lv:7},
+    {en:"I would never have imagined that I would enjoy seafood so much",tl:"Nunca habría imaginado que me gustarían tanto los mariscos",lv:7},
+    {en:"Food is not just about eating here — it is about family and connection",tl:"La comida aquí no es solo comer — es familia y conexión",lv:8},
+  ],
+
+  // ---- FREE TIME & ACTIVITIES ----
+  freetime: [
+    {en:"In my free time I like to play football",tl:"En mi tiempo libre me gusta jugar al fútbol",lv:1},
+    {en:"At the weekend I usually go out with my friends",tl:"El fin de semana normalmente salgo con mis amigos",lv:1},
+    {en:"I love listening to music",tl:"Me encanta escuchar música",lv:1},
+    {en:"We go to the beach after the Spanish classes",tl:"Vamos a la playa después de las clases de español",lv:1},
+    {en:"I like watching films in the evening",tl:"Me gusta ver películas por la tarde",lv:1},
+    {en:"After class Yago and I go to the park to relax",tl:"Después de clase Yago y yo vamos al parque a relajarnos",lv:2},
+    {en:"We often go to the beach for a swim",tl:"A menudo vamos a la playa a nadar",lv:2},
+    {en:"Sometimes we play basketball in the sports centre",tl:"A veces jugamos al baloncesto en el polideportivo",lv:2},
+    {en:"We go for walks along the seafront in the evenings",tl:"Damos paseos por el paseo marítimo por las tardes",lv:2},
+    {en:"I enjoy exploring the city with my friend",tl:"Me gusta explorar la ciudad con mi amigo",lv:2},
+    {en:"Yesterday we went to a concert in the city centre",tl:"Ayer fuimos a un concierto en el centro de la ciudad",lv:3},
+    {en:"At the weekend we visited the old town and tried local food",tl:"El fin de semana visitamos el casco antiguo y probamos comida local",lv:3},
+    {en:"I spend a lot of time practising my Spanish with Yago",tl:"Paso mucho tiempo practicando mi español con Yago",lv:3},
+    {en:"We like going to the cinema when we have free time",tl:"Nos gusta ir al cine cuando tenemos tiempo libre",lv:3},
+    {en:"After the classes we usually get an ice cream and walk around the city",tl:"Después de las clases normalmente tomamos un helado y paseamos por la ciudad",lv:3},
+    {en:"Last Saturday we went to a local football match and it was brilliant",tl:"El sábado pasado fuimos a un partido de fútbol local y fue genial",lv:4},
+    {en:"I think sport is very important for both physical and mental health",tl:"Creo que el deporte es muy importante para la salud física y mental",lv:4},
+    {en:"I had never tried surfing before but Yago taught me and I loved it",tl:"Nunca había probado el surf antes pero Yago me enseñó y me encantó",lv:4},
+    {en:"We prefer to spend time outdoors rather than indoors",tl:"Preferimos pasar el tiempo al aire libre en lugar de quedarnos en casa",lv:4},
+    {en:"The evenings here are so lively compared to Ireland",tl:"Las tardes aquí son tan animadas comparadas con las de Irlanda",lv:4},
+    {en:"Although I miss my friends at home I am having an incredible time here",tl:"Aunque echo de menos a mis amigos en casa lo estoy pasando de maravilla aquí",lv:5},
+    {en:"I have discovered a love of Spanish music that I did not expect",tl:"He descubierto una pasión por la música española que no esperaba",lv:5},
+    {en:"What I enjoy most is being able to practise Spanish in real situations",tl:"Lo que más disfruto es poder practicar el español en situaciones reales",lv:5},
+    {en:"Spending time with Yago has helped me improve my Spanish enormously",tl:"Pasar tiempo con Yago me ha ayudado a mejorar mi español enormemente",lv:5},
+    {en:"Not only have I improved my Spanish but I have also made a great friend",tl:"No solo he mejorado mi español sino que también he hecho un gran amigo",lv:6},
+    {en:"I would never have imagined that I could feel so at home in another country",tl:"Nunca habría imaginado que podría sentirme tan a gusto en otro país",lv:6},
+    {en:"The experience of living here even for a short time has changed my perspective",tl:"La experiencia de vivir aquí aunque sea por poco tiempo ha cambiado mi perspectiva",lv:6},
+    {en:"Having the opportunity to live with a Spanish family is something I will never forget",tl:"Tener la oportunidad de vivir con una familia española es algo que nunca olvidaré",lv:7},
+    {en:"The more Spanish I speak the more confident I feel in everyday situations",tl:"Cuanto más español hablo más seguro me siento en las situaciones cotidianas",lv:7},
+    {en:"I would recommend this kind of experience to every student who studies languages",tl:"Recomendaría este tipo de experiencia a todo estudiante que estudie idiomas",lv:7},
+  ],
+
+  // ---- OPINIONS & FEELINGS ----
+  opinions: [
+    {en:"I think Spanish is a very beautiful language",tl:"Creo que el español es un idioma muy bonito",lv:1},
+    {en:"In my opinion learning languages is very important",tl:"En mi opinión aprender idiomas es muy importante",lv:1},
+    {en:"I really enjoy my Spanish classes",tl:"Disfruto mucho de mis clases de español",lv:1},
+    {en:"I find Spanish easier than I expected",tl:"Encuentro el español más fácil de lo que esperaba",lv:1},
+    {en:"I think Spain is a wonderful country",tl:"Creo que España es un país maravilloso",lv:1},
+    {en:"My Spanish class is very interesting and the teacher is great",tl:"Mi clase de español es muy interesante y el profesor es genial",lv:2},
+    {en:"I feel much more confident speaking Spanish now",tl:"Me siento mucho más seguro hablando español ahora",lv:2},
+    {en:"I think it is important to practise every day",tl:"Creo que es importante practicar todos los días",lv:2},
+    {en:"At first I was nervous but now I enjoy speaking Spanish",tl:"Al principio estaba nervioso pero ahora disfruto hablando español",lv:2},
+    {en:"I prefer Spanish to any other subject at school",tl:"Prefiero el español a cualquier otra asignatura en el colegio",lv:2},
+    {en:"The Spanish course has been more fun than I expected",tl:"El curso de español ha sido más divertido de lo que esperaba",lv:3},
+    {en:"I think the best way to learn a language is to live in the country",tl:"Creo que la mejor manera de aprender un idioma es vivir en el país",lv:3},
+    {en:"I feel very lucky to have this opportunity to improve my Spanish",tl:"Me siento muy afortunado de tener esta oportunidad de mejorar mi español",lv:3},
+    {en:"In my opinion speaking Spanish will help me in the future",tl:"En mi opinión hablar español me ayudará en el futuro",lv:3},
+    {en:"Although it was difficult at the start I am making great progress",tl:"Aunque fue difícil al principio estoy progresando mucho",lv:3},
+    {en:"What I like most about the course is that we speak Spanish all the time",tl:"Lo que más me gusta del curso es que hablamos español todo el tiempo",lv:4},
+    {en:"I think that languages open doors and create opportunities",tl:"Creo que los idiomas abren puertas y crean oportunidades",lv:4},
+    {en:"The teachers are very patient and explain everything very clearly",tl:"Los profesores son muy pacientes y explican todo muy claramente",lv:4},
+    {en:"I feel that my Spanish has improved enormously in just a few weeks",tl:"Siento que mi español ha mejorado enormemente en solo unas semanas",lv:4},
+    {en:"In my opinion this has been the best experience of my life so far",tl:"En mi opinión esta ha sido la mejor experiencia de mi vida hasta ahora",lv:4},
+    {en:"Not only have I improved my Spanish but I have also grown as a person",tl:"No solo he mejorado mi español sino que también he crecido como persona",lv:5},
+    {en:"I believe that every young person should have the chance to learn a foreign language",tl:"Creo que cada joven debería tener la oportunidad de aprender un idioma extranjero",lv:5},
+    {en:"The experience has taught me that communication is about more than just words",tl:"La experiencia me ha enseñado que la comunicación es algo más que palabras",lv:5},
+    {en:"I would say that confidence is the most important thing when learning a language",tl:"Diría que la confianza es lo más importante cuando se aprende un idioma",lv:5},
+    {en:"Although learning Spanish is challenging it is also incredibly rewarding",tl:"Aunque aprender español es desafiante también es increíblemente gratificante",lv:6},
+    {en:"I am convinced that the effort I have put in will pay off in my exams",tl:"Estoy convencido de que el esfuerzo que he puesto dará sus frutos en los exámenes",lv:6},
+    {en:"What surprises me most is how much you can communicate with just a few key phrases",tl:"Lo que más me sorprende es cuánto puedes comunicar con solo unas pocas frases clave",lv:6},
+    {en:"Having experienced life in Spain I understand the language so much better now",tl:"Habiendo experimentado la vida en España entiendo el idioma mucho mejor ahora",lv:7},
+    {en:"The more I practise the more I realise how beautiful and expressive Spanish is",tl:"Cuanto más practico más me doy cuenta de lo bonito y expresivo que es el español",lv:7},
+    {en:"I think this experience will stay with me for the rest of my life",tl:"Creo que esta experiencia me acompañará durante el resto de mi vida",lv:7},
+  ],
+};
+
+// ============================================================
+// GAME STATE
+// ============================================================
+const BROTHER_UNLOCK    = 5;
+const PENALTY_SECS      = 20;
+const QUESTIONS_PER_LEVEL = 5;
+const STORAGE_PREFIX    = 'jc_turbo_';
+
+var currentCat   = 'places';
+var currentLevel = 1;
+var currentPhrases = [];
+var startTime, timerInterval;
+
+const levelList          = document.getElementById('level-list');
+const gameContainer      = document.getElementById('game');
+const questionsContainer = document.getElementById('questions');
+const resultsContainer   = document.getElementById('results');
+
+// ============================================================
+// LOCALSTORAGE
+// ============================================================
+function getUnlocked()            { return parseInt(localStorage.getItem(STORAGE_PREFIX+'unlocked') || '1'); }
+function setUnlocked(level)       { if (level > getUnlocked()) localStorage.setItem(STORAGE_PREFIX+'unlocked', level); }
+function getBest(cat, level)      { return localStorage.getItem(STORAGE_PREFIX+'best_'+cat+'_'+level); }
+function setBest(cat, level, stars) {
+  const prev = parseInt(getBest(cat, level) || '0');
+  if (stars > prev) localStorage.setItem(STORAGE_PREFIX+'best_'+cat+'_'+level, stars);
+}
+function getTotalStars() {
+  let total = 0;
+  ['places','people','food','freetime','opinions'].forEach(function(c) {
+    for (var v = 1; v <= 10; v++) total += parseInt(getBest(c, v) || '0');
+  });
+  return total;
+}
+function brotherUnlocked() { return getTotalStars() >= BROTHER_UNLOCK; }
+
+function getTurboData() {
+  const cats = ['places','people','food','freetime','opinions'];
+  const catLabels = { places:'Places & Descriptions', people:'People & Family', food:'Food & Routine', freetime:'Free Time', opinions:'Opinions & Feelings' };
+  const data = {};
+  cats.forEach(function(cat) {
+    data[cat] = { label: catLabels[cat], levels: {} };
+    for (var lv = 1; lv <= 10; lv++) {
+      const s = getBest(cat, lv);
+      if (s) data[cat].levels[lv] = parseInt(s);
+    }
+  });
+  return data;
+}
+
+// ============================================================
+// CATEGORY SELECTOR
+// ============================================================
+function selectCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  localStorage.setItem(STORAGE_PREFIX+'last_cat', cat);
+  renderLevels();
+}
+
+// ============================================================
+// RENDER LEVELS
+// ============================================================
+function renderLevels() {
+  levelList.style.display = 'flex';
+  gameContainer.style.display = 'none';
+  levelList.innerHTML = '';
+  updateProgress();
+
+  var unlocked = getUnlocked();
+  var zones = {
+    1: { label: 'Levels 1–4 · Core Present Tense' },
+    5: { label: 'Levels 5–7 · Past Tense & Opinions' },
+    8: { label: 'Levels 8–10 · Range & Complex Sentences' },
+  };
+
+  for (var i = 1; i <= 10; i++) {
+    if (zones[i]) {
+      var zl = document.createElement('div');
+      zl.className = 'zone-label';
+      zl.textContent = zones[i].label;
+      levelList.appendChild(zl);
+    }
+    var btn = document.createElement('button');
+    var best = getBest(currentCat, i);
+    var locked = i > unlocked;
+    var stars = best ? '⭐'.repeat(parseInt(best)) + '☆'.repeat(3-parseInt(best)) : '';
+    var zoneClass = i >= 8 ? 'adv-zone' : '';
+    btn.className = 'level-btn' + (zoneClass ? ' '+zoneClass : '');
+    btn.innerHTML = '<span>' + (locked ? '🔒 ' : '') + 'Level ' + i + '</span><span class="level-badge">' + (stars || (locked ? '' : '—')) + '</span>';
+    btn.disabled = locked;
+    (function(level) { btn.addEventListener('click', function() { startGame(level); }); })(i);
+    levelList.appendChild(btn);
+  }
+
+  if (brotherUnlocked()) {
+    var bb = document.createElement('button');
+    bb.textContent = '🧓 The Brother is ready — enter now';
+    bb.className = 'level-btn brother-btn';
+    bb.addEventListener('click', function() {
+      localStorage.setItem('jc_turbo_data', JSON.stringify(getTurboData()));
+      window.location.href = 'jc-brother.html';
+    });
+    levelList.appendChild(bb);
+  }
+}
+
+function updateProgress() {
+  var stars = getTotalStars();
+  var pct = Math.min(100, Math.round((stars / BROTHER_UNLOCK) * 100));
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  var banner = document.getElementById('star-banner');
+  if (brotherUnlocked()) {
+    banner.textContent = '🎉 ' + stars + ' stars — The Brother is unlocked!';
+    banner.style.background = '#e8f5ee'; banner.style.borderColor = '#2d5a27'; banner.style.color = '#1a5c38';
+  } else {
+    banner.textContent = '⭐ ' + stars + ' star' + (stars !== 1 ? 's' : '') + ' earned — need ' + BROTHER_UNLOCK + ' to unlock The Brother';
+  }
+}
+
+// ============================================================
+// START GAME
+// ============================================================
+function startGame(level) {
+  currentLevel = level;
+  localStorage.setItem(STORAGE_PREFIX+'last_level', level);
+
+  var pool = PHRASES[currentCat].filter(function(p) { return p.lv === level; });
+  var adjacent = PHRASES[currentCat].filter(function(p) { return Math.abs(p.lv - level) === 1; });
+  var blended = shuffleArray(pool.slice()).concat(shuffleArray(adjacent.slice()));
+  currentPhrases = shuffleArray(blended).slice(0, QUESTIONS_PER_LEVEL);
+
+  levelList.style.display = 'none';
+  gameContainer.style.display = 'block';
+  questionsContainer.innerHTML = '';
+  resultsContainer.innerHTML = '';
+
+  currentPhrases.forEach(function(phrase, idx) {
+    var promptSafe = phrase.en.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    var answerSafe = phrase.tl.replace(/"/g,'&quot;');
+    var div = document.createElement('div');
+    div.innerHTML =
+      '<div class="prompt-row"><strong>' + phrase.en + '</strong>' +
+      '<button class="speak-prompt" type="button" onclick="speakPrompt(\'' + promptSafe + '\')" title="Read aloud">🔊</button></div>' +
+      '<input type="text" data-answer="' + answerSafe + '" placeholder="Escribe en español..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' +
+      '<button class="voice-btn-inline" type="button" onclick="startVoice(this,' + idx + ')">🎤 Speak</button>';
+    var inp = div.querySelector('input');
+    inp.addEventListener('paste', function(e) { e.preventDefault(); });
+    inp.addEventListener('drop', function(e) { e.preventDefault(); });
+    questionsContainer.appendChild(div);
+  });
+
+  startTimer();
+}
+
+function shuffleArray(arr) { return arr.sort(function() { return Math.random() - 0.5; }); }
+
+// ============================================================
+// TIMER
+// ============================================================
+function startTimer() {
+  startTime = Date.now();
+  timerInterval = setInterval(function() {
+    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+    document.getElementById('timer').textContent = 'Time: ' + elapsed + 's';
+  }, 1000);
+}
+function stopTimer() { clearInterval(timerInterval); }
+
+// ============================================================
+// SUBMIT
+// ============================================================
+document.getElementById('submit').addEventListener('click', function() {
+  stopTimer();
+  var elapsed = Math.floor((Date.now() - startTime) / 1000);
+  var penalty = 0;
+  var correct = 0;
+  var total = currentPhrases.length;
+  var strictCorrect = 0, lenientCorrect = 0;
+
+  document.querySelectorAll('#questions input').forEach(function(input) {
+    var userAns    = input.value.trim();
+    var correctAns = input.dataset.answer;
+    var strict  = normaliseStrict(userAns)  === normaliseStrict(correctAns);
+    var lenient = normaliseLenient(userAns) === normaliseLenient(correctAns);
+    input._strict = strict; input._lenient = lenient;
+    if (lenient) lenientCorrect++;
+    if (strict)  strictCorrect++;
+  });
+
+  document.querySelectorAll('#questions input').forEach(function(input) {
+    if (input._lenient) {
+      correct++;
+      input.style.border = '2px solid #27ae60';
+      input.style.background = '#f0fff4';
+    } else {
+      penalty += PENALTY_SECS;
+      input.style.border = '2px solid #e74c3c';
+      input.style.background = '#fff5f5';
+    }
+  });
+
+  var totalTime = elapsed + penalty;
+  var stars = 0;
+  if (strictCorrect === total && totalTime <= levelUnlockTime(currentLevel)) stars = 3;
+  else if (lenientCorrect === total) stars = 2;
+  else if (lenientCorrect >= Math.ceil(total * 0.5)) stars = 1;
+
+  setBest(currentCat, currentLevel, stars);
+  if (stars >= 1) setUnlocked(currentLevel + 1);
+
+  resultsContainer.innerHTML = '<h3>Finished!</h3>'
+    + '<p>Correct: ' + correct + '/' + total + '</p>'
+    + '<p>Time: ' + elapsed + 's + Penalty: ' + penalty + 's = <strong>' + totalTime + 's</strong></p>'
+    + '<p style="font-size:1.4rem">' + '⭐'.repeat(stars) + '☆'.repeat(3-stars) + '</p>';
+
+  if (stars < 3 && strictCorrect < total && lenientCorrect === total) {
+    var accNote = document.createElement('p');
+    accNote.style.cssText = 'font-size:0.82rem;color:#b45309;margin:4px 0 8px;';
+    accNote.textContent = '💡 For 3 stars: include accents (á é í ó ú ñ) and exact punctuation.';
+    resultsContainer.appendChild(accNote);
+  }
+
+  resultsContainer.innerHTML += '<h4>What you missed:</h4>';
+
+  document.querySelectorAll('#questions input').forEach(function(input) {
+    if (!input._lenient) {
+      var p = document.createElement('p');
+      p.style.cssText = 'margin:6px 0;font-size:0.92rem;';
+      var engLabel = input.closest('div').querySelector('strong').textContent;
+      p.innerHTML = '<strong>' + engLabel + '</strong><br>'
+        + '✅ <span style="color:#27ae60">' + input.dataset.answer + '</span><br>'
+        + '❌ <span style="color:#e74c3c">' + (input.value.trim() || '(blank)') + '</span>';
+      resultsContainer.appendChild(p);
+    }
+  });
+
+  if (correct === total) {
+    var cel = document.createElement('div');
+    cel.className = 'perfect-celebration';
+    cel.textContent = stars === 3 ? '🎉 PERFECT — 3 stars! 🎉' : '✅ All correct!';
+    resultsContainer.prepend(cel);
+    if (stars === 3) setTimeout(function() { cel.textContent = ''; }, 5000);
+  }
+
+  if (stars >= 1) {
+    var uMsg = document.createElement('p');
+    uMsg.className = 'unlock-msg';
+    uMsg.textContent = '🔓 Level ' + (currentLevel + 1) + ' unlocked!';
+    resultsContainer.appendChild(uMsg);
+  }
+
+  updateProgress();
+  if (brotherUnlocked()) {
+    var bMsg = document.createElement('p');
+    bMsg.className = 'unlock-msg';
+    bMsg.innerHTML = '🧓 The Brother is ready! <a href="jc-brother.html" style="color:#1a5c38;font-weight:bold;" onclick="saveTurboData()">Enter →</a>';
+    resultsContainer.appendChild(bMsg);
+  }
+
+  var tryBtn = document.createElement('button');
+  tryBtn.textContent = 'Try Again'; tryBtn.className = 'try-again'; tryBtn.type = 'button';
+  tryBtn.onclick = function() { startGame(currentLevel); };
+  resultsContainer.appendChild(tryBtn);
+
+  var backBtn = document.createElement('button');
+  backBtn.textContent = '← Back to Levels'; backBtn.id = 'back-button'; backBtn.type = 'button';
+  backBtn.onclick = function() { renderLevels(); };
+  resultsContainer.appendChild(backBtn);
+});
+
+function saveTurboData() {
+  localStorage.setItem('jc_turbo_data', JSON.stringify(getTurboData()));
+}
+
+function levelUnlockTime(level) { return 130 - (level - 1) * 8; }
+
+function normaliseLenient(s) {
+  return String(s).toLowerCase()
+    .replace(/\.\.\./g,'').replace(/[¿¡]/g,'').replace(/[,]/g,'')
+    .replace(/[áàâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[íîï]/g,'i')
+    .replace(/[óôö]/g,'o').replace(/[úûü]/g,'u').replace(/[ñ]/g,'n')
+    .replace(/\s+/g,' ').trim();
+}
+
+function normaliseStrict(s) {
+  return String(s).toLowerCase()
+    .replace(/\.\.\./g,'').replace(/[¿¡]/g,'').replace(/[,]/g,'')
+    .replace(/\s+/g,' ').trim();
+}
+
+function speakPrompt(text) {
+  if (!('speechSynthesis' in window)) return;
+  var utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-IE'; utt.rate = 0.9;
+  window.speechSynthesis.speak(utt);
+}
+
+var activeRecognition = null;
+function startVoice(btn, idx) {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { alert('Voice input works best in Chrome.'); return; }
+  if (activeRecognition) { activeRecognition.stop(); }
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var rec = new SR();
+  rec.lang = 'es-ES'; rec.continuous = false; rec.interimResults = false;
+  activeRecognition = rec;
+  btn.classList.add('listening'); btn.textContent = '🔴 Listening...';
+  rec.onresult = function(e) {
+    var inputs = document.querySelectorAll('#questions input');
+    if (inputs[idx]) inputs[idx].value = e.results[0][0].transcript;
+  };
+  rec.onend = function() { btn.classList.remove('listening'); btn.textContent = '🎤 Speak'; activeRecognition = null; };
+  rec.onerror = function() { btn.classList.remove('listening'); btn.textContent = '🎤 Speak'; activeRecognition = null; };
+  rec.start();
+}
+
+renderLevels();
+</script>
+</body>
+</html>
