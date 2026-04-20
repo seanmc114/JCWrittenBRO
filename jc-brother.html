@@ -594,9 +594,17 @@ function openingGreeting() {
 // TASK SELECTOR
 // ============================================================
 function setTask(task, btn) {
+  if (state.currentTask === task) return; // already on this task
   state.currentTask = task;
   document.querySelectorAll('.task-pip').forEach(function(p) { p.classList.remove('active'); });
   btn.classList.add('active');
+  // Clear and give a fresh prompt for the new task type
+  const body = document.getElementById('coach-body');
+  body.innerHTML = '';
+  clearTimeout(state.nudgeT1); clearTimeout(state.nudgeT2);
+  const label = task === 'q17' ? 'Q17 Blog' : 'Q18 Response';
+  addBMsg('Switching to ' + label + '. Here is your question.');
+  setTimeout(function() { givePrompt(task); }, 300);
 }
 
 // ============================================================
@@ -717,6 +725,7 @@ async function submitWriting() {
         turbo_summary: turboSummary,
         attempt_number: state.attempts.length + 1,
         previous_total: state.attempts.length > 0 ? state.attempts[state.attempts.length-1].total : null,
+        recent_totals: state.attempts.slice(-4).map(function(a) { return a.total; }),
       })
     });
     const data = await res.json();
@@ -816,13 +825,13 @@ function showMark(mark, task) {
 }
 
 function gradeEq(total, max) {
-  const pct = total / max;
-  if (pct >= 0.9) return 'H1 / O1 territory 🌟';
-  if (pct >= 0.8) return 'H2 / O2 territory';
-  if (pct >= 0.7) return 'H3 / O3 territory';
-  if (pct >= 0.6) return 'H4 territory';
-  if (pct >= 0.5) return 'H5 territory';
-  return 'Keep working — it will come';
+  const pct = Math.round((total / max) * 100);
+  if (pct >= 90) return pct + '% — Distinction 🌟';
+  if (pct >= 80) return pct + '% — Higher Merit';
+  if (pct >= 70) return pct + '% — Merit';
+  if (pct >= 60) return pct + '% — Achieved';
+  if (pct >= 50) return pct + '% — Partially Achieved';
+  return pct + '% — keep going, it will come';
 }
 
 function nextAttempt() {
