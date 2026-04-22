@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TURBO JC — Spanish</title>
+  <title>TURBO JC</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: #1a1a2e; }
     .container { text-align: center; width: 100%; max-width: 620px; padding: 30px; background-color: rgba(255,255,255,0.97); border-radius: 20px; margin: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); color: #333; }
     h1 { font-size: 3.6rem; color: #2471a3; margin-bottom: 4px; font-style: italic; letter-spacing: -1px; }
-    .subtitle { color: #888; font-size: 0.8rem; margin-bottom: 18px; letter-spacing: 1px; text-transform: uppercase; }
+    .subtitle { color: #888; font-size: 0.8rem; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .lang-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; }
+    .lang-btn { background: #eee; color: #555; font-size: 0.9rem; padding: 8px 16px; border: 2px solid transparent; border-radius: 10px; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+    .lang-btn:hover { background: #ddd; }
+    .lang-btn.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
     .progress-wrap { margin-bottom: 18px; }
     .progress-label { font-size: 0.82rem; color: #666; margin-bottom: 5px; display: flex; justify-content: space-between; }
     .progress-track { background: #eee; border-radius: 50px; height: 10px; }
@@ -38,7 +42,7 @@
     #results { margin-top: 16px; font-size: 1rem; text-align: left; }
     .try-again, #back-button { font-size: 1.1rem; padding: 11px 22px; background-color: #2471a3; color: white; border-radius: 10px; cursor: pointer; margin: 7px 4px; border: none; transition: transform 0.2s; }
     .try-again:hover, #back-button:hover { background-color: #1a5276; transform: scale(1.04); }
-    .perfect-celebration { font-size: 1.8rem; color: gold; margin-bottom: 12px; }
+    .perfect-celebration { font-size: 1.8rem; color: gold; margin-bottom: 12px; text-align: center; }
     .unlock-msg { color: #2d5a27; font-weight: bold; font-size: 1rem; margin: 8px 0; }
     .voice-btn-inline { background: #eee; border: 2px solid #ccc; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 0.85rem; margin-top: 5px; transition: all 0.2s; }
     .voice-btn-inline.listening { background: #eaf4fb; border-color: #2471a3; }
@@ -49,20 +53,26 @@
 <body>
 <div class="container">
   <h1>TURBO JC</h1>
-  <p class="subtitle">Junior Cert Spanish · Written Production · Q17 & Q18</p>
+  <p class="subtitle" id="subtitle">Junior Cert Spanish · Written Production · Q17 &amp; Q18</p>
+
+  <div class="lang-row">
+    <button class="lang-btn active" type="button" onclick="selectLang('es',this)">&#127466;&#127480; Spanish</button>
+    <button class="lang-btn" type="button" onclick="selectLang('fr',this)">&#127467;&#127479; French</button>
+    <button class="lang-btn" type="button" onclick="selectLang('de',this)">&#127465;&#127466; German</button>
+  </div>
 
   <div class="progress-wrap">
     <div class="progress-label"><span>Stars to unlock The Brother</span><span id="progress-pct">0%</span></div>
     <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
-  <div class="star-banner" id="star-banner">⭐ 0 stars earned — do 5 to unlock The Brother</div>
+  <div class="star-banner" id="star-banner">&#11088; 0 stars earned — do 5 to unlock The Brother</div>
 
   <div id="cat-buttons">
-    <button class="cat-btn active" type="button" onclick="selectCat('places',this)">🏙️ Places</button>
-    <button class="cat-btn" type="button" onclick="selectCat('people',this)">👤 People</button>
-    <button class="cat-btn" type="button" onclick="selectCat('food',this)">🍽️ Food & Routine</button>
-    <button class="cat-btn" type="button" onclick="selectCat('freetime',this)">⚽ Free Time</button>
-    <button class="cat-btn" type="button" onclick="selectCat('opinions',this)">🗣️ Opinions</button>
+    <button class="cat-btn active" type="button" onclick="selectCat('places',this)">&#127961;&#65039; Places</button>
+    <button class="cat-btn" type="button" onclick="selectCat('people',this)">&#128100; People</button>
+    <button class="cat-btn" type="button" onclick="selectCat('food',this)">&#127373;&#65039; Food &amp; Routine</button>
+    <button class="cat-btn" type="button" onclick="selectCat('freetime',this)">&#9917; Free Time</button>
+    <button class="cat-btn" type="button" onclick="selectCat('opinions',this)">&#128483;&#65039; Opinions</button>
   </div>
 
   <div id="level-list"></div>
@@ -74,510 +84,642 @@
     <div id="results"></div>
   </div>
 
-  <footer>© 2026 Synge Street Games: Imagination and Perseverance</footer>
+  <footer>&copy; 2026 Synge Street Games: Imagination and Perseverance</footer>
 </div>
 
 <script>
-// ============================================================
-// JC SPANISH PHRASE BANK
-// Built around Q17 blog scenarios and Q18 prompted responses
-// Levels 1-4: core present tense structures
-// Levels 5-7: past tense + opinions
-// Levels 8-10: range structures — connectors, complex sentences
-// ============================================================
-const PHRASES = {
+const PHRASES={es:{places:[
+{en:"It is a beautiful city on the coast",tl:"Es una ciudad preciosa en la costa",lv:1},
+{en:"There are many interesting things to see",tl:"Hay muchas cosas interesantes que ver",lv:1},
+{en:"It is a very big city",tl:"Es una ciudad muy grande",lv:1},
+{en:"There is a beach near the city",tl:"Hay una playa cerca de la ciudad",lv:1},
+{en:"The weather is very good here",tl:"El tiempo aqui es muy bueno",lv:1},
+{en:"It is a small town in the north of Spain",tl:"Es un pueblo pequeño en el norte de España",lv:2},
+{en:"There are lots of shops and restaurants",tl:"Hay muchas tiendas y restaurantes",lv:2},
+{en:"The city is very clean and modern",tl:"La ciudad es muy limpia y moderna",lv:2},
+{en:"I really like the old part of the city",tl:"Me gusta mucho el casco antiguo de la ciudad",lv:2},
+{en:"There is a famous cathedral in the centre",tl:"Hay una catedral famosa en el centro",lv:2},
+{en:"The city is situated on the Atlantic coast",tl:"La ciudad esta situada en la costa atlantica",lv:3},
+{en:"It is known for its seafood and its beaches",tl:"Es conocida por sus mariscos y sus playas",lv:3},
+{en:"There are beautiful parks where you can relax",tl:"Hay parques preciosos donde puedes relajarte",lv:3},
+{en:"The people here are very friendly and welcoming",tl:"La gente aqui es muy simpatica y acogedora",lv:3},
+{en:"I went to visit the old town with my friend",tl:"Fui a visitar el casco antiguo con mi amigo",lv:3},
+{en:"We visited a lot of monuments and museums",tl:"Visitamos muchos monumentos y museos",lv:4},
+{en:"The market in the city centre is very colourful",tl:"El mercado en el centro de la ciudad es muy colorido",lv:4},
+{en:"Yesterday we went to the beach and it was fantastic",tl:"Ayer fuimos a la playa y fue fantastico",lv:4},
+{en:"I think it is one of the most beautiful cities in Spain",tl:"Creo que es una de las ciudades mas bonitas de España",lv:4},
+{en:"The architecture is impressive and the streets are very lively",tl:"La arquitectura es impresionante y las calles son muy animadas",lv:4},
+{en:"Although it is not very big it has a lot to offer tourists",tl:"Aunque no es muy grande tiene mucho que ofrecer a los turistas",lv:5},
+{en:"I had never visited a Spanish city before and I loved it",tl:"Nunca habia visitado una ciudad española antes y me encanto",lv:5},
+{en:"In my opinion it is better than I expected",tl:"En mi opinion es mejor de lo que esperaba",lv:5},
+{en:"We spent the morning exploring the old part of the city",tl:"Pasamos la mañana explorando el casco antiguo de la ciudad",lv:5},
+{en:"The views from the top of the hill are spectacular",tl:"Las vistas desde la cima de la colina son espectaculares",lv:5},
+{en:"Not only is the city beautiful but it is also very safe",tl:"No solo es bella la ciudad sino que tambien es muy segura",lv:6},
+{en:"I would recommend this city to anyone who wants to visit Spain",tl:"Recomendaria esta ciudad a cualquiera que quiera visitar España",lv:6},
+{en:"The mix of old and modern architecture makes it unique",tl:"La mezcla de arquitectura antigua y moderna la hace unica",lv:6},
+{en:"Having spent a week here I feel I know it well",tl:"Habiendo pasado una semana aqui siento que la conozco bien",lv:7},
+{en:"The more time I spend here the more I fall in love with it",tl:"Cuanto mas tiempo paso aqui mas me enamoro de ella",lv:7},
+],people:[
+{en:"My friend is very tall and has dark hair",tl:"Mi amigo es muy alto y tiene el pelo moreno",lv:1},
+{en:"He is very funny and friendly",tl:"Es muy gracioso y simpatico",lv:1},
+{en:"She has blue eyes and short hair",tl:"Tiene los ojos azules y el pelo corto",lv:1},
+{en:"He is the same age as me",tl:"Tiene la misma edad que yo",lv:1},
+{en:"My family is quite big",tl:"Mi familia es bastante grande",lv:1},
+{en:"I have two brothers and one sister",tl:"Tengo dos hermanos y una hermana",lv:2},
+{en:"My mother works as a teacher",tl:"Mi madre trabaja como profesora",lv:2},
+{en:"He is very sporty and loves football",tl:"Es muy deportista y le encanta el futbol",lv:2},
+{en:"She is very kind and always helps me",tl:"Es muy amable y siempre me ayuda",lv:2},
+{en:"My best friend is called Yago and he lives in La Coruña",tl:"Mi mejor amigo se llama Yago y vive en La Coruña",lv:2},
+{en:"He is very intelligent and works very hard at school",tl:"Es muy inteligente y trabaja muy duro en el instituto",lv:3},
+{en:"I get on very well with my family",tl:"Me llevo muy bien con mi familia",lv:3},
+{en:"My father is quite tall and has brown eyes",tl:"Mi padre es bastante alto y tiene los ojos marrones",lv:3},
+{en:"She is very sociable and has lots of friends",tl:"Es muy sociable y tiene muchos amigos",lv:3},
+{en:"We have been friends since we were young",tl:"Somos amigos desde que eramos pequeños",lv:3},
+{en:"In general I would say he is a very positive person",tl:"En general diria que es una persona muy positiva",lv:4},
+{en:"Although she can be shy she is very warm once you know her",tl:"Aunque puede ser timida es muy cariñosa cuando la conoces",lv:4},
+{en:"My brother and I argue sometimes but we get on well",tl:"Mi hermano y yo discutimos a veces pero nos llevamos bien",lv:4},
+{en:"He reminds me of my older brother back home in Ireland",tl:"Me recuerda a mi hermano mayor en Irlanda",lv:4},
+{en:"She has a great sense of humour and always makes me laugh",tl:"Tiene un gran sentido del humor y siempre me hace reir",lv:4},
+{en:"What I like most about him is that he is very honest",tl:"Lo que mas me gusta de el es que es muy honesto",lv:5},
+{en:"I admire her because she is very hard-working and determined",tl:"La admiro porque es muy trabajadora y determinada",lv:5},
+{en:"He has changed a lot since I last saw him two years ago",tl:"Ha cambiado mucho desde la ultima vez que lo vi hace dos años",lv:5},
+{en:"My grandmother lives with us and she is very important to me",tl:"Mi abuela vive con nosotros y es muy importante para mi",lv:5},
+{en:"Despite being very busy he always finds time for his friends",tl:"A pesar de estar muy ocupado siempre encuentra tiempo para sus amigos",lv:6},
+{en:"Not only is she a great friend but she is also like a sister to me",tl:"No solo es una gran amiga sino que tambien es como una hermana para mi",lv:6},
+{en:"I think personality is more important than appearance",tl:"Creo que la personalidad es mas importante que la apariencia",lv:6},
+{en:"Having spent this time with him I feel we understand each other well",tl:"Habiendo pasado este tiempo con el siento que nos entendemos bien",lv:7},
+{en:"The more I get to know his family the more I feel at home here",tl:"Cuanto mas conozco a su familia mas me siento como en casa aqui",lv:7},
+{en:"I would say that the best quality in a friend is loyalty",tl:"Diria que la mejor cualidad en un amigo es la lealtad",lv:7},
+],food:[
+{en:"I have breakfast at eight in the morning",tl:"Desayuno a las ocho de la mañana",lv:1},
+{en:"I get up at seven every day",tl:"Me levanto a las siete todos los dias",lv:1},
+{en:"Spanish food is very tasty",tl:"La comida española es muy rica",lv:1},
+{en:"I like paella a lot",tl:"Me gusta mucho la paella",lv:1},
+{en:"We eat dinner at three in Spain",tl:"En España comemos a las tres",lv:1},
+{en:"I have already tried tortilla española and it is delicious",tl:"Ya he probado la tortilla española y esta deliciosa",lv:2},
+{en:"The portions here are much bigger than in Ireland",tl:"Las raciones aqui son mucho mas grandes que en Irlanda",lv:2},
+{en:"I go to school by bus every morning",tl:"Voy al instituto en autobus todas las mañanas",lv:2},
+{en:"After school I do my homework and then watch television",tl:"Despues del instituto hago los deberes y luego veo la television",lv:2},
+{en:"We had churros for breakfast and they were amazing",tl:"Tomamos churros para desayunar y estaban increibles",lv:2},
+{en:"My daily routine here is very different from Ireland",tl:"Mi rutina diaria aqui es muy diferente a la de Irlanda",lv:3},
+{en:"People here eat much later than we do in Ireland",tl:"La gente aqui come mucho mas tarde que nosotros en Irlanda",lv:3},
+{en:"I tried gazpacho for the first time and I loved it",tl:"Probe el gazpacho por primera vez y me encanto",lv:3},
+{en:"I usually have lunch with the family and we talk a lot",tl:"Normalmente como con la familia y hablamos mucho",lv:3},
+{en:"The fresh fish here is much better than anything I have eaten before",tl:"El pescado fresco aqui es mucho mejor que nada que haya comido antes",lv:3},
+{en:"Although I was nervous about trying new foods I am glad I did",tl:"Aunque estaba nervioso por probar nuevas comidas me alegra haberlo hecho",lv:4},
+{en:"My favourite Spanish dish so far has been the seafood paella",tl:"Mi plato español favorito hasta ahora ha sido la paella de mariscos",lv:4},
+{en:"I have gotten used to eating at Spanish times which is much later",tl:"Me he acostumbrado a comer a horas españolas que es mucho mas tarde",lv:4},
+{en:"The market was full of fresh vegetables fruit and seafood",tl:"El mercado estaba lleno de verduras frescas fruta y mariscos",lv:4},
+{en:"I would definitely recommend trying the local food if you visit Spain",tl:"Definitivamente recomendaria probar la comida local si visitas España",lv:4},
+{en:"What surprised me most was how important mealtimes are for families here",tl:"Lo que mas me sorprendio fue lo importantes que son las comidas para las familias aqui",lv:5},
+{en:"In Ireland we eat much earlier and usually in front of the television",tl:"En Irlanda comemos mucho antes y normalmente delante de la television",lv:5},
+{en:"I have started to enjoy foods that I would never eat at home",tl:"He empezado a disfrutar de comidas que nunca comeria en casa",lv:5},
+{en:"The Spanish lifestyle with long lunches and late dinners suits me well",tl:"El estilo de vida español con almuerzos largos y cenas tardias me va bien",lv:5},
+{en:"Not only is the food delicious but the whole experience of eating together is special",tl:"No solo esta deliciosa la comida sino que toda la experiencia de comer juntos es especial",lv:6},
+{en:"I think Irish people could learn a lot from the Spanish attitude to food",tl:"Creo que los irlandeses podrian aprender mucho de la actitud española hacia la comida",lv:6},
+{en:"Having tried so many new dishes I feel much more adventurous about food now",tl:"Habiendo probado tantos platos nuevos me siento mucho mas aventurero con la comida ahora",lv:7},
+{en:"The more I experience Spanish food culture the more I appreciate it",tl:"Cuanto mas experimento la cultura gastronomica española mas la aprecio",lv:7},
+{en:"I would never have imagined that I would enjoy seafood so much",tl:"Nunca habria imaginado que me gustarian tanto los mariscos",lv:7},
+{en:"Food here is not just about eating it is about family and togetherness",tl:"La comida aqui no es solo comer sino que es familia y union",lv:8},
+],freetime:[
+{en:"In my free time I like to play football",tl:"En mi tiempo libre me gusta jugar al futbol",lv:1},
+{en:"At the weekend I usually go out with my friends",tl:"El fin de semana normalmente salgo con mis amigos",lv:1},
+{en:"I love listening to music",tl:"Me encanta escuchar musica",lv:1},
+{en:"We go to the beach after the Spanish classes",tl:"Vamos a la playa despues de las clases de español",lv:1},
+{en:"I like watching films in the evening",tl:"Me gusta ver peliculas por la tarde",lv:1},
+{en:"After class Yago and I go to the park to relax",tl:"Despues de clase Yago y yo vamos al parque a relajarnos",lv:2},
+{en:"We often go to the beach for a swim",tl:"A menudo vamos a la playa a nadar",lv:2},
+{en:"Sometimes we play basketball in the sports centre",tl:"A veces jugamos al baloncesto en el polideportivo",lv:2},
+{en:"We go for walks along the seafront in the evenings",tl:"Damos paseos por el paseo maritimo por las tardes",lv:2},
+{en:"I enjoy exploring the city with my friend",tl:"Me gusta explorar la ciudad con mi amigo",lv:2},
+{en:"Yesterday we went to a concert in the city centre",tl:"Ayer fuimos a un concierto en el centro de la ciudad",lv:3},
+{en:"At the weekend we visited the old town and tried local food",tl:"El fin de semana visitamos el casco antiguo y probamos comida local",lv:3},
+{en:"I spend a lot of time practising my Spanish with Yago",tl:"Paso mucho tiempo practicando mi español con Yago",lv:3},
+{en:"We like going to the cinema when we have free time",tl:"Nos gusta ir al cine cuando tenemos tiempo libre",lv:3},
+{en:"After class we usually get an ice cream and walk around the city",tl:"Despues de clase normalmente tomamos un helado y paseamos por la ciudad",lv:3},
+{en:"Last Saturday we went to a local football match and it was brilliant",tl:"El sabado pasado fuimos a un partido de futbol local y fue genial",lv:4},
+{en:"I think sport is very important for both physical and mental health",tl:"Creo que el deporte es muy importante para la salud fisica y mental",lv:4},
+{en:"I had never tried surfing before but Yago taught me and I loved it",tl:"Nunca habia probado el surf antes pero Yago me enseño y me encanto",lv:4},
+{en:"We prefer to spend time outdoors rather than indoors",tl:"Preferimos pasar el tiempo al aire libre en lugar de quedarnos en casa",lv:4},
+{en:"The evenings here are so lively compared to Ireland",tl:"Las tardes aqui son tan animadas comparadas con las de Irlanda",lv:4},
+{en:"Although I miss my friends at home I am having an incredible time here",tl:"Aunque echo de menos a mis amigos en casa lo estoy pasando de maravilla aqui",lv:5},
+{en:"I have discovered a love of Spanish music that I did not expect",tl:"He descubierto una pasion por la musica española que no esperaba",lv:5},
+{en:"What I enjoy most is being able to practise Spanish in real situations",tl:"Lo que mas disfruto es poder practicar el español en situaciones reales",lv:5},
+{en:"Spending time with Yago has helped me improve my Spanish enormously",tl:"Pasar tiempo con Yago me ha ayudado a mejorar mi español enormemente",lv:5},
+{en:"Not only have I improved my Spanish but I have also made a great friend",tl:"No solo he mejorado mi español sino que tambien he hecho un gran amigo",lv:6},
+{en:"I would never have imagined that I could feel so at home in another country",tl:"Nunca habria imaginado que podria sentirme tan a gusto en otro pais",lv:6},
+{en:"The experience of living here even for a short time has changed my perspective",tl:"La experiencia de vivir aqui aunque sea por poco tiempo ha cambiado mi perspectiva",lv:6},
+{en:"Having the opportunity to live with a Spanish family is something I will never forget",tl:"Tener la oportunidad de vivir con una familia española es algo que nunca olvidare",lv:7},
+{en:"The more Spanish I speak the more confident I feel in everyday situations",tl:"Cuanto mas español hablo mas seguro me siento en las situaciones cotidianas",lv:7},
+{en:"I would recommend this kind of experience to every student who studies languages",tl:"Recomendaria este tipo de experiencia a todo estudiante que estudie idiomas",lv:7},
+],opinions:[
+{en:"I think Spanish is a very beautiful language",tl:"Creo que el español es un idioma muy bonito",lv:1},
+{en:"In my opinion learning languages is very important",tl:"En mi opinion aprender idiomas es muy importante",lv:1},
+{en:"I really enjoy my Spanish classes",tl:"Disfruto mucho de mis clases de español",lv:1},
+{en:"I find Spanish easier than I expected",tl:"Encuentro el español mas facil de lo que esperaba",lv:1},
+{en:"I think Spain is a wonderful country",tl:"Creo que España es un pais maravilloso",lv:1},
+{en:"My Spanish class is very interesting and the teacher is great",tl:"Mi clase de español es muy interesante y el profesor es genial",lv:2},
+{en:"I feel much more confident speaking Spanish now",tl:"Me siento mucho mas seguro hablando español ahora",lv:2},
+{en:"I think it is important to practise every day",tl:"Creo que es importante practicar todos los dias",lv:2},
+{en:"At first I was nervous but now I enjoy speaking Spanish",tl:"Al principio estaba nervioso pero ahora disfruto hablando español",lv:2},
+{en:"I prefer Spanish to any other subject at school",tl:"Prefiero el español a cualquier otra asignatura en el colegio",lv:2},
+{en:"The Spanish course has been more fun than I expected",tl:"El curso de español ha sido mas divertido de lo que esperaba",lv:3},
+{en:"I think the best way to learn a language is to live in the country",tl:"Creo que la mejor manera de aprender un idioma es vivir en el pais",lv:3},
+{en:"I feel very lucky to have this opportunity to improve my Spanish",tl:"Me siento muy afortunado de tener esta oportunidad de mejorar mi español",lv:3},
+{en:"In my opinion speaking Spanish will help me in the future",tl:"En mi opinion hablar español me ayudara en el futuro",lv:3},
+{en:"Although it was difficult at the start I am making great progress",tl:"Aunque fue dificil al principio estoy progresando mucho",lv:3},
+{en:"What I like most about the course is that we speak Spanish all the time",tl:"Lo que mas me gusta del curso es que hablamos español todo el tiempo",lv:4},
+{en:"I think that languages open doors and create opportunities",tl:"Creo que los idiomas abren puertas y crean oportunidades",lv:4},
+{en:"The teachers are very patient and explain everything very clearly",tl:"Los profesores son muy pacientes y explican todo muy claramente",lv:4},
+{en:"I feel that my Spanish has improved enormously in just a few weeks",tl:"Siento que mi español ha mejorado enormemente en solo unas semanas",lv:4},
+{en:"In my opinion this has been the best experience of my life so far",tl:"En mi opinion esta ha sido la mejor experiencia de mi vida hasta ahora",lv:4},
+{en:"Not only have I improved my Spanish but I have also grown as a person",tl:"No solo he mejorado mi español sino que tambien he crecido como persona",lv:5},
+{en:"I believe that every young person should have the chance to learn a foreign language",tl:"Creo que cada joven deberia tener la oportunidad de aprender un idioma extranjero",lv:5},
+{en:"The experience has taught me that communication is about more than just words",tl:"La experiencia me ha enseñado que la comunicacion es algo mas que palabras",lv:5},
+{en:"I would say that confidence is the most important thing when learning a language",tl:"Diria que la confianza es lo mas importante cuando se aprende un idioma",lv:5},
+{en:"Although learning Spanish is challenging it is also incredibly rewarding",tl:"Aunque aprender español es desafiante tambien es increiblemente gratificante",lv:6},
+{en:"I am convinced that the effort I have put in will pay off in my exams",tl:"Estoy convencido de que el esfuerzo que he puesto dara sus frutos en los examenes",lv:6},
+{en:"What surprises me most is how much you can communicate with just a few key phrases",tl:"Lo que mas me sorprende es cuanto puedes comunicar con solo unas pocas frases clave",lv:6},
+{en:"Having experienced life in Spain I understand the language so much better now",tl:"Habiendo experimentado la vida en España entiendo el idioma mucho mejor ahora",lv:7},
+{en:"The more I practise the more I realise how beautiful and expressive Spanish is",tl:"Cuanto mas practico mas me doy cuenta de lo bonito y expresivo que es el español",lv:7},
+{en:"I think this experience will stay with me for the rest of my life",tl:"Creo que esta experiencia me acompañara durante el resto de mi vida",lv:7},
+]},
 
-  // ---- PLACES & DESCRIPTIONS (Q17 city/place scenarios) ----
-  places: [
-    {en:"It is a beautiful city on the coast",tl:"Es una ciudad preciosa en la costa",lv:1},
-    {en:"There are many interesting things to see",tl:"Hay muchas cosas interesantes que ver",lv:1},
-    {en:"It is a very big city",tl:"Es una ciudad muy grande",lv:1},
-    {en:"There is a beach near the city",tl:"Hay una playa cerca de la ciudad",lv:1},
-    {en:"The weather is very good here",tl:"El tiempo aquí es muy bueno",lv:1},
-    {en:"It is a small town in the north of Spain",tl:"Es un pueblo pequeño en el norte de España",lv:2},
-    {en:"There are lots of shops and restaurants",tl:"Hay muchas tiendas y restaurantes",lv:2},
-    {en:"The city is very clean and modern",tl:"La ciudad es muy limpia y moderna",lv:2},
-    {en:"I really like the old part of the city",tl:"Me gusta mucho el casco antiguo de la ciudad",lv:2},
-    {en:"There is a famous cathedral in the centre",tl:"Hay una catedral famosa en el centro",lv:2},
-    {en:"The city is situated on the Atlantic coast",tl:"La ciudad está situada en la costa atlántica",lv:3},
-    {en:"It is known for its seafood and its beaches",tl:"Es conocida por sus mariscos y sus playas",lv:3},
-    {en:"There are beautiful parks where you can relax",tl:"Hay parques preciosos donde puedes relajarte",lv:3},
-    {en:"The people here are very friendly and welcoming",tl:"La gente aquí es muy simpática y acogedora",lv:3},
-    {en:"I went to visit the old town with my friend",tl:"Fui a visitar el casco antiguo con mi amigo",lv:3},
-    {en:"We visited a lot of monuments and museums",tl:"Visitamos muchos monumentos y museos",lv:4},
-    {en:"The market in the city centre is very colourful",tl:"El mercado en el centro de la ciudad es muy colorido",lv:4},
-    {en:"Yesterday we went to the beach and it was fantastic",tl:"Ayer fuimos a la playa y fue fantástico",lv:4},
-    {en:"I think it is one of the most beautiful cities in Spain",tl:"Creo que es una de las ciudades más bonitas de España",lv:4},
-    {en:"The architecture is impressive and the streets are very lively",tl:"La arquitectura es impresionante y las calles son muy animadas",lv:4},
-    {en:"Although it is not very big it has a lot to offer tourists",tl:"Aunque no es muy grande tiene mucho que ofrecer a los turistas",lv:5},
-    {en:"I had never visited a Spanish city before and I loved it",tl:"Nunca había visitado una ciudad española antes y me encantó",lv:5},
-    {en:"In my opinion it is better than I expected",tl:"En mi opinión es mejor de lo que esperaba",lv:5},
-    {en:"We spent the morning exploring the old part of the city",tl:"Pasamos la mañana explorando el casco antiguo de la ciudad",lv:5},
-    {en:"The views from the top of the hill are spectacular",tl:"Las vistas desde la cima de la colina son espectaculares",lv:5},
-    {en:"Not only is the city beautiful but it is also very safe",tl:"No solo es bella la ciudad sino que también es muy segura",lv:6},
-    {en:"I would recommend this city to anyone who wants to visit Spain",tl:"Recomendaría esta ciudad a cualquiera que quiera visitar España",lv:6},
-    {en:"The mix of old and modern architecture makes it unique",tl:"La mezcla de arquitectura antigua y moderna la hace única",lv:6},
-    {en:"Having spent a week here I feel I know it well",tl:"Habiendo pasado una semana aquí siento que la conozco bien",lv:7},
-    {en:"The more time I spend here the more I fall in love with it",tl:"Cuanto más tiempo paso aquí más me enamoro de ella",lv:7},
-  ],
+fr:{places:[
+{en:"It is a beautiful city on the coast",tl:"C'est une belle ville sur la cote",lv:1},
+{en:"There are many interesting things to see",tl:"Il y a beaucoup de choses interessantes a voir",lv:1},
+{en:"It is a very big city",tl:"C'est une tres grande ville",lv:1},
+{en:"There is a beach near the city",tl:"Il y a une plage pres de la ville",lv:1},
+{en:"The weather is very good here",tl:"Le temps est tres bon ici",lv:1},
+{en:"It is a small town in the north of France",tl:"C'est une petite ville dans le nord de la France",lv:2},
+{en:"There are lots of shops and restaurants",tl:"Il y a beaucoup de magasins et de restaurants",lv:2},
+{en:"The city is very clean and modern",tl:"La ville est tres propre et moderne",lv:2},
+{en:"I really like the old part of the city",tl:"J'aime beaucoup le vieux quartier de la ville",lv:2},
+{en:"There is a famous cathedral in the centre",tl:"Il y a une cathedrale celebre dans le centre",lv:2},
+{en:"The city is situated in the south of France",tl:"La ville est situee dans le sud de la France",lv:3},
+{en:"It is known for its food and its culture",tl:"Elle est connue pour sa cuisine et sa culture",lv:3},
+{en:"There are beautiful parks where you can relax",tl:"Il y a de beaux parcs ou on peut se detendre",lv:3},
+{en:"The people here are very friendly and welcoming",tl:"Les gens ici sont tres sympas et accueillants",lv:3},
+{en:"I went to visit the old town with my friend",tl:"Je suis alle visiter la vieille ville avec mon ami",lv:3},
+{en:"We visited a lot of monuments and museums",tl:"Nous avons visite beaucoup de monuments et de musees",lv:4},
+{en:"The market in the city centre is very colourful",tl:"Le marche dans le centre-ville est tres colore",lv:4},
+{en:"Yesterday we went to the beach and it was fantastic",tl:"Hier nous sommes alles a la plage et c'etait fantastique",lv:4},
+{en:"I think it is one of the most beautiful cities in France",tl:"Je crois que c'est une des plus belles villes de France",lv:4},
+{en:"The architecture is impressive and the streets are very lively",tl:"L'architecture est impressionnante et les rues sont tres animees",lv:4},
+{en:"Although it is not very big it has a lot to offer tourists",tl:"Bien qu'elle ne soit pas tres grande elle a beaucoup a offrir aux touristes",lv:5},
+{en:"I had never visited a French city before and I loved it",tl:"Je n'avais jamais visite une ville francaise avant et j'ai adore",lv:5},
+{en:"In my opinion it is better than I expected",tl:"A mon avis c'est mieux que je ne le pensais",lv:5},
+{en:"We spent the morning exploring the old part of the city",tl:"Nous avons passe la matinee a explorer le vieux quartier de la ville",lv:5},
+{en:"The views from the top of the hill are spectacular",tl:"Les vues depuis le sommet de la colline sont spectaculaires",lv:5},
+{en:"Not only is the city beautiful but it is also very safe",tl:"Non seulement la ville est belle mais elle est aussi tres sure",lv:6},
+{en:"I would recommend this city to anyone who wants to visit France",tl:"Je recommanderais cette ville a quiconque veut visiter la France",lv:6},
+{en:"The mix of old and modern architecture makes it unique",tl:"Le melange d'architecture ancienne et moderne la rend unique",lv:6},
+{en:"Having spent a week here I feel I know it well",tl:"Ayant passe une semaine ici j'ai l'impression de bien la connaitre",lv:7},
+{en:"The more time I spend here the more I fall in love with it",tl:"Plus je passe du temps ici plus j'en tombe amoureux",lv:7},
+],people:[
+{en:"My friend is very tall and has dark hair",tl:"Mon ami est tres grand et a les cheveux bruns",lv:1},
+{en:"He is very funny and friendly",tl:"Il est tres drole et sympa",lv:1},
+{en:"She has blue eyes and short hair",tl:"Elle a les yeux bleus et les cheveux courts",lv:1},
+{en:"He is the same age as me",tl:"Il a le meme age que moi",lv:1},
+{en:"My family is quite big",tl:"Ma famille est assez grande",lv:1},
+{en:"I have two brothers and one sister",tl:"J'ai deux freres et une soeur",lv:2},
+{en:"My mother works as a teacher",tl:"Ma mere travaille comme professeure",lv:2},
+{en:"He is very sporty and loves football",tl:"Il est tres sportif et adore le football",lv:2},
+{en:"She is very kind and always helps me",tl:"Elle est tres gentille et m'aide toujours",lv:2},
+{en:"My best friend is called Lucas and he lives in Paris",tl:"Mon meilleur ami s'appelle Lucas et il habite a Paris",lv:2},
+{en:"He is very intelligent and works very hard at school",tl:"Il est tres intelligent et travaille tres dur au college",lv:3},
+{en:"I get on very well with my family",tl:"Je m'entends tres bien avec ma famille",lv:3},
+{en:"My father is quite tall and has brown eyes",tl:"Mon pere est assez grand et a les yeux marrons",lv:3},
+{en:"She is very sociable and has lots of friends",tl:"Elle est tres sociable et a beaucoup d'amis",lv:3},
+{en:"We have been friends since we were young",tl:"Nous sommes amis depuis que nous etions petits",lv:3},
+{en:"In general I would say he is a very positive person",tl:"En general je dirais que c'est une personne tres positive",lv:4},
+{en:"Although she can be shy she is very warm once you know her",tl:"Bien qu'elle puisse etre timide elle est tres chaleureuse quand on la connait",lv:4},
+{en:"My brother and I argue sometimes but we get on well",tl:"Mon frere et moi nous disputons parfois mais nous nous entendons bien",lv:4},
+{en:"He reminds me of my older brother back home in Ireland",tl:"Il me rappelle mon grand frere chez moi en Irlande",lv:4},
+{en:"She has a great sense of humour and always makes me laugh",tl:"Elle a un grand sens de l'humour et me fait toujours rire",lv:4},
+{en:"What I like most about him is that he is very honest",tl:"Ce que j'aime le plus chez lui c'est qu'il est tres honnete",lv:5},
+{en:"I admire her because she is very hard-working and determined",tl:"Je l'admire parce qu'elle est tres travailleuse et determinee",lv:5},
+{en:"He has changed a lot since I last saw him two years ago",tl:"Il a beaucoup change depuis la derniere fois que je l'ai vu il y a deux ans",lv:5},
+{en:"My grandmother lives with us and she is very important to me",tl:"Ma grand-mere habite avec nous et elle est tres importante pour moi",lv:5},
+{en:"Despite being very busy he always finds time for his friends",tl:"Malgre son emploi du temps charge il trouve toujours du temps pour ses amis",lv:6},
+{en:"Not only is she a great friend but she is also like a sister to me",tl:"Non seulement c'est une excellente amie mais elle est aussi comme une soeur pour moi",lv:6},
+{en:"I think personality is more important than appearance",tl:"Je pense que la personnalite est plus importante que l'apparence",lv:6},
+{en:"Having spent this time with him I feel we understand each other well",tl:"Ayant passe ce temps avec lui j'ai l'impression qu'on se comprend bien",lv:7},
+{en:"The more I get to know his family the more I feel at home here",tl:"Plus je connais sa famille plus je me sens chez moi ici",lv:7},
+{en:"I would say that the best quality in a friend is loyalty",tl:"Je dirais que la meilleure qualite chez un ami c'est la loyaute",lv:7},
+],food:[
+{en:"I have breakfast at eight in the morning",tl:"Je prends le petit-dejeuner a huit heures du matin",lv:1},
+{en:"I get up at seven every day",tl:"Je me leve a sept heures tous les jours",lv:1},
+{en:"French food is very tasty",tl:"La cuisine francaise est tres bonne",lv:1},
+{en:"I like croissants a lot",tl:"J'aime beaucoup les croissants",lv:1},
+{en:"We eat dinner at seven in the evening in France",tl:"En France on dine a sept heures du soir",lv:1},
+{en:"I have already tried crepes and they are delicious",tl:"J'ai deja goute des crepes et c'est delicieux",lv:2},
+{en:"The portions here are much bigger than in Ireland",tl:"Les portions ici sont beaucoup plus grandes qu'en Irlande",lv:2},
+{en:"I go to school by bus every morning",tl:"Je vais au college en bus tous les matins",lv:2},
+{en:"After school I do my homework and then watch television",tl:"Apres le college je fais mes devoirs et ensuite je regarde la tele",lv:2},
+{en:"We had a baguette with cheese for lunch and it was amazing",tl:"Nous avons mange une baguette avec du fromage au dejeuner et c'etait incroyable",lv:2},
+{en:"My daily routine here is very different from Ireland",tl:"Ma routine quotidienne ici est tres differente de celle en Irlande",lv:3},
+{en:"People here take lunch very seriously and it lasts a long time",tl:"Les gens ici prennent le dejeuner tres au serieux et ca dure longtemps",lv:3},
+{en:"I tried French cheese for the first time and I loved it",tl:"J'ai goute du fromage francais pour la premiere fois et j'ai adore",lv:3},
+{en:"I usually have lunch with the family and we talk a lot",tl:"En general je dejeune avec la famille et on parle beaucoup",lv:3},
+{en:"The fresh bread here is much better than anything I have eaten before",tl:"Le pain frais ici est bien meilleur que tout ce que j'ai mange avant",lv:3},
+{en:"Although I was nervous about trying new foods I am glad I did",tl:"Bien que j'aie ete nerveux a l'idee de gouter de nouveaux aliments je suis content de l'avoir fait",lv:4},
+{en:"My favourite French dish so far has been the boeuf bourguignon",tl:"Mon plat francais prefere jusqu'a present a ete le boeuf bourguignon",lv:4},
+{en:"I have gotten used to eating at French times which is much later",tl:"Je me suis habitue a manger aux heures francaises qui sont beaucoup plus tardives",lv:4},
+{en:"The market was full of fresh vegetables fruit and cheese",tl:"Le marche etait plein de legumes frais de fruits et de fromages",lv:4},
+{en:"I would definitely recommend trying the local food if you visit France",tl:"Je recommanderais vraiment de gouter la cuisine locale si vous visitez la France",lv:4},
+{en:"What surprised me most was how important mealtimes are for families here",tl:"Ce qui m'a le plus surpris c'est l'importance des repas pour les familles ici",lv:5},
+{en:"In Ireland we eat much earlier and usually in front of the television",tl:"En Irlande on mange bien plus tot et generalement devant la television",lv:5},
+{en:"I have started to enjoy foods that I would never eat at home",tl:"J'ai commence a apprecier des aliments que je ne mangerais jamais chez moi",lv:5},
+{en:"The French lifestyle with long lunches and leisurely dinners suits me well",tl:"Le style de vie francais avec de longs dejeuners et des diners tranquilles me convient bien",lv:5},
+{en:"Not only is the food delicious but the whole experience of eating together is special",tl:"Non seulement la nourriture est delicieuse mais toute l'experience de manger ensemble est speciale",lv:6},
+{en:"I think Irish people could learn a lot from the French attitude to food",tl:"Je pense que les Irlandais pourraient apprendre beaucoup de l'attitude francaise envers la nourriture",lv:6},
+{en:"Having tried so many new dishes I feel much more adventurous about food now",tl:"Ayant essaye tant de nouveaux plats je me sens beaucoup plus aventureux avec la nourriture maintenant",lv:7},
+{en:"The more I experience French food culture the more I appreciate it",tl:"Plus j'experimente la culture culinaire francaise plus je l'apprecie",lv:7},
+{en:"I would never have imagined that I would enjoy French cuisine so much",tl:"Je n'aurais jamais imagine apprecier autant la cuisine francaise",lv:7},
+{en:"Food here is not just about eating it is about family and togetherness",tl:"La nourriture ici ne concerne pas seulement manger c'est aussi la famille et le partage",lv:8},
+],freetime:[
+{en:"In my free time I like to play football",tl:"Dans mon temps libre j'aime jouer au foot",lv:1},
+{en:"At the weekend I usually go out with my friends",tl:"Le week-end je sors generalement avec mes amis",lv:1},
+{en:"I love listening to music",tl:"J'adore ecouter de la musique",lv:1},
+{en:"We go to the park after the French classes",tl:"Nous allons au parc apres les cours de francais",lv:1},
+{en:"I like watching films in the evening",tl:"J'aime regarder des films le soir",lv:1},
+{en:"After class Lucas and I go to the cafe to relax",tl:"Apres les cours Lucas et moi allons au cafe pour nous detendre",lv:2},
+{en:"We often go swimming at the weekend",tl:"Nous allons souvent a la piscine le week-end",lv:2},
+{en:"Sometimes we play tennis in the park",tl:"Parfois nous jouons au tennis dans le parc",lv:2},
+{en:"We go for walks along the river in the evenings",tl:"Nous nous promenons le long de la riviere le soir",lv:2},
+{en:"I enjoy exploring the city with my friend",tl:"J'aime explorer la ville avec mon ami",lv:2},
+{en:"Yesterday we went to a concert in the city centre",tl:"Hier nous sommes alles a un concert dans le centre-ville",lv:3},
+{en:"At the weekend we visited the old town and tried local food",tl:"Le week-end nous avons visite la vieille ville et goute la cuisine locale",lv:3},
+{en:"I spend a lot of time practising my French with Lucas",tl:"Je passe beaucoup de temps a pratiquer mon francais avec Lucas",lv:3},
+{en:"We like going to the cinema when we have free time",tl:"Nous aimons aller au cinema quand nous avons du temps libre",lv:3},
+{en:"After class we usually get an ice cream and walk around the city",tl:"Apres les cours on prend generalement une glace et on se promene en ville",lv:3},
+{en:"Last Saturday we went to a local rugby match and it was brilliant",tl:"Samedi dernier nous sommes alles a un match de rugby local et c'etait genial",lv:4},
+{en:"I think sport is very important for both physical and mental health",tl:"Je pense que le sport est tres important pour la sante physique et mentale",lv:4},
+{en:"I had never tried cycling in the city before but Lucas showed me the routes",tl:"Je n'avais jamais fait du velo en ville avant mais Lucas m'a appris les itineraires",lv:4},
+{en:"We prefer to spend time outdoors rather than indoors",tl:"Nous preferons passer du temps dehors plutot qu'a l'interieur",lv:4},
+{en:"The evenings here are so lively compared to Ireland",tl:"Les soirees ici sont tellement animees comparees a celles en Irlande",lv:4},
+{en:"Although I miss my friends at home I am having an incredible time here",tl:"Bien que mes amis me manquent chez moi je passe un moment incroyable ici",lv:5},
+{en:"I have discovered a love of French cinema that I did not expect",tl:"J'ai decouvert une passion pour le cinema francais que je n'attendais pas",lv:5},
+{en:"What I enjoy most is being able to practise French in real situations",tl:"Ce que j'apprecie le plus c'est de pouvoir pratiquer le francais dans des situations reelles",lv:5},
+{en:"Spending time with Lucas has helped me improve my French enormously",tl:"Passer du temps avec Lucas m'a aide a ameliorer mon francais enormement",lv:5},
+{en:"Not only have I improved my French but I have also made a great friend",tl:"Non seulement j'ai ameliore mon francais mais j'ai aussi trouve un excellent ami",lv:6},
+{en:"I would never have imagined that I could feel so at home in another country",tl:"Je n'aurais jamais imagine me sentir aussi bien chez moi dans un autre pays",lv:6},
+{en:"The experience of living here even for a short time has changed my perspective",tl:"L'experience de vivre ici a change ma facon de voir les choses",lv:6},
+{en:"Having the opportunity to live with a French family is something I will never forget",tl:"Avoir l'opportunite de vivre avec une famille francaise est quelque chose que je n'oublierai jamais",lv:7},
+{en:"The more French I speak the more confident I feel in everyday situations",tl:"Plus je parle francais plus je me sens confiant dans les situations quotidiennes",lv:7},
+{en:"I would recommend this kind of experience to every student who studies languages",tl:"Je recommanderais ce type d'experience a tout eleve qui etudie les langues",lv:7},
+],opinions:[
+{en:"I think French is a very beautiful language",tl:"Je pense que le francais est une tres belle langue",lv:1},
+{en:"In my opinion learning languages is very important",tl:"A mon avis apprendre des langues est tres important",lv:1},
+{en:"I really enjoy my French classes",tl:"J'aime vraiment mes cours de francais",lv:1},
+{en:"I find French more interesting than I expected",tl:"Je trouve le francais plus interessant que je ne le pensais",lv:1},
+{en:"I think France is a wonderful country",tl:"Je pense que la France est un pays merveilleux",lv:1},
+{en:"My French class is very interesting and the teacher is great",tl:"Mon cours de francais est tres interessant et le prof est super",lv:2},
+{en:"I feel much more confident speaking French now",tl:"Je me sens beaucoup plus confiant quand je parle francais maintenant",lv:2},
+{en:"I think it is important to practise every day",tl:"Je pense qu'il est important de pratiquer tous les jours",lv:2},
+{en:"At first I was nervous but now I enjoy speaking French",tl:"Au debut j'etais nerveux mais maintenant j'aime parler francais",lv:2},
+{en:"I prefer French to any other subject at school",tl:"Je prefere le francais a toute autre matiere au college",lv:2},
+{en:"The French course has been more fun than I expected",tl:"Le cours de francais a ete plus amusant que je ne le pensais",lv:3},
+{en:"I think the best way to learn a language is to live in the country",tl:"Je pense que la meilleure facon d'apprendre une langue est de vivre dans le pays",lv:3},
+{en:"I feel very lucky to have this opportunity to improve my French",tl:"Je me sens tres chanceux d'avoir cette opportunite d'ameliorer mon francais",lv:3},
+{en:"In my opinion speaking French will help me in the future",tl:"A mon avis parler francais m'aidera dans l'avenir",lv:3},
+{en:"Although it was difficult at the start I am making great progress",tl:"Bien que ce soit difficile au debut je fais de grands progres",lv:3},
+{en:"What I like most about the course is that we speak French all the time",tl:"Ce que j'aime le plus dans le cours c'est qu'on parle francais tout le temps",lv:4},
+{en:"I think that languages open doors and create opportunities",tl:"Je pense que les langues ouvrent des portes et creent des opportunites",lv:4},
+{en:"The teachers are very patient and explain everything very clearly",tl:"Les professeurs sont tres patients et expliquent tout tres clairement",lv:4},
+{en:"I feel that my French has improved enormously in just a few weeks",tl:"J'ai l'impression que mon francais s'est enormement ameliore en quelques semaines seulement",lv:4},
+{en:"In my opinion this has been the best experience of my life so far",tl:"A mon avis c'est la meilleure experience de ma vie jusqu'a present",lv:4},
+{en:"Not only have I improved my French but I have also grown as a person",tl:"Non seulement j'ai ameliore mon francais mais j'ai aussi grandi en tant que personne",lv:5},
+{en:"I believe that every young person should have the chance to learn a foreign language",tl:"Je crois que chaque jeune devrait avoir la chance d'apprendre une langue etrangere",lv:5},
+{en:"The experience has taught me that communication is about more than just words",tl:"L'experience m'a appris que la communication est bien plus que des mots",lv:5},
+{en:"I would say that confidence is the most important thing when learning a language",tl:"Je dirais que la confiance est la chose la plus importante quand on apprend une langue",lv:5},
+{en:"Although learning French is challenging it is also incredibly rewarding",tl:"Bien qu'apprendre le francais soit difficile c'est aussi incroyablement enrichissant",lv:6},
+{en:"I am convinced that the effort I have put in will pay off in my exams",tl:"Je suis convaincu que les efforts que j'ai fournis porteront leurs fruits lors de mes examens",lv:6},
+{en:"What surprises me most is how much you can communicate with just a few key phrases",tl:"Ce qui me surprend le plus c'est combien on peut communiquer avec seulement quelques phrases cles",lv:6},
+{en:"Having experienced life in France I understand the language so much better now",tl:"Ayant vecu en France je comprends tellement mieux la langue maintenant",lv:7},
+{en:"The more I practise the more I realise how rich and expressive French is",tl:"Plus je pratique plus je realise a quel point le francais est riche et expressif",lv:7},
+{en:"I think this experience will stay with me for the rest of my life",tl:"Je pense que cette experience restera avec moi pour le reste de ma vie",lv:7},
+]},
 
-  // ---- PEOPLE & FAMILY (describing Yago, family members, friends) ----
-  people: [
-    {en:"My friend is very tall and has dark hair",tl:"Mi amigo es muy alto y tiene el pelo moreno",lv:1},
-    {en:"He is very funny and friendly",tl:"Es muy gracioso y simpático",lv:1},
-    {en:"She has blue eyes and short hair",tl:"Tiene los ojos azules y el pelo corto",lv:1},
-    {en:"He is the same age as me",tl:"Tiene la misma edad que yo",lv:1},
-    {en:"My family is quite big",tl:"Mi familia es bastante grande",lv:1},
-    {en:"I have two brothers and one sister",tl:"Tengo dos hermanos y una hermana",lv:2},
-    {en:"My mother works as a teacher",tl:"Mi madre trabaja como profesora",lv:2},
-    {en:"He is very sporty and loves football",tl:"Es muy deportista y le encanta el fútbol",lv:2},
-    {en:"She is very kind and always helps me",tl:"Es muy amable y siempre me ayuda",lv:2},
-    {en:"My best friend is called Yago and he lives in La Coruña",tl:"Mi mejor amigo se llama Yago y vive en La Coruña",lv:2},
-    {en:"He is very intelligent and works very hard at school",tl:"Es muy inteligente y trabaja muy duro en el instituto",lv:3},
-    {en:"I get on very well with my family",tl:"Me llevo muy bien con mi familia",lv:3},
-    {en:"My father is quite tall and has brown eyes",tl:"Mi padre es bastante alto y tiene los ojos marrones",lv:3},
-    {en:"She is very sociable and has lots of friends",tl:"Es muy sociable y tiene muchos amigos",lv:3},
-    {en:"We have been friends since we were young",tl:"Somos amigos desde que éramos pequeños",lv:3},
-    {en:"In general I would say he is a very positive person",tl:"En general diría que es una persona muy positiva",lv:4},
-    {en:"Although she can be shy she is very warm once you know her",tl:"Aunque puede ser tímida es muy cariñosa cuando la conoces",lv:4},
-    {en:"My brother and I argue sometimes but we get on well",tl:"Mi hermano y yo discutimos a veces pero nos llevamos bien",lv:4},
-    {en:"He reminds me of my older brother back home in Ireland",tl:"Me recuerda a mi hermano mayor en Irlanda",lv:4},
-    {en:"She has a great sense of humour and always makes me laugh",tl:"Tiene un gran sentido del humor y siempre me hace reír",lv:4},
-    {en:"What I like most about him is that he is very honest",tl:"Lo que más me gusta de él es que es muy honesto",lv:5},
-    {en:"I admire her because she is very hard-working and determined",tl:"La admiro porque es muy trabajadora y determinada",lv:5},
-    {en:"He has changed a lot since I last saw him two years ago",tl:"Ha cambiado mucho desde la última vez que lo vi hace dos años",lv:5},
-    {en:"My grandmother lives with us and she is very important to me",tl:"Mi abuela vive con nosotros y es muy importante para mí",lv:5},
-    {en:"Despite being very busy he always finds time for his friends",tl:"A pesar de estar muy ocupado siempre encuentra tiempo para sus amigos",lv:6},
-    {en:"Not only is she a great friend but she is also like a sister to me",tl:"No solo es una gran amiga sino que también es como una hermana para mí",lv:6},
-    {en:"I think personality is more important than appearance",tl:"Creo que la personalidad es más importante que la apariencia",lv:6},
-    {en:"Having spent this time with him I feel we understand each other well",tl:"Habiendo pasado este tiempo con él siento que nos entendemos bien",lv:7},
-    {en:"The more I get to know his family the more I feel at home here",tl:"Cuanto más conozco a su familia más me siento como en casa aquí",lv:7},
-    {en:"I would say that the best quality in a friend is loyalty",tl:"Diría que la mejor cualidad en un amigo es la lealtad",lv:7},
-  ],
-
-  // ---- FOOD & DAILY ROUTINE ----
-  food: [
-    {en:"I have breakfast at eight o clock in the morning",tl:"Desayuno a las ocho de la mañana",lv:1},
-    {en:"I get up at seven o clock every day",tl:"Me levanto a las siete todos los días",lv:1},
-    {en:"Spanish food is very tasty",tl:"La comida española es muy rica",lv:1},
-    {en:"I like paella a lot",tl:"Me gusta mucho la paella",lv:1},
-    {en:"We eat dinner at three o clock in Spain",tl:"En España comemos a las tres",lv:1},
-    {en:"I have already tried tortilla española and it is delicious",tl:"Ya he probado la tortilla española y está deliciosa",lv:2},
-    {en:"The portions here are much bigger than in Ireland",tl:"Las raciones aquí son mucho más grandes que en Irlanda",lv:2},
-    {en:"I go to school by bus every morning",tl:"Voy al instituto en autobús todas las mañanas",lv:2},
-    {en:"After school I do my homework and then watch television",tl:"Después del instituto hago los deberes y luego veo la televisión",lv:2},
-    {en:"We had churros for breakfast and they were amazing",tl:"Tomamos churros para desayunar y estaban increíbles",lv:2},
-    {en:"My daily routine here is very different from Ireland",tl:"Mi rutina diaria aquí es muy diferente a la de Irlanda",lv:3},
-    {en:"People here eat much later than we do in Ireland",tl:"La gente aquí come mucho más tarde que nosotros en Irlanda",lv:3},
-    {en:"I tried gazpacho for the first time and I loved it",tl:"Probé el gazpacho por primera vez y me encantó",lv:3},
-    {en:"The fresh fish here is much better than anything I have eaten before",tl:"El pescado fresco aquí es mucho mejor que nada que haya comido antes",lv:3},
-    {en:"I usually have lunch with the family and we talk a lot",tl:"Normalmente como con la familia y hablamos mucho",lv:3},
-    {en:"Although I was nervous about trying new foods I am glad I did",tl:"Aunque estaba nervioso por probar nuevas comidas me alegra haberlo hecho",lv:4},
-    {en:"My favourite Spanish dish so far has been the seafood paella",tl:"Mi plato español favorito hasta ahora ha sido la paella de mariscos",lv:4},
-    {en:"I have gotten used to eating at Spanish times which is much later",tl:"Me he acostumbrado a comer a horas españolas que es mucho más tarde",lv:4},
-    {en:"The market was full of fresh vegetables fruit and seafood",tl:"El mercado estaba lleno de verduras frescas fruta y mariscos",lv:4},
-    {en:"I would definitely recommend trying the local food if you visit Spain",tl:"Definitivamente recomendaría probar la comida local si visitas España",lv:4},
-    {en:"What surprised me most was how important mealtimes are for families here",tl:"Lo que más me sorprendió fue lo importantes que son las comidas para las familias aquí",lv:5},
-    {en:"In Ireland we eat much earlier and usually in front of the television",tl:"En Irlanda comemos mucho antes y normalmente delante de la televisión",lv:5},
-    {en:"I have started to enjoy foods that I would never eat at home",tl:"He empezado a disfrutar de comidas que nunca comería en casa",lv:5},
-    {en:"The Spanish lifestyle with long lunches and late dinners suits me well",tl:"El estilo de vida español con almuerzos largos y cenas tardías me va bien",lv:5},
-    {en:"Not only is the food delicious but the whole experience of eating together is special",tl:"No solo está deliciosa la comida sino que toda la experiencia de comer juntos es especial",lv:6},
-    {en:"I think Irish people could learn a lot from the Spanish attitude to food",tl:"Creo que los irlandeses podrían aprender mucho de la actitud española hacia la comida",lv:6},
-    {en:"Having tried so many new dishes I feel much more adventurous about food now",tl:"Habiendo probado tantos platos nuevos me siento mucho más aventurero con la comida ahora",lv:7},
-    {en:"The more I experience Spanish food culture the more I appreciate it",tl:"Cuanto más experimento la cultura gastronómica española más la aprecio",lv:7},
-    {en:"I would never have imagined that I would enjoy seafood so much",tl:"Nunca habría imaginado que me gustarían tanto los mariscos",lv:7},
-    {en:"Food is not just about eating here — it is about family and connection",tl:"La comida aquí no es solo comer — es familia y conexión",lv:8},
-  ],
-
-  // ---- FREE TIME & ACTIVITIES ----
-  freetime: [
-    {en:"In my free time I like to play football",tl:"En mi tiempo libre me gusta jugar al fútbol",lv:1},
-    {en:"At the weekend I usually go out with my friends",tl:"El fin de semana normalmente salgo con mis amigos",lv:1},
-    {en:"I love listening to music",tl:"Me encanta escuchar música",lv:1},
-    {en:"We go to the beach after the Spanish classes",tl:"Vamos a la playa después de las clases de español",lv:1},
-    {en:"I like watching films in the evening",tl:"Me gusta ver películas por la tarde",lv:1},
-    {en:"After class Yago and I go to the park to relax",tl:"Después de clase Yago y yo vamos al parque a relajarnos",lv:2},
-    {en:"We often go to the beach for a swim",tl:"A menudo vamos a la playa a nadar",lv:2},
-    {en:"Sometimes we play basketball in the sports centre",tl:"A veces jugamos al baloncesto en el polideportivo",lv:2},
-    {en:"We go for walks along the seafront in the evenings",tl:"Damos paseos por el paseo marítimo por las tardes",lv:2},
-    {en:"I enjoy exploring the city with my friend",tl:"Me gusta explorar la ciudad con mi amigo",lv:2},
-    {en:"Yesterday we went to a concert in the city centre",tl:"Ayer fuimos a un concierto en el centro de la ciudad",lv:3},
-    {en:"At the weekend we visited the old town and tried local food",tl:"El fin de semana visitamos el casco antiguo y probamos comida local",lv:3},
-    {en:"I spend a lot of time practising my Spanish with Yago",tl:"Paso mucho tiempo practicando mi español con Yago",lv:3},
-    {en:"We like going to the cinema when we have free time",tl:"Nos gusta ir al cine cuando tenemos tiempo libre",lv:3},
-    {en:"After the classes we usually get an ice cream and walk around the city",tl:"Después de las clases normalmente tomamos un helado y paseamos por la ciudad",lv:3},
-    {en:"Last Saturday we went to a local football match and it was brilliant",tl:"El sábado pasado fuimos a un partido de fútbol local y fue genial",lv:4},
-    {en:"I think sport is very important for both physical and mental health",tl:"Creo que el deporte es muy importante para la salud física y mental",lv:4},
-    {en:"I had never tried surfing before but Yago taught me and I loved it",tl:"Nunca había probado el surf antes pero Yago me enseñó y me encantó",lv:4},
-    {en:"We prefer to spend time outdoors rather than indoors",tl:"Preferimos pasar el tiempo al aire libre en lugar de quedarnos en casa",lv:4},
-    {en:"The evenings here are so lively compared to Ireland",tl:"Las tardes aquí son tan animadas comparadas con las de Irlanda",lv:4},
-    {en:"Although I miss my friends at home I am having an incredible time here",tl:"Aunque echo de menos a mis amigos en casa lo estoy pasando de maravilla aquí",lv:5},
-    {en:"I have discovered a love of Spanish music that I did not expect",tl:"He descubierto una pasión por la música española que no esperaba",lv:5},
-    {en:"What I enjoy most is being able to practise Spanish in real situations",tl:"Lo que más disfruto es poder practicar el español en situaciones reales",lv:5},
-    {en:"Spending time with Yago has helped me improve my Spanish enormously",tl:"Pasar tiempo con Yago me ha ayudado a mejorar mi español enormemente",lv:5},
-    {en:"Not only have I improved my Spanish but I have also made a great friend",tl:"No solo he mejorado mi español sino que también he hecho un gran amigo",lv:6},
-    {en:"I would never have imagined that I could feel so at home in another country",tl:"Nunca habría imaginado que podría sentirme tan a gusto en otro país",lv:6},
-    {en:"The experience of living here even for a short time has changed my perspective",tl:"La experiencia de vivir aquí aunque sea por poco tiempo ha cambiado mi perspectiva",lv:6},
-    {en:"Having the opportunity to live with a Spanish family is something I will never forget",tl:"Tener la oportunidad de vivir con una familia española es algo que nunca olvidaré",lv:7},
-    {en:"The more Spanish I speak the more confident I feel in everyday situations",tl:"Cuanto más español hablo más seguro me siento en las situaciones cotidianas",lv:7},
-    {en:"I would recommend this kind of experience to every student who studies languages",tl:"Recomendaría este tipo de experiencia a todo estudiante que estudie idiomas",lv:7},
-  ],
-
-  // ---- OPINIONS & FEELINGS ----
-  opinions: [
-    {en:"I think Spanish is a very beautiful language",tl:"Creo que el español es un idioma muy bonito",lv:1},
-    {en:"In my opinion learning languages is very important",tl:"En mi opinión aprender idiomas es muy importante",lv:1},
-    {en:"I really enjoy my Spanish classes",tl:"Disfruto mucho de mis clases de español",lv:1},
-    {en:"I find Spanish easier than I expected",tl:"Encuentro el español más fácil de lo que esperaba",lv:1},
-    {en:"I think Spain is a wonderful country",tl:"Creo que España es un país maravilloso",lv:1},
-    {en:"My Spanish class is very interesting and the teacher is great",tl:"Mi clase de español es muy interesante y el profesor es genial",lv:2},
-    {en:"I feel much more confident speaking Spanish now",tl:"Me siento mucho más seguro hablando español ahora",lv:2},
-    {en:"I think it is important to practise every day",tl:"Creo que es importante practicar todos los días",lv:2},
-    {en:"At first I was nervous but now I enjoy speaking Spanish",tl:"Al principio estaba nervioso pero ahora disfruto hablando español",lv:2},
-    {en:"I prefer Spanish to any other subject at school",tl:"Prefiero el español a cualquier otra asignatura en el colegio",lv:2},
-    {en:"The Spanish course has been more fun than I expected",tl:"El curso de español ha sido más divertido de lo que esperaba",lv:3},
-    {en:"I think the best way to learn a language is to live in the country",tl:"Creo que la mejor manera de aprender un idioma es vivir en el país",lv:3},
-    {en:"I feel very lucky to have this opportunity to improve my Spanish",tl:"Me siento muy afortunado de tener esta oportunidad de mejorar mi español",lv:3},
-    {en:"In my opinion speaking Spanish will help me in the future",tl:"En mi opinión hablar español me ayudará en el futuro",lv:3},
-    {en:"Although it was difficult at the start I am making great progress",tl:"Aunque fue difícil al principio estoy progresando mucho",lv:3},
-    {en:"What I like most about the course is that we speak Spanish all the time",tl:"Lo que más me gusta del curso es que hablamos español todo el tiempo",lv:4},
-    {en:"I think that languages open doors and create opportunities",tl:"Creo que los idiomas abren puertas y crean oportunidades",lv:4},
-    {en:"The teachers are very patient and explain everything very clearly",tl:"Los profesores son muy pacientes y explican todo muy claramente",lv:4},
-    {en:"I feel that my Spanish has improved enormously in just a few weeks",tl:"Siento que mi español ha mejorado enormemente en solo unas semanas",lv:4},
-    {en:"In my opinion this has been the best experience of my life so far",tl:"En mi opinión esta ha sido la mejor experiencia de mi vida hasta ahora",lv:4},
-    {en:"Not only have I improved my Spanish but I have also grown as a person",tl:"No solo he mejorado mi español sino que también he crecido como persona",lv:5},
-    {en:"I believe that every young person should have the chance to learn a foreign language",tl:"Creo que cada joven debería tener la oportunidad de aprender un idioma extranjero",lv:5},
-    {en:"The experience has taught me that communication is about more than just words",tl:"La experiencia me ha enseñado que la comunicación es algo más que palabras",lv:5},
-    {en:"I would say that confidence is the most important thing when learning a language",tl:"Diría que la confianza es lo más importante cuando se aprende un idioma",lv:5},
-    {en:"Although learning Spanish is challenging it is also incredibly rewarding",tl:"Aunque aprender español es desafiante también es increíblemente gratificante",lv:6},
-    {en:"I am convinced that the effort I have put in will pay off in my exams",tl:"Estoy convencido de que el esfuerzo que he puesto dará sus frutos en los exámenes",lv:6},
-    {en:"What surprises me most is how much you can communicate with just a few key phrases",tl:"Lo que más me sorprende es cuánto puedes comunicar con solo unas pocas frases clave",lv:6},
-    {en:"Having experienced life in Spain I understand the language so much better now",tl:"Habiendo experimentado la vida en España entiendo el idioma mucho mejor ahora",lv:7},
-    {en:"The more I practise the more I realise how beautiful and expressive Spanish is",tl:"Cuanto más practico más me doy cuenta de lo bonito y expresivo que es el español",lv:7},
-    {en:"I think this experience will stay with me for the rest of my life",tl:"Creo que esta experiencia me acompañará durante el resto de mi vida",lv:7},
-  ],
-};
+de:{places:[
+{en:"It is a beautiful city on the river",tl:"Es ist eine wunderschone Stadt am Fluss",lv:1},
+{en:"There are many interesting things to see",tl:"Es gibt viele interessante Dinge zu sehen",lv:1},
+{en:"It is a very big city",tl:"Es ist eine sehr grosse Stadt",lv:1},
+{en:"There is a park near the city centre",tl:"Es gibt einen Park in der Nahe des Stadtzentrums",lv:1},
+{en:"The weather is very good here in summer",tl:"Das Wetter ist hier im Sommer sehr gut",lv:1},
+{en:"It is a small town in the south of Germany",tl:"Es ist eine kleine Stadt im Suden Deutschlands",lv:2},
+{en:"There are lots of shops and restaurants",tl:"Es gibt viele Geschafte und Restaurants",lv:2},
+{en:"The city is very clean and modern",tl:"Die Stadt ist sehr sauber und modern",lv:2},
+{en:"I really like the old part of the city",tl:"Ich mag die Altstadt sehr gern",lv:2},
+{en:"There is a famous castle on the hill",tl:"Es gibt ein beruhmtes Schloss auf dem Hugel",lv:2},
+{en:"The city is situated in the heart of Germany",tl:"Die Stadt liegt im Herzen Deutschlands",lv:3},
+{en:"It is known for its history and its culture",tl:"Sie ist bekannt fur ihre Geschichte und ihre Kultur",lv:3},
+{en:"There are beautiful parks where you can relax",tl:"Es gibt wunderschone Parks wo man sich entspannen kann",lv:3},
+{en:"The people here are very friendly and welcoming",tl:"Die Menschen hier sind sehr freundlich und gastfreundlich",lv:3},
+{en:"I went to visit the old town with my friend",tl:"Ich bin mit meinem Freund die Altstadt besuchen gegangen",lv:3},
+{en:"We visited a lot of monuments and museums",tl:"Wir haben viele Denkmaler und Museen besucht",lv:4},
+{en:"The Christmas market in the city centre is very colourful",tl:"Der Weihnachtsmarkt im Stadtzentrum ist sehr bunt",lv:4},
+{en:"Yesterday we went to the castle and it was fantastic",tl:"Gestern sind wir zum Schloss gegangen und es war fantastisch",lv:4},
+{en:"I think it is one of the most beautiful cities in Germany",tl:"Ich denke es ist eine der schonsten Stadte Deutschlands",lv:4},
+{en:"The architecture is impressive and the streets are very lively",tl:"Die Architektur ist beeindruckend und die Strassen sind sehr belebt",lv:4},
+{en:"Although it is not very big it has a lot to offer tourists",tl:"Obwohl sie nicht sehr gross ist hat sie Touristen viel zu bieten",lv:5},
+{en:"I had never visited a German city before and I loved it",tl:"Ich hatte noch nie eine deutsche Stadt besucht und ich liebte es",lv:5},
+{en:"In my opinion it is better than I expected",tl:"Meiner Meinung nach ist es besser als ich erwartet hatte",lv:5},
+{en:"We spent the morning exploring the old part of the city",tl:"Wir haben den Vormittag damit verbracht die Altstadt zu erkunden",lv:5},
+{en:"The views from the top of the tower are spectacular",tl:"Die Aussicht von der Spitze des Turms ist spektakular",lv:5},
+{en:"Not only is the city beautiful but it is also very safe",tl:"Die Stadt ist nicht nur schon sondern auch sehr sicher",lv:6},
+{en:"I would recommend this city to anyone who wants to visit Germany",tl:"Ich wurde diese Stadt jedem empfehlen der Deutschland besuchen mochte",lv:6},
+{en:"The mix of old and modern architecture makes it unique",tl:"Die Mischung aus alter und moderner Architektur macht sie einzigartig",lv:6},
+{en:"Having spent a week here I feel I know it well",tl:"Nachdem ich eine Woche hier verbracht habe fuhle ich mich gut damit vertraut",lv:7},
+{en:"The more time I spend here the more I fall in love with it",tl:"Je mehr Zeit ich hier verbringe desto mehr verliebe ich mich in sie",lv:7},
+],people:[
+{en:"My friend is very tall and has dark hair",tl:"Mein Freund ist sehr gross und hat dunkle Haare",lv:1},
+{en:"He is very funny and friendly",tl:"Er ist sehr lustig und freundlich",lv:1},
+{en:"She has blue eyes and short hair",tl:"Sie hat blaue Augen und kurze Haare",lv:1},
+{en:"He is the same age as me",tl:"Er ist genauso alt wie ich",lv:1},
+{en:"My family is quite big",tl:"Meine Familie ist ziemlich gross",lv:1},
+{en:"I have two brothers and one sister",tl:"Ich habe zwei Bruder und eine Schwester",lv:2},
+{en:"My mother works as a teacher",tl:"Meine Mutter arbeitet als Lehrerin",lv:2},
+{en:"He is very sporty and loves football",tl:"Er ist sehr sportlich und liebt Fussball",lv:2},
+{en:"She is very kind and always helps me",tl:"Sie ist sehr nett und hilft mir immer",lv:2},
+{en:"My best friend is called Felix and he lives in Berlin",tl:"Mein bester Freund heisst Felix und wohnt in Berlin",lv:2},
+{en:"He is very intelligent and works very hard at school",tl:"Er ist sehr intelligent und arbeitet sehr hart in der Schule",lv:3},
+{en:"I get on very well with my family",tl:"Ich verstehe mich sehr gut mit meiner Familie",lv:3},
+{en:"My father is quite tall and has brown eyes",tl:"Mein Vater ist ziemlich gross und hat braune Augen",lv:3},
+{en:"She is very sociable and has lots of friends",tl:"Sie ist sehr gesellig und hat viele Freunde",lv:3},
+{en:"We have been friends since we were young",tl:"Wir sind befreundet seit wir klein waren",lv:3},
+{en:"In general I would say he is a very positive person",tl:"Im Allgemeinen wurde ich sagen er ist ein sehr positiver Mensch",lv:4},
+{en:"Although she can be shy she is very warm once you know her",tl:"Obwohl sie schuchtern sein kann ist sie sehr herzlich wenn man sie kennt",lv:4},
+{en:"My brother and I argue sometimes but we get on well",tl:"Mein Bruder und ich streiten uns manchmal aber wir kommen gut miteinander aus",lv:4},
+{en:"He reminds me of my older brother back home in Ireland",tl:"Er erinnert mich an meinen alteren Bruder zu Hause in Irland",lv:4},
+{en:"She has a great sense of humour and always makes me laugh",tl:"Sie hat einen tollen Sinn fur Humor und bringt mich immer zum Lachen",lv:4},
+{en:"What I like most about him is that he is very honest",tl:"Was mir an ihm am besten gefallt ist dass er sehr ehrlich ist",lv:5},
+{en:"I admire her because she is very hard-working and determined",tl:"Ich bewundere sie weil sie sehr fleissig und zielstrebig ist",lv:5},
+{en:"He has changed a lot since I last saw him two years ago",tl:"Er hat sich sehr verandert seit ich ihn vor zwei Jahren zuletzt gesehen habe",lv:5},
+{en:"My grandmother lives with us and she is very important to me",tl:"Meine Oma wohnt bei uns und sie ist mir sehr wichtig",lv:5},
+{en:"Despite being very busy he always finds time for his friends",tl:"Obwohl er sehr beschaftigt ist findet er immer Zeit fur seine Freunde",lv:6},
+{en:"Not only is she a great friend but she is also like a sister to me",tl:"Sie ist nicht nur eine tolle Freundin sondern auch wie eine Schwester fur mich",lv:6},
+{en:"I think personality is more important than appearance",tl:"Ich denke dass Personlichkeit wichtiger ist als Aussehen",lv:6},
+{en:"Having spent this time with him I feel we understand each other well",tl:"Nachdem ich diese Zeit mit ihm verbracht habe habe ich das Gefuhl dass wir uns gut verstehen",lv:7},
+{en:"The more I get to know his family the more I feel at home here",tl:"Je mehr ich seine Familie kennenlerne desto wohler fuhle ich mich hier",lv:7},
+{en:"I would say that the best quality in a friend is loyalty",tl:"Ich wurde sagen dass die beste Eigenschaft bei einem Freund Loyalitat ist",lv:7},
+],food:[
+{en:"I have breakfast at seven in the morning",tl:"Ich fruhstucke um sieben Uhr morgens",lv:1},
+{en:"I get up at six every day",tl:"Ich stehe jeden Tag um sechs Uhr auf",lv:1},
+{en:"German food is very tasty",tl:"Das deutsche Essen ist sehr lecker",lv:1},
+{en:"I like bread and sausages a lot",tl:"Ich mag Brot und Wurst sehr gern",lv:1},
+{en:"We eat dinner at six in the evening in Germany",tl:"In Deutschland essen wir um sechs Uhr abends zu Abend",lv:1},
+{en:"I have already tried pretzels and they are delicious",tl:"Ich habe bereits Brezeln probiert und sie sind kostlich",lv:2},
+{en:"The portions here are much bigger than in Ireland",tl:"Die Portionen hier sind viel grosser als in Irland",lv:2},
+{en:"I go to school by bike every morning",tl:"Ich fahre jeden Morgen mit dem Fahrrad zur Schule",lv:2},
+{en:"After school I do my homework and then watch television",tl:"Nach der Schule mache ich meine Hausaufgaben und sehe dann fern",lv:2},
+{en:"We had a bratwurst at the market and it was amazing",tl:"Wir haben eine Bratwurst auf dem Markt gegessen und sie war unglaublich",lv:2},
+{en:"My daily routine here is very different from Ireland",tl:"Mein Tagesablauf hier ist sehr anders als in Irland",lv:3},
+{en:"People here eat dinner much earlier than we do in Ireland",tl:"Die Leute hier essen viel fruher zu Abend als wir in Irland",lv:3},
+{en:"I tried German cake for the first time and I loved it",tl:"Ich habe zum ersten Mal deutschen Kuchen probiert und ich habe ihn geliebt",lv:3},
+{en:"I usually have lunch with the family and we talk a lot",tl:"Normalerweise esse ich mit der Familie zu Mittag und wir reden viel",lv:3},
+{en:"The fresh bread here is much better than anything I have eaten before",tl:"Das frische Brot hier ist viel besser als alles was ich vorher gegessen habe",lv:3},
+{en:"Although I was nervous about trying new foods I am glad I did",tl:"Obwohl ich nervos war neue Speisen zu probieren bin ich froh dass ich es getan habe",lv:4},
+{en:"My favourite German dish so far has been the schnitzel",tl:"Mein liebstes deutsches Gericht bisher war das Schnitzel",lv:4},
+{en:"I have gotten used to eating at German times which is much earlier",tl:"Ich habe mich daran gewohnt zu deutschen Zeiten zu essen was viel fruher ist",lv:4},
+{en:"The market was full of fresh vegetables bread and sausages",tl:"Der Markt war voll mit frischem Gemuse Brot und Wursten",lv:4},
+{en:"I would definitely recommend trying the local food if you visit Germany",tl:"Ich wurde auf jeden Fall empfehlen die lokale Kuche zu probieren wenn man Deutschland besucht",lv:4},
+{en:"What surprised me most was how important mealtimes are for families here",tl:"Was mich am meisten uberrascht hat war wie wichtig Mahlzeiten fur Familien hier sind",lv:5},
+{en:"In Ireland we eat much later and usually in front of the television",tl:"In Irland essen wir viel spater und normalerweise vor dem Fernseher",lv:5},
+{en:"I have started to enjoy foods that I would never eat at home",tl:"Ich habe angefangen Speisen zu geniessen die ich zu Hause nie essen wurde",lv:5},
+{en:"The German lifestyle with early dinners and long walks suits me well",tl:"Der deutsche Lebensstil mit fruhen Abendessen und langen Spaziergangen passt gut zu mir",lv:5},
+{en:"Not only is the food delicious but the whole experience of eating together is special",tl:"Das Essen ist nicht nur lecker sondern die ganze Erfahrung gemeinsam zu essen ist etwas Besonderes",lv:6},
+{en:"I think Irish people could learn a lot from the German attitude to food",tl:"Ich denke dass die Iren viel von der deutschen Einstellung zum Essen lernen konnten",lv:6},
+{en:"Having tried so many new dishes I feel much more adventurous about food now",tl:"Nachdem ich so viele neue Gerichte probiert habe fuhle ich mich beim Essen viel abenteuerlustiger",lv:7},
+{en:"The more I experience German food culture the more I appreciate it",tl:"Je mehr ich die deutsche Esskultur erlebe desto mehr schatze ich sie",lv:7},
+{en:"I would never have imagined that I would enjoy German food so much",tl:"Ich hatte nie gedacht dass mir deutsches Essen so gut gefallen wurde",lv:7},
+{en:"Food here is not just about eating it is about family and togetherness",tl:"Essen hier ist nicht nur Nahrungsaufnahme es geht um Familie und Zusammensein",lv:8},
+],freetime:[
+{en:"In my free time I like to play football",tl:"In meiner Freizeit spiele ich gern Fussball",lv:1},
+{en:"At the weekend I usually go out with my friends",tl:"Am Wochenende gehe ich normalerweise mit meinen Freunden aus",lv:1},
+{en:"I love listening to music",tl:"Ich hore sehr gern Musik",lv:1},
+{en:"We go cycling after the German classes",tl:"Wir fahren nach den Deutschstunden Fahrrad",lv:1},
+{en:"I like watching films in the evening",tl:"Ich sehe abends gern Filme",lv:1},
+{en:"After class Felix and I go to the park to relax",tl:"Nach der Schule gehen Felix und ich in den Park um uns zu entspannen",lv:2},
+{en:"We often go swimming at the weekend",tl:"Wir gehen oft am Wochenende schwimmen",lv:2},
+{en:"Sometimes we play table tennis in the sports hall",tl:"Manchmal spielen wir Tischtennis in der Sporthalle",lv:2},
+{en:"We go for walks in the forest in the evenings",tl:"Wir gehen abends im Wald spazieren",lv:2},
+{en:"I enjoy exploring the city with my friend",tl:"Ich erkunde die Stadt gern mit meinem Freund",lv:2},
+{en:"Yesterday we went to a concert in the city centre",tl:"Gestern sind wir zu einem Konzert im Stadtzentrum gegangen",lv:3},
+{en:"At the weekend we visited the castle and tried local food",tl:"Am Wochenende haben wir das Schloss besucht und lokales Essen probiert",lv:3},
+{en:"I spend a lot of time practising my German with Felix",tl:"Ich verbringe viel Zeit damit mein Deutsch mit Felix zu uben",lv:3},
+{en:"We like going to the cinema when we have free time",tl:"Wir gehen gern ins Kino wenn wir Freizeit haben",lv:3},
+{en:"After class we usually get a hot chocolate and walk around the city",tl:"Nach der Schule trinken wir normalerweise einen heissen Kakao und schlendern durch die Stadt",lv:3},
+{en:"Last Saturday we went to a local football match and it was brilliant",tl:"Letzten Samstag sind wir zu einem lokalen Fussballspiel gegangen und es war toll",lv:4},
+{en:"I think sport is very important for both physical and mental health",tl:"Ich denke dass Sport sehr wichtig fur die korperliche und geistige Gesundheit ist",lv:4},
+{en:"I had never tried hiking before but Felix showed me the best trails",tl:"Ich hatte noch nie gewandert aber Felix hat mir die besten Wanderwege gezeigt",lv:4},
+{en:"We prefer to spend time outdoors rather than indoors",tl:"Wir verbringen lieber Zeit draussen als drinnen",lv:4},
+{en:"The evenings here are so peaceful compared to Ireland",tl:"Die Abende hier sind im Vergleich zu Irland so ruhig",lv:4},
+{en:"Although I miss my friends at home I am having an incredible time here",tl:"Obwohl ich meine Freunde zu Hause vermisse habe ich hier eine unglaubliche Zeit",lv:5},
+{en:"I have discovered a love of German music that I did not expect",tl:"Ich habe eine Leidenschaft fur deutsche Musik entdeckt die ich nicht erwartet hatte",lv:5},
+{en:"What I enjoy most is being able to practise German in real situations",tl:"Was mir am meisten Spass macht ist Deutsch in echten Situationen uben zu konnen",lv:5},
+{en:"Spending time with Felix has helped me improve my German enormously",tl:"Die Zeit mit Felix hat mir enorm geholfen mein Deutsch zu verbessern",lv:5},
+{en:"Not only have I improved my German but I have also made a great friend",tl:"Ich habe nicht nur mein Deutsch verbessert sondern auch einen tollen Freund gefunden",lv:6},
+{en:"I would never have imagined that I could feel so at home in another country",tl:"Ich hatte nie gedacht dass ich mich in einem anderen Land so zu Hause fuhlen konnte",lv:6},
+{en:"The experience of living here even for a short time has changed my perspective",tl:"Die Erfahrung hier zu leben hat auch fur kurze Zeit meine Sichtweise verandert",lv:6},
+{en:"Having the opportunity to live with a German family is something I will never forget",tl:"Die Moglichkeit mit einer deutschen Familie zu leben ist etwas das ich nie vergessen werde",lv:7},
+{en:"The more German I speak the more confident I feel in everyday situations",tl:"Je mehr Deutsch ich spreche desto selbstbewusster fuhle ich mich in alltaglichen Situationen",lv:7},
+{en:"I would recommend this kind of experience to every student who studies languages",tl:"Ich wurde diese Art von Erfahrung jedem Schuler empfehlen der Sprachen lernt",lv:7},
+],opinions:[
+{en:"I think German is a very interesting language",tl:"Ich denke dass Deutsch eine sehr interessante Sprache ist",lv:1},
+{en:"In my opinion learning languages is very important",tl:"Meiner Meinung nach ist es sehr wichtig Sprachen zu lernen",lv:1},
+{en:"I really enjoy my German classes",tl:"Ich mag meinen Deutschunterricht sehr",lv:1},
+{en:"I find German more interesting than I expected",tl:"Ich finde Deutsch interessanter als ich erwartet hatte",lv:1},
+{en:"I think Germany is a wonderful country",tl:"Ich denke dass Deutschland ein wunderbares Land ist",lv:1},
+{en:"My German class is very interesting and the teacher is great",tl:"Mein Deutschunterricht ist sehr interessant und die Lehrerin ist toll",lv:2},
+{en:"I feel much more confident speaking German now",tl:"Ich fuhle mich jetzt viel selbstbewusster wenn ich Deutsch spreche",lv:2},
+{en:"I think it is important to practise every day",tl:"Ich denke es ist wichtig jeden Tag zu uben",lv:2},
+{en:"At first I was nervous but now I enjoy speaking German",tl:"Am Anfang war ich nervos aber jetzt spreche ich gern Deutsch",lv:2},
+{en:"I prefer German to any other subject at school",tl:"Ich mag Deutsch lieber als jedes andere Fach in der Schule",lv:2},
+{en:"The German course has been more fun than I expected",tl:"Der Deutschkurs hat mehr Spass gemacht als ich erwartet hatte",lv:3},
+{en:"I think the best way to learn a language is to live in the country",tl:"Ich denke die beste Art eine Sprache zu lernen ist im Land zu leben",lv:3},
+{en:"I feel very lucky to have this opportunity to improve my German",tl:"Ich fuhle mich sehr glucklich diese Gelegenheit zu haben mein Deutsch zu verbessern",lv:3},
+{en:"In my opinion speaking German will help me in the future",tl:"Meiner Meinung nach wird mir Deutschsprechen in der Zukunft helfen",lv:3},
+{en:"Although it was difficult at the start I am making great progress",tl:"Obwohl es am Anfang schwierig war mache ich jetzt grosse Fortschritte",lv:3},
+{en:"What I like most about the course is that we speak German all the time",tl:"Was mir am Kurs am besten gefallt ist dass wir die ganze Zeit Deutsch sprechen",lv:4},
+{en:"I think that languages open doors and create opportunities",tl:"Ich denke dass Sprachen Turen offnen und Moglichkeiten schaffen",lv:4},
+{en:"The teachers are very patient and explain everything very clearly",tl:"Die Lehrer sind sehr geduldig und erklaren alles sehr klar",lv:4},
+{en:"I feel that my German has improved enormously in just a few weeks",tl:"Ich habe das Gefuhl dass sich mein Deutsch in nur wenigen Wochen enorm verbessert hat",lv:4},
+{en:"In my opinion this has been the best experience of my life so far",tl:"Meiner Meinung nach war das bisher die beste Erfahrung meines Lebens",lv:4},
+{en:"Not only have I improved my German but I have also grown as a person",tl:"Ich habe nicht nur mein Deutsch verbessert sondern bin auch als Person gewachsen",lv:5},
+{en:"I believe that every young person should have the chance to learn a foreign language",tl:"Ich glaube dass jeder junge Mensch die Chance haben sollte eine Fremdsprache zu lernen",lv:5},
+{en:"The experience has taught me that communication is about more than just words",tl:"Die Erfahrung hat mir gelehrt dass Kommunikation mehr als nur Worter bedeutet",lv:5},
+{en:"I would say that confidence is the most important thing when learning a language",tl:"Ich wurde sagen dass Selbstvertrauen das Wichtigste beim Sprachenlernen ist",lv:5},
+{en:"Although learning German is challenging it is also incredibly rewarding",tl:"Obwohl Deutschlernen anspruchsvoll ist ist es auch unglaublich lohnend",lv:6},
+{en:"I am convinced that the effort I have put in will pay off in my exams",tl:"Ich bin uberzeugt dass sich meine Bemuhungen bei den Prufungen auszahlen werden",lv:6},
+{en:"What surprises me most is how much you can communicate with just a few key phrases",tl:"Was mich am meisten uberrascht ist wie viel man mit nur ein paar Schlusselsatzen kommunizieren kann",lv:6},
+{en:"Having experienced life in Germany I understand the language so much better now",tl:"Nachdem ich das Leben in Deutschland erlebt habe verstehe ich die Sprache jetzt viel besser",lv:7},
+{en:"The more I practise the more I realise how precise and expressive German is",tl:"Je mehr ich ube desto mehr merke ich wie prazise und ausdrucksstark Deutsch ist",lv:7},
+{en:"I think this experience will stay with me for the rest of my life",tl:"Ich denke diese Erfahrung wird mich fur den Rest meines Lebens begleiten",lv:7},
+]}};
 
 // ============================================================
 // GAME STATE
 // ============================================================
-const BROTHER_UNLOCK    = 5;
-const PENALTY_SECS      = 20;
-const QUESTIONS_PER_LEVEL = 5;
-const STORAGE_PREFIX    = 'jc_turbo_';
+const BROTHER_UNLOCK=5,PENALTY_SECS=20,QUESTIONS_PER_LEVEL=5;
+var currentLang='es',currentCat='places',currentLevel=1,currentPhrases=[],startTime,timerInterval;
+const levelList=document.getElementById('level-list'),gameContainer=document.getElementById('game'),questionsContainer=document.getElementById('questions'),resultsContainer=document.getElementById('results');
+const LANG_SUBTITLES={es:'Junior Cert Spanish · Written Production · Q17 & Q18',fr:'Junior Cert French · Written Production · Q17 & Q18',de:'Junior Cert German · Written Production · Q17 & Q18'};
+const VOICE_LANGS={es:'es-ES',fr:'fr-FR',de:'de-DE'};
+const ACCENT_TIPS={es:'For 3 stars: include accents (a e i o u n) exactly as shown.',fr:'For 3 stars: include accents (e e e a a u u i c) exactly as shown.',de:'For 3 stars: include umlauts (a o u ss) exactly as shown.'};
 
-var currentCat   = 'places';
-var currentLevel = 1;
-var currentPhrases = [];
-var startTime, timerInterval;
+function storageKey(s){return 'jc_turbo_'+currentLang+'_'+s;}
+function getUnlocked(){return parseInt(localStorage.getItem(storageKey('unlocked'))||'1');}
+function setUnlocked(l){if(l>getUnlocked())localStorage.setItem(storageKey('unlocked'),l);}
+function getBest(c,l){return localStorage.getItem(storageKey('best_'+c+'_'+l));}
+function setBest(c,l,s){const p=parseInt(getBest(c,l)||'0');if(s>p)localStorage.setItem(storageKey('best_'+c+'_'+l),s);}
+function getTotalStars(){let t=0;['places','people','food','freetime','opinions'].forEach(function(c){for(var v=1;v<=10;v++)t+=parseInt(getBest(c,v)||'0');});return t;}
+function brotherUnlocked(){return getTotalStars()>=BROTHER_UNLOCK;}
+function getTurboData(){const cats=['places','people','food','freetime','opinions'],labels={places:'Places',people:'People',food:'Food & Routine',freetime:'Free Time',opinions:'Opinions'},data={};cats.forEach(function(c){data[c]={label:labels[c],levels:{}};for(var l=1;l<=10;l++){const s=getBest(c,l);if(s)data[c].levels[l]=parseInt(s);}});return data;}
 
-const levelList          = document.getElementById('level-list');
-const gameContainer      = document.getElementById('game');
-const questionsContainer = document.getElementById('questions');
-const resultsContainer   = document.getElementById('results');
+function selectLang(lang,btn){currentLang=lang;document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.getElementById('subtitle').textContent=LANG_SUBTITLES[lang];localStorage.setItem('jc_turbo_last_lang',lang);renderLevels();}
+function selectCat(cat,btn){currentCat=cat;document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');renderLevels();}
 
-// ============================================================
-// LOCALSTORAGE
-// ============================================================
-function getUnlocked()            { return parseInt(localStorage.getItem(STORAGE_PREFIX+'unlocked') || '1'); }
-function setUnlocked(level)       { if (level > getUnlocked()) localStorage.setItem(STORAGE_PREFIX+'unlocked', level); }
-function getBest(cat, level)      { return localStorage.getItem(STORAGE_PREFIX+'best_'+cat+'_'+level); }
-function setBest(cat, level, stars) {
-  const prev = parseInt(getBest(cat, level) || '0');
-  if (stars > prev) localStorage.setItem(STORAGE_PREFIX+'best_'+cat+'_'+level, stars);
-}
-function getTotalStars() {
-  let total = 0;
-  ['places','people','food','freetime','opinions'].forEach(function(c) {
-    for (var v = 1; v <= 10; v++) total += parseInt(getBest(c, v) || '0');
-  });
-  return total;
-}
-function brotherUnlocked() { return getTotalStars() >= BROTHER_UNLOCK; }
-
-function getTurboData() {
-  const cats = ['places','people','food','freetime','opinions'];
-  const catLabels = { places:'Places & Descriptions', people:'People & Family', food:'Food & Routine', freetime:'Free Time', opinions:'Opinions & Feelings' };
-  const data = {};
-  cats.forEach(function(cat) {
-    data[cat] = { label: catLabels[cat], levels: {} };
-    for (var lv = 1; lv <= 10; lv++) {
-      const s = getBest(cat, lv);
-      if (s) data[cat].levels[lv] = parseInt(s);
-    }
-  });
-  return data;
-}
-
-// ============================================================
-// CATEGORY SELECTOR
-// ============================================================
-function selectCat(cat, btn) {
-  currentCat = cat;
-  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  localStorage.setItem(STORAGE_PREFIX+'last_cat', cat);
-  renderLevels();
-}
-
-// ============================================================
-// RENDER LEVELS
-// ============================================================
-function renderLevels() {
-  levelList.style.display = 'flex';
-  gameContainer.style.display = 'none';
-  levelList.innerHTML = '';
-  updateProgress();
-
-  var unlocked = getUnlocked();
-  var zones = {
-    1: { label: 'Levels 1–4 · Core Present Tense' },
-    5: { label: 'Levels 5–7 · Past Tense & Opinions' },
-    8: { label: 'Levels 8–10 · Range & Complex Sentences' },
-  };
-
-  for (var i = 1; i <= 10; i++) {
-    if (zones[i]) {
-      var zl = document.createElement('div');
-      zl.className = 'zone-label';
-      zl.textContent = zones[i].label;
-      levelList.appendChild(zl);
-    }
-    var btn = document.createElement('button');
-    var best = getBest(currentCat, i);
-    var locked = i > unlocked;
-    var stars = best ? '⭐'.repeat(parseInt(best)) + '☆'.repeat(3-parseInt(best)) : '';
-    var zoneClass = i >= 8 ? 'adv-zone' : '';
-    btn.className = 'level-btn' + (zoneClass ? ' '+zoneClass : '');
-    btn.innerHTML = '<span>' + (locked ? '🔒 ' : '') + 'Level ' + i + '</span><span class="level-badge">' + (stars || (locked ? '' : '—')) + '</span>';
-    btn.disabled = locked;
-    (function(level) { btn.addEventListener('click', function() { startGame(level); }); })(i);
+function renderLevels(){
+  levelList.style.display='flex';gameContainer.style.display='none';levelList.innerHTML='';updateProgress();
+  var unlocked=getUnlocked();
+  var zones={1:{label:'Levels 1-4 · Core Present Tense'},5:{label:'Levels 5-7 · Past Tense & Opinions'},8:{label:'Levels 8-10 · Range & Complex Sentences'}};
+  for(var i=1;i<=10;i++){
+    if(zones[i]){var zl=document.createElement('div');zl.className='zone-label';zl.textContent=zones[i].label;levelList.appendChild(zl);}
+    var btn=document.createElement('button'),best=getBest(currentCat,i),locked=i>unlocked,stars=best?'⭐'.repeat(parseInt(best))+'☆'.repeat(3-parseInt(best)):'',zc=i>=8?'adv-zone':'';
+    btn.className='level-btn'+(zc?' '+zc:'');btn.type='button';
+    btn.innerHTML='<span>'+(locked?'🔒 ':'')+'Level '+i+'</span><span class="level-badge">'+(stars||(locked?'':'—'))+'</span>';
+    btn.disabled=locked;
+    (function(lv){btn.addEventListener('click',function(){startGame(lv);});})(i);
     levelList.appendChild(btn);
   }
-
-  if (brotherUnlocked()) {
-    var bb = document.createElement('button');
-    bb.textContent = '🧓 The Brother is ready — enter now';
-    bb.className = 'level-btn brother-btn';
-    bb.addEventListener('click', function() {
-      localStorage.setItem('jc_turbo_data', JSON.stringify(getTurboData()));
-      window.location.href = 'jc-brother.html';
-    });
+  if(brotherUnlocked()){
+    var bb=document.createElement('button');bb.type='button';
+    bb.textContent='🧓 Meet The Brother →';bb.className='level-btn brother-btn';
+    bb.addEventListener('click',function(){localStorage.setItem('jc_turbo_data',JSON.stringify(getTurboData()));localStorage.setItem('jc_turbo_lang',currentLang);window.location.href='jc-brother.html';});
     levelList.appendChild(bb);
   }
 }
 
-function updateProgress() {
-  var stars = getTotalStars();
-  var pct = Math.min(100, Math.round((stars / BROTHER_UNLOCK) * 100));
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-pct').textContent = pct + '%';
-  var banner = document.getElementById('star-banner');
-  if (brotherUnlocked()) {
-    banner.textContent = '🎉 ' + stars + ' stars — The Brother is unlocked!';
-    banner.style.background = '#e8f5ee'; banner.style.borderColor = '#2d5a27'; banner.style.color = '#1a5c38';
-  } else {
-    banner.textContent = '⭐ ' + stars + ' star' + (stars !== 1 ? 's' : '') + ' earned — need ' + BROTHER_UNLOCK + ' to unlock The Brother';
-  }
+function updateProgress(){
+  var stars=getTotalStars(),pct=Math.min(100,Math.round((stars/BROTHER_UNLOCK)*100));
+  document.getElementById('progress-fill').style.width=pct+'%';document.getElementById('progress-pct').textContent=pct+'%';
+  var banner=document.getElementById('star-banner');
+  if(brotherUnlocked()){banner.textContent='🎉 '+stars+' stars — The Brother is unlocked!';banner.style.background='#e8f5ee';banner.style.borderColor='#2d5a27';banner.style.color='#1a5c38';}
+  else{banner.textContent='⭐ '+stars+' star'+(stars!==1?'s':'')+' earned — need '+BROTHER_UNLOCK+' to unlock The Brother';}
 }
 
-// ============================================================
-// START GAME
-// ============================================================
-function startGame(level) {
-  currentLevel = level;
-  localStorage.setItem(STORAGE_PREFIX+'last_level', level);
-
-  var pool = PHRASES[currentCat].filter(function(p) { return p.lv === level; });
-  var adjacent = PHRASES[currentCat].filter(function(p) { return Math.abs(p.lv - level) === 1; });
-  var blended = shuffleArray(pool.slice()).concat(shuffleArray(adjacent.slice()));
-  currentPhrases = shuffleArray(blended).slice(0, QUESTIONS_PER_LEVEL);
-
-  levelList.style.display = 'none';
-  gameContainer.style.display = 'block';
-  questionsContainer.innerHTML = '';
-  resultsContainer.innerHTML = '';
-
-  currentPhrases.forEach(function(phrase, idx) {
-    var promptSafe = phrase.en.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    var answerSafe = phrase.tl.replace(/"/g,'&quot;');
-    var div = document.createElement('div');
-    div.innerHTML =
-      '<div class="prompt-row"><strong>' + phrase.en + '</strong>' +
-      '<button class="speak-prompt" type="button" onclick="speakPrompt(\'' + promptSafe + '\')" title="Read aloud">🔊</button></div>' +
-      '<input type="text" data-answer="' + answerSafe + '" placeholder="Escribe en español..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' +
-      '<button class="voice-btn-inline" type="button" onclick="startVoice(this,' + idx + ')">🎤 Speak</button>';
-    var inp = div.querySelector('input');
-    inp.addEventListener('paste', function(e) { e.preventDefault(); });
-    inp.addEventListener('drop', function(e) { e.preventDefault(); });
+function startGame(level){
+  currentLevel=level;
+  var pool=PHRASES[currentLang][currentCat].filter(function(p){return p.lv===level;});
+  var adj=PHRASES[currentLang][currentCat].filter(function(p){return Math.abs(p.lv-level)===1;});
+  currentPhrases=shuffleArray(shuffleArray(pool.slice()).concat(shuffleArray(adj.slice()))).slice(0,QUESTIONS_PER_LEVEL);
+  levelList.style.display='none';gameContainer.style.display='block';questionsContainer.innerHTML='';resultsContainer.innerHTML='';
+  var placeholder={es:'Escribe en español...',fr:'Écris en français...',de:'Schreib auf Deutsch...'}[currentLang]||'Write here...';
+  currentPhrases.forEach(function(phrase,idx){
+    var safe=phrase.en.replace(/'/g,"\\'").replace(/"/g,'&quot;'),ansSafe=phrase.tl.replace(/"/g,'&quot;');
+    var div=document.createElement('div');
+    div.innerHTML='<div class="prompt-row"><strong>'+phrase.en+'</strong><button class="speak-prompt" type="button" onclick="speakPrompt(\''+safe+'\')" title="Read aloud">🔊</button></div>'+
+      '<input type="text" data-answer="'+ansSafe+'" placeholder="'+placeholder+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">'+
+      '<button class="voice-btn-inline" type="button" onclick="startVoice(this,'+idx+')">🎤 Speak</button>';
+    var inp=div.querySelector('input');
+    inp.addEventListener('paste',function(e){e.preventDefault();});inp.addEventListener('drop',function(e){e.preventDefault();});
     questionsContainer.appendChild(div);
   });
-
   startTimer();
 }
 
-function shuffleArray(arr) { return arr.sort(function() { return Math.random() - 0.5; }); }
+function shuffleArray(a){return a.sort(function(){return Math.random()-0.5;});}
+function startTimer(){startTime=Date.now();timerInterval=setInterval(function(){document.getElementById('timer').textContent='Time: '+Math.floor((Date.now()-startTime)/1000)+'s';},1000);}
+function stopTimer(){clearInterval(timerInterval);}
 
 // ============================================================
-// TIMER
+// SUBMIT — bulletproof: results array collected BEFORE
+// any innerHTML change, so DOM wipe can never corrupt results
 // ============================================================
-function startTimer() {
-  startTime = Date.now();
-  timerInterval = setInterval(function() {
-    var elapsed = Math.floor((Date.now() - startTime) / 1000);
-    document.getElementById('timer').textContent = 'Time: ' + elapsed + 's';
-  }, 1000);
-}
-function stopTimer() { clearInterval(timerInterval); }
-
-// ============================================================
-// SUBMIT
-// ============================================================
-document.getElementById('submit').addEventListener('click', function() {
+document.getElementById('submit').addEventListener('click',function(){
   stopTimer();
-  var elapsed = Math.floor((Date.now() - startTime) / 1000);
-  var penalty = 0;
-  var correct = 0;
-  var total = currentPhrases.length;
-  var strictCorrect = 0, lenientCorrect = 0;
+  var elapsed=Math.floor((Date.now()-startTime)/1000),penalty=0,correct=0,total=currentPhrases.length,strictCorrect=0,lenientCorrect=0;
 
-  document.querySelectorAll('#questions input').forEach(function(input) {
-    var userAns    = input.value.trim();
-    var correctAns = input.dataset.answer;
-    var strict  = normaliseStrict(userAns)  === normaliseStrict(correctAns);
-    var lenient = normaliseLenient(userAns) === normaliseLenient(correctAns);
-    input._strict = strict; input._lenient = lenient;
-    if (lenient) lenientCorrect++;
-    if (strict)  strictCorrect++;
+  // Step 1: collect ALL results into array first
+  var results=[];
+  document.querySelectorAll('#questions input').forEach(function(input){
+    var userAns=input.value.trim(),correctAns=input.dataset.answer;
+    var strict=normaliseStrict(userAns)===normaliseStrict(correctAns);
+    var lenient=normaliseLenient(userAns)===normaliseLenient(correctAns);
+    results.push({userAns:userAns,correctAns:correctAns,strict:strict,lenient:lenient,engLabel:input.closest('div').querySelector('strong').textContent});
+    if(lenient)lenientCorrect++;if(strict)strictCorrect++;
   });
 
-  document.querySelectorAll('#questions input').forEach(function(input) {
-    if (input._lenient) {
-      correct++;
-      input.style.border = '2px solid #27ae60';
-      input.style.background = '#f0fff4';
-    } else {
-      penalty += PENALTY_SECS;
-      input.style.border = '2px solid #e74c3c';
-      input.style.background = '#fff5f5';
-    }
+  // Step 2: colour borders while inputs still in DOM
+  document.querySelectorAll('#questions input').forEach(function(input,idx){
+    if(results[idx].lenient){correct++;input.style.border='2px solid #27ae60';input.style.background='#f0fff4';}
+    else{penalty+=PENALTY_SECS;input.style.border='2px solid #e74c3c';input.style.background='#fff5f5';}
   });
 
-  var totalTime = elapsed + penalty;
-  var stars = 0;
-  if (strictCorrect === total && totalTime <= levelUnlockTime(currentLevel)) stars = 3;
-  else if (lenientCorrect === total) stars = 2;
-  else if (lenientCorrect >= Math.ceil(total * 0.5)) stars = 1;
+  var totalTime=elapsed+penalty,stars=0;
+  if(strictCorrect===total&&totalTime<=levelUnlockTime(currentLevel))stars=3;
+  else if(lenientCorrect===total)stars=2;
+  else if(lenientCorrect>=Math.ceil(total*0.5))stars=1;
+  setBest(currentCat,currentLevel,stars);if(stars>=1)setUnlocked(currentLevel+1);
 
-  setBest(currentCat, currentLevel, stars);
-  if (stars >= 1) setUnlocked(currentLevel + 1);
-
-  resultsContainer.innerHTML = '<h3>Finished!</h3>'
-    + '<p>Correct: ' + correct + '/' + total + '</p>'
-    + '<p>Time: ' + elapsed + 's + Penalty: ' + penalty + 's = <strong>' + totalTime + 's</strong></p>'
-    + '<p style="font-size:1.4rem">' + '⭐'.repeat(stars) + '☆'.repeat(3-stars) + '</p>';
-
-  if (stars < 3 && strictCorrect < total && lenientCorrect === total) {
-    var accNote = document.createElement('p');
-    accNote.style.cssText = 'font-size:0.82rem;color:#b45309;margin:4px 0 8px;';
-    accNote.textContent = '💡 For 3 stars: include accents (á é í ó ú ñ) and exact punctuation.';
-    resultsContainer.appendChild(accNote);
-  }
-
-  resultsContainer.innerHTML += '<h4>What you missed:</h4>';
-
-  document.querySelectorAll('#questions input').forEach(function(input) {
-    if (!input._lenient) {
-      var p = document.createElement('p');
-      p.style.cssText = 'margin:6px 0;font-size:0.92rem;';
-      var engLabel = input.closest('div').querySelector('strong').textContent;
-      p.innerHTML = '<strong>' + engLabel + '</strong><br>'
-        + '✅ <span style="color:#27ae60">' + input.dataset.answer + '</span><br>'
-        + '❌ <span style="color:#e74c3c">' + (input.value.trim() || '(blank)') + '</span>';
-      resultsContainer.appendChild(p);
-    }
-  });
-
-  if (correct === total) {
-    var cel = document.createElement('div');
-    cel.className = 'perfect-celebration';
-    cel.textContent = stars === 3 ? '🎉 PERFECT — 3 stars! 🎉' : '✅ All correct!';
-    resultsContainer.prepend(cel);
-    if (stars === 3) setTimeout(function() { cel.textContent = ''; }, 5000);
-  }
-
-  if (stars >= 1) {
-    var uMsg = document.createElement('p');
-    uMsg.className = 'unlock-msg';
-    uMsg.textContent = '🔓 Level ' + (currentLevel + 1) + ' unlocked!';
-    resultsContainer.appendChild(uMsg);
-  }
-
+  // Step 3: render all results from array — never touch inputs again
+  resultsContainer.innerHTML='';
+  if(correct===total){var cel=document.createElement('div');cel.className='perfect-celebration';cel.textContent=stars===3?'🎉 PERFECT — 3 stars! 🎉':'✅ All correct!';resultsContainer.appendChild(cel);if(stars===3)setTimeout(function(){cel.textContent='';},5000);}
+  var sum=document.createElement('div');sum.innerHTML='<h3>Finished!</h3><p>Correct: '+correct+'/'+total+'</p><p>Time: '+elapsed+'s + Penalty: '+penalty+'s = <strong>'+totalTime+'s</strong></p><p style="font-size:1.4rem">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</p>';resultsContainer.appendChild(sum);
+  if(stars<3&&strictCorrect<total&&lenientCorrect===total){var an=document.createElement('p');an.style.cssText='font-size:0.82rem;color:#b45309;margin:4px 0 8px;';an.textContent='💡 '+(ACCENT_TIPS[currentLang]||ACCENT_TIPS.es);resultsContainer.appendChild(an);}
+  var missed=results.filter(function(r){return !r.lenient;});
+  if(missed.length){var mt=document.createElement('h4');mt.textContent='What you missed:';resultsContainer.appendChild(mt);missed.forEach(function(r){var p=document.createElement('p');p.style.cssText='margin:6px 0;font-size:0.92rem;';p.innerHTML='<strong>'+r.engLabel+'</strong><br>✅ <span style="color:#27ae60">'+r.correctAns+'</span><br>❌ <span style="color:#e74c3c">'+(r.userAns||'(blank)')+'</span>';resultsContainer.appendChild(p);});}
+  if(stars>=1){var um=document.createElement('p');um.className='unlock-msg';um.textContent='🔓 Level '+(currentLevel+1)+' unlocked!';resultsContainer.appendChild(um);}
   updateProgress();
-  if (brotherUnlocked()) {
-    var bMsg = document.createElement('p');
-    bMsg.className = 'unlock-msg';
-    bMsg.innerHTML = '🧓 The Brother is ready! <a href="jc-brother.html" style="color:#1a5c38;font-weight:bold;" onclick="saveTurboData()">Enter →</a>';
-    resultsContainer.appendChild(bMsg);
-  }
-
-  var tryBtn = document.createElement('button');
-  tryBtn.textContent = 'Try Again'; tryBtn.className = 'try-again'; tryBtn.type = 'button';
-  tryBtn.onclick = function() { startGame(currentLevel); };
-  resultsContainer.appendChild(tryBtn);
-
-  var backBtn = document.createElement('button');
-  backBtn.textContent = '← Back to Levels'; backBtn.id = 'back-button'; backBtn.type = 'button';
-  backBtn.onclick = function() { renderLevels(); };
-  resultsContainer.appendChild(backBtn);
+  if(brotherUnlocked()){var bm=document.createElement('p');bm.className='unlock-msg';bm.innerHTML='🧓 The Brother is ready! <a href="jc-brother.html" style="color:#1a5c38;font-weight:bold;" onclick="saveTurboData()">Meet The Brother →</a>';resultsContainer.appendChild(bm);}
+  var tb=document.createElement('button');tb.textContent='Try Again';tb.className='try-again';tb.type='button';tb.onclick=function(){startGame(currentLevel);};resultsContainer.appendChild(tb);
+  var bb=document.createElement('button');bb.textContent='← Back to Levels';bb.id='back-button';bb.type='button';bb.onclick=function(){renderLevels();};resultsContainer.appendChild(bb);
 });
 
-function saveTurboData() {
-  localStorage.setItem('jc_turbo_data', JSON.stringify(getTurboData()));
-}
+function saveTurboData(){localStorage.setItem('jc_turbo_data',JSON.stringify(getTurboData()));localStorage.setItem('jc_turbo_lang',currentLang);}
+function levelUnlockTime(l){return 130-(l-1)*8;}
 
-function levelUnlockTime(level) { return 130 - (level - 1) * 8; }
-
-function normaliseLenient(s) {
+// Bulletproof normalisers — handles all ES/FR/DE edge cases
+function normaliseLenient(s){
   return String(s).toLowerCase()
-    .replace(/\.\.\./g,'').replace(/[¿¡]/g,'').replace(/[,]/g,'')
-    .replace(/[áàâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[íîï]/g,'i')
-    .replace(/[óôö]/g,'o').replace(/[úûü]/g,'u').replace(/[ñ]/g,'n')
+    .replace(/\u2026/g,'').replace(/\.\.\./g,'').replace(/[¿¡]/g,'')
+    .replace(/[,;:.]/g,'').replace(/[\u201c\u201d\u2018\u2019\u00ab\u00bb]/g,'')
+    .replace(/[\u2014\u2013-]/g,' ')
+    .replace(/[àáâäã]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i')
+    .replace(/[òóôöõ]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ýÿ]/g,'y')
+    .replace(/[ñ]/g,'n').replace(/[ç]/g,'c').replace(/[ß]/g,'ss')
+    .replace(/[œ]/g,'oe').replace(/[æ]/g,'ae')
+    .replace(/\s+/g,' ').trim();
+}
+function normaliseStrict(s){
+  return String(s).toLowerCase()
+    .replace(/\u2026/g,'').replace(/\.\.\./g,'').replace(/[¿¡]/g,'')
+    .replace(/[,;:.]/g,'').replace(/[\u201c\u201d\u2018\u2019\u00ab\u00bb]/g,'')
+    .replace(/[\u2014\u2013]/g,' ')
     .replace(/\s+/g,' ').trim();
 }
 
-function normaliseStrict(s) {
-  return String(s).toLowerCase()
-    .replace(/\.\.\./g,'').replace(/[¿¡]/g,'').replace(/[,]/g,'')
-    .replace(/\s+/g,' ').trim();
-}
-
-function speakPrompt(text) {
-  if (!('speechSynthesis' in window)) return;
-  var utt = new SpeechSynthesisUtterance(text);
-  utt.lang = 'en-IE'; utt.rate = 0.9;
-  window.speechSynthesis.speak(utt);
-}
-
-var activeRecognition = null;
-function startVoice(btn, idx) {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { alert('Voice input works best in Chrome.'); return; }
-  if (activeRecognition) { activeRecognition.stop(); }
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var rec = new SR();
-  rec.lang = 'es-ES'; rec.continuous = false; rec.interimResults = false;
-  activeRecognition = rec;
-  btn.classList.add('listening'); btn.textContent = '🔴 Listening...';
-  rec.onresult = function(e) {
-    var inputs = document.querySelectorAll('#questions input');
-    if (inputs[idx]) inputs[idx].value = e.results[0][0].transcript;
-  };
-  rec.onend = function() { btn.classList.remove('listening'); btn.textContent = '🎤 Speak'; activeRecognition = null; };
-  rec.onerror = function() { btn.classList.remove('listening'); btn.textContent = '🎤 Speak'; activeRecognition = null; };
+function speakPrompt(t){if(!('speechSynthesis' in window))return;var u=new SpeechSynthesisUtterance(t);u.lang='en-IE';u.rate=0.9;window.speechSynthesis.speak(u);}
+var activeRec=null;
+function startVoice(btn,idx){
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){alert('Voice input works best in Chrome.');return;}
+  if(activeRec)activeRec.stop();
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=new SR();
+  rec.lang=VOICE_LANGS[currentLang]||'es-ES';rec.continuous=false;rec.interimResults=false;activeRec=rec;
+  btn.classList.add('listening');btn.textContent='🔴 Listening...';
+  rec.onresult=function(e){var inp=document.querySelectorAll('#questions input');if(inp[idx])inp[idx].value=e.results[0][0].transcript;};
+  rec.onend=function(){btn.classList.remove('listening');btn.textContent='🎤 Speak';activeRec=null;};
+  rec.onerror=function(){btn.classList.remove('listening');btn.textContent='🎤 Speak';activeRec=null;};
   rec.start();
 }
 
-renderLevels();
+(function(){
+  var saved=localStorage.getItem('jc_turbo_last_lang');
+  if(saved&&PHRASES[saved]){currentLang=saved;document.querySelectorAll('.lang-btn').forEach(function(b){var m=(saved==='es'&&b.textContent.includes('Spanish'))||(saved==='fr'&&b.textContent.includes('French'))||(saved==='de'&&b.textContent.includes('German'));b.classList.toggle('active',m);});document.getElementById('subtitle').textContent=LANG_SUBTITLES[saved];}
+  renderLevels();
+})();
 </script>
 </body>
 </html>
