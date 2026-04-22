@@ -2,1618 +2,1023 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Brother — CBA Prep</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>The Brother — JC Spanish</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1c1917;
-      --paper: #faf7f2;
-      --aged: #f0ead6;
-      --brother: #1a5c38;
-      --brother-light: #e8f5ee;
-      --gold: #b45309;
-      --teal: #0f766e;
-      --coral: #be123c;
-      --muted: #78716c;
-      --border: #d6d3c4;
+      --ink: #1c1917; --paper: #faf7f2; --aged: #f0ead6;
+      --brother: #2471a3; --brother-light: #eaf4fb;
+      --gold: #b45309; --coral: #be123c; --muted: #78716c; --border: #d6d3c4;
+      --green: #1a5c38;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--paper);
-      min-height: 100vh;
-      color: var(--ink);
-    }
-
-    /* ---- SCREENS ---- */
+    body { font-family: 'Nunito', sans-serif; background: var(--paper); min-height: 100vh; color: var(--ink); }
     .screen { display: none; min-height: 100vh; }
     .screen.active { display: flex; flex-direction: column; }
 
-    /* ============================================================
-       WELCOME SCREEN
-    ============================================================ */
-    #screen-welcome {
-      justify-content: center;
-      align-items: center;
-      background: var(--ink);
-      padding: 30px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    #screen-welcome::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 30% 40%, rgba(26,92,56,0.25) 0%, transparent 60%),
-                  radial-gradient(ellipse at 80% 80%, rgba(26,92,56,0.1) 0%, transparent 50%);
-    }
-    .welcome-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .brother-figure {
-      font-size: 6rem;
-      margin-bottom: 16px;
-      animation: brotherBob 4s ease-in-out infinite;
-      display: block;
-      filter: drop-shadow(0 0 20px rgba(26,92,56,0.4));
-    }
-    @keyframes brotherBob {
-      0%,100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-12px) rotate(2deg); }
-    }
-
-    .welcome-title {
-      font-family: 'Lora', serif;
-      font-size: 2.8rem;
-      font-weight: 600;
-      color: white;
-      margin-bottom: 8px;
-      letter-spacing: -1px;
-    }
-    .welcome-sub {
-      color: rgba(255,255,255,0.45);
-      font-size: 0.9rem;
-      margin-bottom: 36px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .welcome-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 28px 24px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(10px);
-    }
-
-    .field-label {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .field-input {
-      width: 100%;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.12);
-      border-radius: 10px;
-      color: white;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-      padding: 12px 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      margin-bottom: 18px;
-    }
+    /* WELCOME */
+    #screen-welcome { justify-content: center; align-items: center; background: #1a1a2e; padding: 30px 20px; position: relative; overflow: hidden; }
+    #screen-welcome::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(36,113,163,0.3) 0%, transparent 60%); }
+    .welcome-inner { position: relative; z-index: 1; max-width: 480px; width: 100%; text-align: center; }
+    .brother-figure { margin: 0 auto 14px; animation: brotherBob 4s ease-in-out infinite; display: block; filter: drop-shadow(0 0 20px rgba(36,113,163,0.5)); }
+    @keyframes brotherBob { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+    .welcome-title { font-family: 'Lora', serif; font-size: 2.4rem; font-weight: 600; color: white; margin-bottom: 4px; }
+    .welcome-sub { color: rgba(255,255,255,0.38); font-size: 0.78rem; margin-bottom: 28px; letter-spacing: 1px; text-transform: uppercase; }
+    .welcome-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 24px 20px; margin-bottom: 16px; }
+    .field-label { color: rgba(255,255,255,0.45); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 7px; display: block; text-align: left; }
+    .field-input { width: 100%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.12); border-radius: 10px; color: white; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 600; padding: 11px 14px; outline: none; transition: border-color 0.2s; margin-bottom: 16px; }
     .field-input:focus { border-color: var(--brother); }
-    .field-input::placeholder { color: rgba(255,255,255,0.2); }
+    .field-input::placeholder { color: rgba(255,255,255,0.18); }
+    .grade-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .grade-btn { flex: 1; min-width: 50px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 8px; color: rgba(255,255,255,0.45); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.82rem; padding: 9px 4px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .grade-btn:hover { border-color: rgba(36,113,163,0.5); color: white; }
+    .grade-btn.selected { background: var(--brother); border-color: var(--brother); color: white; }
+    .grade-btn.ol.selected { background: var(--gold); border-color: var(--gold); }
+    .enter-btn { width: 100%; padding: 15px; background: var(--brother); color: white; font-family: 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 900; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; margin-top: 12px; }
+    .enter-btn:hover { filter: brightness(1.12); }
+    .turbo-note { color: rgba(255,255,255,0.28); font-size: 0.75rem; margin-top: 12px; font-style: italic; }
 
-    .lang-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .lang-choice {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      color: rgba(255,255,255,0.5);
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      padding: 10px 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .lang-choice:hover { border-color: rgba(26,92,56,0.5); color: white; }
-    .lang-choice.selected { background: var(--brother); border-color: var(--brother); color: white; }
-    .lang-choice .flag { font-size: 1.4rem; }
+    /* REVEAL */
+    #screen-reveal { justify-content: center; align-items: center; background: #1a1a2e; padding: 40px 20px; }
+    .reveal-inner { max-width: 440px; width: 100%; text-align: center; }
+    .brother-big { font-size: 6rem; display: block; animation: revealFloat 2s ease-in-out infinite; filter: drop-shadow(0 0 40px rgba(36,113,163,0.8)); margin-bottom: 16px; }
+    @keyframes revealFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .reveal-text { font-family: 'Lora', serif; font-size: 1.5rem; color: white; margin-bottom: 10px; line-height: 1.4; }
+    .reveal-sub { color: rgba(255,255,255,0.42); font-size: 0.9rem; margin-bottom: 28px; line-height: 1.65; white-space: pre-line; }
+    .reveal-btn { background: var(--brother); color: white; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1rem; padding: 14px 36px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+    .reveal-btn:hover { filter: brightness(1.12); }
 
-    .enter-btn {
-      width: 100%;
-      padding: 16px;
-      background: var(--brother);
-      color: white;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 900;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 8px;
-    }
-    .enter-btn:hover { filter: brightness(1.15); transform: scale(1.01); }
-    .enter-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    /* COACH */
+    #screen-coach { background: var(--paper); flex-direction: column; max-width: 680px; margin: 0 auto; width: 100%; }
+    .coach-header { background: #1a1a2e; padding: 12px 16px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; flex-shrink: 0; }
+    .ch-brother { font-size: 1.6rem; animation: brotherBob 4s ease-in-out infinite; }
+    .ch-info { flex: 1; }
+    .ch-name { font-family: 'Lora', serif; color: white; font-size: 0.9rem; font-weight: 600; }
+    .ch-grade { color: rgba(255,255,255,0.38); font-size: 0.68rem; }
+    .ch-actions { display: flex; gap: 6px; align-items: center; }
+    .hdr-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.55); font-family: 'Nunito', sans-serif; font-size: 0.7rem; font-weight: 700; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s; }
+    .hdr-btn:hover { background: rgba(255,255,255,0.14); color: white; }
+    .q-btn { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 0.9rem; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: 900; font-family: 'Nunito', sans-serif; }
 
-    .week-picker {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .week-btn {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      color: rgba(255,255,255,0.5);
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      padding: 10px 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-    }
-    .week-btn:hover { border-color: rgba(26,92,56,0.5); color: white; }
-    .week-btn.selected { background: var(--brother); border-color: var(--brother); color: white; }
+    /* Task type bar */
+    .task-bar { display: flex; background: rgba(0,0,0,0.4); flex-shrink: 0; }
+    .task-pip { flex: 1; padding: 8px; text-align: center; font-size: 0.7rem; color: rgba(255,255,255,0.3); font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .task-pip.active { color: white; background: rgba(36,113,163,0.5); }
 
-    .turbo-note {
-      color: rgba(255,255,255,0.3);
-      font-size: 0.8rem;
-      margin-top: 12px;
-      font-style: italic;
-    }
-
-    /* ============================================================
-       REVEAL SCREEN
-    ============================================================ */
-    #screen-reveal {
-      justify-content: center;
-      align-items: center;
-      background: var(--ink);
-      padding: 40px 20px;
-    }
-    .reveal-inner {
-      max-width: 460px;
-      width: 100%;
-      text-align: center;
-    }
-    .brother-big {
-      font-size: 8rem;
-      display: block;
-      animation: revealFloat 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 40px rgba(26,92,56,0.8));
-      margin-bottom: 20px;
-    }
-    @keyframes revealFloat {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-16px); }
-    }
-    .reveal-text {
-      font-family: 'Lora', serif;
-      font-size: 1.6rem;
-      color: white;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    .reveal-sub {
-      color: rgba(255,255,255,0.45);
-      font-size: 1rem;
-      margin-bottom: 36px;
-      line-height: 1.6;
-    }
-    .reveal-btn {
-      background: var(--brother);
-      color: white;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1.1rem;
-      padding: 16px 40px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .reveal-btn:hover { filter: brightness(1.15); transform: scale(1.02); }
-
-    /* ============================================================
-       CHAT SCREEN
-    ============================================================ */
-    #screen-chat {
-      background: var(--paper);
-      flex-direction: column;
-      max-width: 720px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    /* Header */
-    .chat-header {
-      background: var(--ink);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      flex-shrink: 0;
-    }
-    .chat-header-brother { font-size: 1.8rem; animation: brotherBob 4s ease-in-out infinite; }
-    .chat-header-info { flex: 1; }
-    .chat-header-name {
-      font-family: 'Lora', serif;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    .chat-header-week {
-      color: rgba(255,255,255,0.4);
-      font-size: 0.75rem;
-    }
-    .chat-header-actions { display: flex; gap: 8px; }
-    .header-btn {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.6);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .header-btn:hover { background: rgba(255,255,255,0.14); color: white; }
-
-    /* Week indicator */
-    .week-bar {
-      display: flex;
-      background: rgba(0,0,0,0.6);
-      flex-shrink: 0;
-    }
-    .week-pip {
-      flex: 1;
-      padding: 6px;
-      text-align: center;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.25);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .week-pip.active { color: white; background: rgba(26,92,56,0.4); }
-    .week-pip:hover { color: rgba(255,255,255,0.6); }
+    .coach-body { flex: 1; overflow-y: auto; padding: 18px 16px; display: flex; flex-direction: column; gap: 14px; }
 
     /* Messages */
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .b-msg { display: flex; gap: 9px; align-self: flex-start; max-width: 94%; animation: msgIn 0.3s ease; }
+    @keyframes msgIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+    .b-av { width: 32px; height: 32px; border-radius: 50%; background: var(--brother); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .b-bub { background: white; border: 1px solid var(--border); border-radius: 14px; border-top-left-radius: 4px; padding: 12px 15px; font-size: 0.9rem; line-height: 1.6; color: var(--ink); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .b-bub p { margin-bottom: 8px; }
+    .b-bub p:last-child { margin-bottom: 0; }
 
-    .msg {
-      display: flex;
-      gap: 10px;
-      max-width: 85%;
-      animation: msgIn 0.3s ease;
-    }
-    @keyframes msgIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .msg.brother { align-self: flex-start; }
-    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    /* Q17 prompt card */
+    .prompt-card { background: white; border: 2px solid var(--brother); border-radius: 14px; padding: 16px 18px; }
+    .prompt-label { font-size: 0.66rem; font-weight: 900; color: var(--brother); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .prompt-scenario { font-size: 0.88rem; color: var(--muted); font-style: italic; margin-bottom: 12px; line-height: 1.5; padding: 8px 12px; background: var(--aged); border-radius: 8px; }
+    .prompt-title { font-family: 'Lora', serif; font-size: 0.96rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+    .prompt-bullets { list-style: none; }
+    .prompt-bullets li { font-size: 0.88rem; color: var(--ink); padding: 4px 0 4px 20px; position: relative; line-height: 1.45; border-bottom: 1px solid var(--border); }
+    .prompt-bullets li:last-child { border-bottom: none; }
+    .prompt-bullets li::before { position: absolute; left: 0; color: var(--brother); font-weight: 900; font-size: 0.8rem; }
+    .prompt-bullets li.q17::before { content: attr(data-label); }
+    .prompt-bullets li.q18::before { content: '→'; }
+    .marks-chip { display: inline-block; background: var(--brother-light); border: 1px solid var(--brother); border-radius: 8px; padding: 3px 10px; font-size: 0.7rem; font-weight: 700; color: var(--brother); margin-left: 8px; }
 
-    .msg-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .msg.brother .msg-avatar { background: var(--brother); }
-    .msg.user .msg-avatar { background: var(--aged); border: 2px solid var(--border); }
+    /* Write zone */
+    .write-zone { background: white; border: 2px solid var(--border); border-radius: 14px; padding: 14px 16px; transition: border-color 0.2s; }
+    .write-zone:focus-within { border-color: var(--brother); }
+    .write-label { font-size: 0.66rem; font-weight: 900; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .word-count { font-weight: 400; font-style: italic; }
+    .write-ta { width: 100%; border: none; outline: none; font-family: 'Lora', serif; font-size: 0.93rem; line-height: 1.7; color: var(--ink); resize: none; min-height: 200px; background: none; }
+    .write-ta::placeholder { color: #ccc; font-style: italic; }
+    .write-footer { display: flex; justify-content: flex-end; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+    .submit-btn { background: var(--brother); color: white; border: none; border-radius: 10px; padding: 11px 24px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; }
+    .submit-btn:hover { filter: brightness(1.1); }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .msg-bubble {
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-size: 0.95rem;
-      line-height: 1.55;
-    }
-    .msg.brother .msg-bubble {
-      background: white;
-      border: 1px solid var(--border);
-      border-top-left-radius: 4px;
-      color: var(--ink);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .msg.user .msg-bubble {
-      background: var(--brother);
-      color: white;
-      border-top-right-radius: 4px;
-    }
+    /* Nudge */
+    .nudge { background: #fff8e1; border: 2px solid #f39c12; border-radius: 12px; padding: 11px 15px; font-size: 0.86rem; color: #7f4f00; }
 
-    /* Fact card inside message */
-    .fact-card {
-      background: var(--brother-light);
-      border-left: 3px solid var(--brother);
-      border-radius: 8px;
-      padding: 10px 14px;
-      margin-top: 10px;
-      font-size: 0.88rem;
-    }
-    .fact-tl { color: var(--brother); font-weight: 700; margin-top: 4px; font-style: italic; }
+    /* Mark card */
+    .mark-card { background: white; border: 2px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+    .mark-label { font-size: 0.66rem; font-weight: 900; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
 
-    /* Quote card */
-    .quote-card {
-      background: var(--aged);
-      border-left: 3px solid var(--gold);
-      border-radius: 8px;
-      padding: 10px 14px;
-      margin-top: 10px;
-      font-size: 0.88rem;
-      font-style: italic;
-      color: var(--gold);
-    }
+    /* Q17 marking */
+    .q17-bullets-mark { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .q17-bullet-row { display: flex; align-items: center; gap: 8px; background: var(--aged); border-radius: 8px; padding: 8px 12px; }
+    .q17-bullet-letter { font-weight: 900; color: var(--brother); font-size: 0.82rem; width: 20px; flex-shrink: 0; }
+    .q17-bullet-text { font-size: 0.82rem; color: var(--ink); flex: 1; }
+    .q17-bullet-score { font-weight: 900; font-size: 0.9rem; min-width: 28px; text-align: right; }
 
-    /* Typing indicator */
-    .typing-indicator {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 12px 16px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      border-top-left-radius: 4px;
-      width: fit-content;
-    }
-    .typing-dot {
-      width: 7px; height: 7px;
-      background: var(--muted);
-      border-radius: 50%;
-      animation: typingBounce 1.2s ease infinite;
-    }
-    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typingBounce {
-      0%,60%,100% { transform: translateY(0); }
-      30% { transform: translateY(-6px); }
-    }
+    .mark-section { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mark-section:last-child { border-bottom: none; }
+    .mark-section-label { font-size: 0.82rem; color: var(--muted); }
+    .mark-section-val { font-size: 1.1rem; font-weight: 900; }
 
-    /* Input area */
-    .chat-input-area {
-      padding: 14px 16px;
-      background: white;
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .input-row {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-    }
-    .chat-input {
-      flex: 1;
-      background: var(--aged);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem;
-      padding: 12px 14px;
-      outline: none;
-      resize: none;
-      min-height: 46px;
-      max-height: 120px;
-      transition: border-color 0.2s;
-      color: var(--ink);
-    }
-    .chat-input:focus { border-color: var(--brother); }
-    .chat-input::placeholder { color: var(--muted); }
+    .mark-total { text-align: center; border-radius: 10px; padding: 14px; margin: 12px 0; color: white; }
+    .mark-total-num { font-size: 2.2rem; font-weight: 900; }
+    .mark-total-sub { font-size: 0.78rem; opacity: 0.75; margin-top: 3px; }
+    .mark-feedback { font-size: 0.87rem; line-height: 1.6; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
+    .mark-feedback p { margin-bottom: 8px; }
+    .mark-feedback p:last-child { margin-bottom: 0; }
 
-    .send-btn {
-      background: var(--brother);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      width: 46px;
-      height: 46px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .send-btn:hover { filter: brightness(1.15); }
-    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    /* Improved writing */
+    .improved-card { background: white; border: 2px solid var(--gold); border-radius: 14px; padding: 16px 18px; }
+    .improved-label { font-size: 0.66rem; font-weight: 900; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .improved-intro { font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; font-style: italic; }
+    .improved-text { font-family: 'Lora', serif; font-size: 0.9rem; line-height: 1.8; color: var(--ink); }
+    .improved-note { display: inline-block; background: #fff8e1; border: 1px solid #f39c12; border-radius: 4px; padding: 1px 7px; font-family: 'Nunito', sans-serif; font-size: 0.7rem; color: #7f4f00; font-weight: 700; font-style: normal; margin-left: 4px; vertical-align: middle; }
 
-    .voice-btn {
-      background: var(--aged);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      width: 46px;
-      height: 46px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .voice-btn:hover { border-color: var(--brother); }
-    .voice-btn.listening { background: var(--coral); border-color: var(--coral); color: white; animation: pulse 1s infinite; }
-    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    /* Prescription */
+    .prescription { background: var(--brother-light); border: 2px solid var(--brother); border-radius: 12px; padding: 14px 16px; }
+    .presc-label { font-size: 0.66rem; font-weight: 900; color: var(--brother); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .presc-text { font-size: 0.88rem; color: var(--ink); line-height: 1.55; margin-bottom: 10px; }
+    .turbo-link { display: inline-block; background: var(--brother); color: white; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.86rem; padding: 9px 20px; border-radius: 9px; text-decoration: none; }
 
-    .input-hints {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-    .hint-chip {
-      background: var(--brother-light);
-      color: var(--brother);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 50px;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-    }
-    .hint-chip:hover { background: var(--brother); color: white; }
+    /* Actions */
+    .action-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .action-btn { flex: 1; min-width: 130px; padding: 12px; background: white; border: 2px solid var(--brother); color: var(--brother); font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.86rem; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .action-btn:hover { background: var(--brother); color: white; }
+    .action-btn.primary { background: var(--brother); color: white; }
 
-    /* ============================================================
-       SCRIPT SCREEN
-    ============================================================ */
-    #screen-script {
-      background: var(--paper);
-      flex-direction: column;
-    }
-    .script-header {
-      background: var(--ink);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .script-header h2 {
-      font-family: 'Lora', serif;
-      color: white;
-      font-size: 1.1rem;
-      flex: 1;
-    }
-    .script-content { padding: 20px 16px; max-width: 720px; margin: 0 auto; width: 100%; overflow-y: auto; flex: 1; }
+    /* Typing */
+    .typing-ind { display: flex; align-items: center; gap: 5px; padding: 10px 14px; background: white; border: 1px solid var(--border); border-radius: 14px; border-top-left-radius: 4px; width: fit-content; }
+    .t-dot { width: 7px; height: 7px; background: var(--muted); border-radius: 50%; animation: tBounce 1.2s ease infinite; }
+    .t-dot:nth-child(2) { animation-delay: 0.2s; }
+    .t-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes tBounce { 0%,60%,100% { transform:translateY(0); } 30% { transform:translateY(-6px); } }
 
-    .script-title {
-      font-family: 'Lora', serif;
-      font-size: 1.8rem;
-      color: var(--ink);
-      margin-bottom: 6px;
-    }
-    .script-meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
+    /* Graph */
+    #screen-graph { background: var(--paper); flex-direction: column; max-width: 680px; margin: 0 auto; width: 100%; }
+    .graph-header { background: #1a1a2e; padding: 12px 16px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .graph-header h2 { font-family: 'Lora', serif; color: white; font-size: 1rem; flex: 1; }
+    .graph-body { flex: 1; padding: 18px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+    .graph-box { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .graph-box-title { font-size: 0.7rem; font-weight: 900; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+    canvas { display: block; }
+    .graph-legend { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .leg-item { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; color: var(--muted); }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .attempt-row { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+    .att-num { font-size: 0.7rem; font-weight: 900; color: var(--muted); width: 22px; flex-shrink: 0; }
+    .att-type { font-size: 0.8rem; color: var(--ink); flex: 1; }
+    .att-total { font-size: 1.1rem; font-weight: 900; color: var(--brother); }
 
-    .script-section {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 16px;
-    }
-    .script-section-heading {
-      font-weight: 900;
-      color: var(--brother);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-    .script-tl {
-      font-family: 'Lora', serif;
-      font-size: 1.05rem;
-      color: var(--ink);
-      line-height: 1.6;
-      margin-bottom: 8px;
-    }
-    .script-en {
-      color: var(--muted);
-      font-size: 0.85rem;
-      line-height: 1.5;
-      font-style: italic;
-      border-top: 1px solid var(--border);
-      padding-top: 8px;
-      margin-top: 8px;
-    }
-    .script-tip {
-      background: var(--brother-light);
-      color: var(--brother);
-      font-size: 0.8rem;
-      padding: 6px 10px;
-      border-radius: 8px;
-      margin-top: 10px;
-      font-weight: 600;
-    }
+    /* Criteria overlay */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 999; padding: 20px; align-items: flex-end; justify-content: center; }
+    .overlay.open { display: flex; }
+    .overlay-box { background: white; border-radius: 18px; padding: 22px 20px; max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; }
+    .overlay-box h3 { font-family: 'Lora', serif; font-size: 1.05rem; margin-bottom: 16px; }
+    .crit { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .crit:last-of-type { margin-bottom: 0; padding-bottom: 0; border: none; }
+    .crit-name { font-weight: 900; color: var(--brother); font-size: 0.86rem; margin-bottom: 4px; }
+    .crit-name span { color: var(--muted); font-weight: 400; }
+    .crit-desc { font-size: 0.83rem; color: var(--ink); line-height: 1.55; }
+    .close-btn { width: 100%; margin-top: 16px; padding: 12px; background: var(--ink); color: white; border: none; border-radius: 10px; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem; cursor: pointer; }
 
-    .script-footer {
-      background: var(--aged);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin: 16px 0;
-    }
-    .script-footer h4 { color: var(--gold); font-size: 0.85rem; margin-bottom: 8px; font-weight: 900; text-transform: uppercase; }
-    .script-footer p { color: var(--ink); font-size: 0.9rem; line-height: 1.5; }
-
-    .print-btn {
-      width: 100%;
-      padding: 16px;
-      background: var(--ink);
-      color: white;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1rem;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      margin: 8px 0;
-      transition: all 0.2s;
-    }
-    .print-btn:hover { background: var(--brother); }
-
-    .back-to-chat {
-      width: 100%;
-      padding: 14px;
-      background: transparent;
-      color: var(--muted);
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      cursor: pointer;
-      margin: 4px 0;
-      transition: all 0.2s;
-    }
-    .back-to-chat:hover { color: var(--ink); border-color: var(--ink); }
-
-    /* ============================================================
-       LOADING / SPINNER
-    ============================================================ */
-    .spinner {
-      display: inline-block;
-      width: 18px; height: 18px;
-      border: 2px solid rgba(26,92,56,0.2);
-      border-top-color: var(--brother);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      vertical-align: middle;
-    }
+    footer { text-align: center; font-size: 0.66rem; color: rgba(255,255,255,0.18); padding: 10px; flex-shrink: 0; }
+    footer.light { color: var(--muted); }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ============================================================
-       PRINT
-    ============================================================ */
-    @media print {
-      .chat-header, .chat-input-area, .week-bar, .print-btn, .back-to-chat, .script-header { display: none !important; }
-      body { background: white; }
-      .script-content { padding: 0; }
-      .script-section { border: 1px solid #ccc; break-inside: avoid; }
-    }
-
-    /* Util */
-    .hidden { display: none !important; }
-    .loading-msg {
-      text-align: center;
-      color: var(--muted);
-      font-style: italic;
-      font-size: 0.9rem;
-      padding: 20px;
-    }
+    .spinner { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(36,113,163,0.2); border-top-color: var(--brother); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PptxGenJS/3.12.0/pptxgen.bundled.js"></script>
 </head>
 <body>
 
-<!-- ============================================================
-     SCREEN 1: WELCOME
-============================================================ -->
+<!-- CRITERIA OVERLAY -->
+<div class="overlay" id="criteria-overlay" onclick="closeCriteria()">
+  <div class="overlay-box" onclick="event.stopPropagation()">
+    <h3>How the JC Written section is marked</h3>
+    <div class="crit">
+      <div class="crit-name">Q17 — Blog <span>(30 marks total)</span></div>
+      <div class="crit-desc"><strong>Content (10 marks):</strong> 5 bullet points × 2 marks each. Each point: 2m if clear, relevant and developed. 1m if partially clear or not developed. 0m if unclear or irrelevant.<br><br><strong>Expression (20 marks):</strong> One global mark for the quality of your Spanish across the whole answer. Top (17-20): rich vocabulary, correct tenses. Middle (10-16): very good vocabulary, mostly correct tenses. Lower (5-9): reasonable vocabulary, mostly incorrect tenses. Bottom (1-4): limited vocabulary and tenses.<br><br>⚠️ You must answer ALL 5 points to be eligible for the Top expression band. Miss one and your expression mark is capped.</div>
+    </div>
+    <div class="crit">
+      <div class="crit-name">Q18 — Response <span>(40 marks total)</span></div>
+      <div class="crit-desc"><strong>Content (16 marks):</strong> 8 points × 2 marks each. Same system — developed and relevant = 2m, partial = 1m, unclear = 0m.<br><br><strong>Expression (24 marks):</strong> Same global system. Top (21-24): rich vocabulary, correct tenses. Middle (13-20): very good, mostly correct. Lower (7-12): reasonable, mostly incorrect. Bottom (1-6): limited.<br><br>⚠️ Must answer ALL 8 points for the Top expression band.</div>
+    </div>
+    <div class="crit">
+      <div class="crit-name">The golden rule</div>
+      <div class="crit-desc">Never leave a point blank. A weak attempt at a point still gets 1 mark for content AND keeps your expression band options open. A blank gets 0 and caps your expression mark. Always write something for every point.</div>
+    </div>
+    <button class="close-btn" type="button" onclick="closeCriteria()">Got it</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: WELCOME -->
 <div id="screen-welcome" class="screen active">
   <div class="welcome-inner">
-    <svg class="brother-figure" viewBox="0 0 200 260" width="160" height="208" xmlns="http://www.w3.org/2000/svg">
-      <!-- Body / cardigan -->
-      <ellipse cx="100" cy="190" rx="58" ry="72" fill="#2d5a27"/>
-      <rect x="42" y="155" width="116" height="100" rx="20" fill="#2d5a27"/>
-      <!-- Shirt visible centre -->
-      <rect x="84" y="155" width="32" height="90" rx="4" fill="#f0ead6"/>
-      <!-- Cardigan highlight -->
-      <path d="M42 165 Q55 155 72 152 L84 155 L84 245 Q62 240 42 220Z" fill="#3d7a35"/>
-      <path d="M158 165 Q145 155 128 152 L116 155 L116 245 Q138 240 158 220Z" fill="#3d7a35"/>
-      <!-- Arms -->
-      <ellipse cx="28" cy="195" rx="20" ry="52" fill="#2d5a27"/>
-      <ellipse cx="172" cy="195" rx="20" ry="52" fill="#2d5a27"/>
-      <!-- Hands -->
-      <ellipse cx="28" cy="238" rx="16" ry="14" fill="#d4956a"/>
-      <ellipse cx="172" cy="238" rx="16" ry="14" fill="#d4956a"/>
-      <!-- Neck -->
-      <rect x="86" y="128" width="28" height="32" rx="8" fill="#d4956a"/>
-      <!-- Head -->
-      <ellipse cx="100" cy="100" rx="54" ry="60" fill="#d4956a"/>
-      <!-- White hair — top and sides -->
-      <ellipse cx="100" cy="52" rx="52" ry="28" fill="#e8e2d0"/>
-      <path d="M48 72 Q44 55 50 42 Q58 28 72 24 Q86 20 100 20 Q114 20 128 24 Q142 28 150 42 Q156 55 152 72" fill="#e8e2d0"/>
-      <!-- Hair shadow/depth -->
-      <path d="M52 78 Q50 62 56 48 Q66 32 100 28 Q134 32 144 48 Q150 62 148 78" fill="#c8bfaa" opacity="0.5"/>
-      <!-- Side hair wisps -->
-      <path d="M48 85 Q42 95 44 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
-      <path d="M152 85 Q158 95 156 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
-      <!-- Forehead skin -->
-      <ellipse cx="100" cy="80" rx="44" ry="22" fill="#d4956a"/>
-      <!-- Cheeks flush -->
-      <ellipse cx="72" cy="112" rx="12" ry="8" fill="#e8906a" opacity="0.35"/>
-      <ellipse cx="128" cy="112" rx="12" ry="8" fill="#e8906a" opacity="0.35"/>
-      <!-- Wrinkles -->
-      <path d="M70 88 Q76 85 82 88" fill="none" stroke="#b87a52" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
-      <path d="M118 88 Q124 85 130 88" fill="none" stroke="#b87a52" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
-      <path d="M80 128 Q100 136 120 128" fill="none" stroke="#b87a52" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
-      <!-- Eyebrows — bushy, grey -->
-      <path d="M68 90 Q82 84 96 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
-      <path d="M104 90 Q118 84 132 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
-      <!-- Eyes -->
-      <ellipse cx="82" cy="102" rx="13" ry="10" fill="#f0ede6"/>
-      <ellipse cx="118" cy="102" rx="13" ry="10" fill="#f0ede6"/>
-      <ellipse cx="82" cy="103" rx="7" ry="8" fill="#5a3e28"/>
-      <ellipse cx="118" cy="103" rx="7" ry="8" fill="#5a3e28"/>
-      <ellipse cx="82" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
-      <ellipse cx="118" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
-      <ellipse cx="84" cy="100" rx="2" ry="2" fill="white"/>
-      <ellipse cx="120" cy="100" rx="2" ry="2" fill="white"/>
-      <!-- Glasses -->
-      <ellipse cx="82" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
-      <ellipse cx="118" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M97 103 Q100 100 103 103" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M67 99 Q60 96 54 98" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M133 99 Q140 96 146 98" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <!-- Nose -->
-      <ellipse cx="100" cy="118" rx="9" ry="7" fill="#c08060"/>
-      <ellipse cx="100" cy="115" rx="6" ry="5" fill="#c88a62"/>
-      <!-- Smile — warm -->
-      <path d="M82 132 Q100 144 118 132" fill="none" stroke="#8a5a3a" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Ears -->
-      <ellipse cx="46" cy="105" rx="9" ry="13" fill="#c08060"/>
-      <ellipse cx="154" cy="105" rx="9" ry="13" fill="#c08060"/>
+    <svg class="brother-figure" viewBox="0 0 200 260" width="120" height="156" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="190" rx="58" ry="72" fill="#2471a3"/><rect x="42" y="155" width="116" height="100" rx="20" fill="#2471a3"/><rect x="84" y="155" width="32" height="90" rx="4" fill="#f0ead6"/><path d="M42 165 Q55 155 72 152 L84 155 L84 245 Q62 240 42 220Z" fill="#1a5c8a"/><path d="M158 165 Q145 155 128 152 L116 155 L116 245 Q138 240 158 220Z" fill="#1a5c8a"/><ellipse cx="28" cy="195" rx="20" ry="52" fill="#2471a3"/><ellipse cx="172" cy="195" rx="20" ry="52" fill="#2471a3"/><ellipse cx="28" cy="238" rx="16" ry="14" fill="#d4956a"/><ellipse cx="172" cy="238" rx="16" ry="14" fill="#d4956a"/><rect x="86" y="128" width="28" height="32" rx="8" fill="#d4956a"/><ellipse cx="100" cy="100" rx="54" ry="60" fill="#d4956a"/><ellipse cx="100" cy="52" rx="52" ry="28" fill="#e8e2d0"/><path d="M48 72 Q44 55 50 42 Q58 28 72 24 Q86 20 100 20 Q114 20 128 24 Q142 28 150 42 Q156 55 152 72" fill="#e8e2d0"/><path d="M48 85 Q42 95 44 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/><path d="M152 85 Q158 95 156 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/><ellipse cx="100" cy="80" rx="44" ry="22" fill="#d4956a"/><path d="M68 90 Q82 84 96 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/><path d="M104 90 Q118 84 132 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/><ellipse cx="82" cy="102" rx="13" ry="10" fill="#f0ede6"/><ellipse cx="118" cy="102" rx="13" ry="10" fill="#f0ede6"/><ellipse cx="82" cy="103" rx="7" ry="8" fill="#5a3e28"/><ellipse cx="118" cy="103" rx="7" ry="8" fill="#5a3e28"/><ellipse cx="82" cy="103" rx="4" ry="4.5" fill="#1a1208"/><ellipse cx="118" cy="103" rx="4" ry="4.5" fill="#1a1208"/><ellipse cx="84" cy="100" rx="2" ry="2" fill="white"/><ellipse cx="120" cy="100" rx="2" ry="2" fill="white"/><ellipse cx="82" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/><ellipse cx="118" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/><path d="M97 103 Q100 100 103 103" fill="none" stroke="#7a6a5a" stroke-width="2"/><ellipse cx="100" cy="118" rx="9" ry="7" fill="#c08060"/><path d="M84 132 Q100 142 116 132" fill="none" stroke="#8a5a3a" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="46" cy="105" rx="9" ry="13" fill="#c08060"/><ellipse cx="154" cy="105" rx="9" ry="13" fill="#c08060"/>
     </svg>
     <h1 class="welcome-title">The Brother</h1>
-    <p class="welcome-sub">Your mentor. Your script. Your presentation.</p>
-
+    <p class="welcome-sub">JC Spanish · Written Production · Q17 & Q18</p>
     <div class="welcome-card">
       <label class="field-label">Your first name</label>
       <input class="field-input" id="inp-name" type="text" placeholder="What do they call you?" maxlength="30" autocomplete="off">
-
-      <label class="field-label">Your language</label>
-      <div class="lang-row">
-        <button class="lang-choice selected" data-lang="es" onclick="selectLang(this)">
-          <span class="flag">🇪🇸</span>Spanish
-        </button>
-        <button class="lang-choice" data-lang="fr" onclick="selectLang(this)">
-          <span class="flag">🇫🇷</span>French
-        </button>
-        <button class="lang-choice" data-lang="de" onclick="selectLang(this)">
-          <span class="flag">🇩🇪</span>German
-        </button>
-      </div>
-
-      <div style="height:18px;"></div>
-
-      <label class="field-label">Which week are you in?</label>
-      <div class="week-picker">
-        <button class="week-btn selected" data-week="1" onclick="selectWeek(this)">Week 1<br><small>Exploring</small></button>
-        <button class="week-btn" data-week="2" onclick="selectWeek(this)">Week 2<br><small>Building</small></button>
-        <button class="week-btn" data-week="3" onclick="selectWeek(this)">Week 3<br><small>Showtime</small></button>
-      </div>
-
-      <p class="turbo-note">Played Turbo? Good. The Brother knows.</p>
     </div>
-
-    <button class="enter-btn" id="enter-btn" onclick="enterBrother()">Meet The Brother →</button>
+    <button class="enter-btn" type="button" onclick="enterBrother()">Meet The Brother →</button>
+    <p class="turbo-note" id="turbo-note">Loading your Turbo data...</p>
+    <footer>© 2026 Synge Street Games: Imagination and Perseverance</footer>
   </div>
 </div>
 
-<!-- ============================================================
-     SCREEN 2: REVEAL
-============================================================ -->
+<!-- SCREEN 2: REVEAL -->
 <div id="screen-reveal" class="screen">
-  <div class="reveal-inner">
-    <svg class="brother-big" viewBox="0 0 200 260" width="180" height="234" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="100" cy="190" rx="58" ry="72" fill="#2d5a27"/>
-      <rect x="42" y="155" width="116" height="100" rx="20" fill="#2d5a27"/>
-      <rect x="84" y="155" width="32" height="90" rx="4" fill="#f0ead6"/>
-      <path d="M42 165 Q55 155 72 152 L84 155 L84 245 Q62 240 42 220Z" fill="#3d7a35"/>
-      <path d="M158 165 Q145 155 128 152 L116 155 L116 245 Q138 240 158 220Z" fill="#3d7a35"/>
-      <ellipse cx="28" cy="195" rx="20" ry="52" fill="#2d5a27"/>
-      <ellipse cx="172" cy="195" rx="20" ry="52" fill="#2d5a27"/>
-      <ellipse cx="28" cy="238" rx="16" ry="14" fill="#d4956a"/>
-      <ellipse cx="172" cy="238" rx="16" ry="14" fill="#d4956a"/>
-      <rect x="86" y="128" width="28" height="32" rx="8" fill="#d4956a"/>
-      <ellipse cx="100" cy="100" rx="54" ry="60" fill="#d4956a"/>
-      <ellipse cx="100" cy="52" rx="52" ry="28" fill="#e8e2d0"/>
-      <path d="M48 72 Q44 55 50 42 Q58 28 72 24 Q86 20 100 20 Q114 20 128 24 Q142 28 150 42 Q156 55 152 72" fill="#e8e2d0"/>
-      <path d="M52 78 Q50 62 56 48 Q66 32 100 28 Q134 32 144 48 Q150 62 148 78" fill="#c8bfaa" opacity="0.5"/>
-      <path d="M48 85 Q42 95 44 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
-      <path d="M152 85 Q158 95 156 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
-      <ellipse cx="100" cy="80" rx="44" ry="22" fill="#d4956a"/>
-      <ellipse cx="72" cy="112" rx="12" ry="8" fill="#e8906a" opacity="0.35"/>
-      <ellipse cx="128" cy="112" rx="12" ry="8" fill="#e8906a" opacity="0.35"/>
-      <path d="M68 90 Q82 84 96 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
-      <path d="M104 90 Q118 84 132 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
-      <ellipse cx="82" cy="102" rx="13" ry="10" fill="#f0ede6"/>
-      <ellipse cx="118" cy="102" rx="13" ry="10" fill="#f0ede6"/>
-      <ellipse cx="82" cy="103" rx="7" ry="8" fill="#5a3e28"/>
-      <ellipse cx="118" cy="103" rx="7" ry="8" fill="#5a3e28"/>
-      <ellipse cx="82" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
-      <ellipse cx="118" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
-      <ellipse cx="84" cy="100" rx="2" ry="2" fill="white"/>
-      <ellipse cx="120" cy="100" rx="2" ry="2" fill="white"/>
-      <ellipse cx="82" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
-      <ellipse cx="118" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M97 103 Q100 100 103 103" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M67 99 Q60 96 54 98" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M133 99 Q140 96 146 98" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <ellipse cx="100" cy="118" rx="9" ry="7" fill="#c08060"/>
-      <ellipse cx="100" cy="115" rx="6" ry="5" fill="#c88a62"/>
-      <path d="M82 132 Q100 144 118 132" fill="none" stroke="#8a5a3a" stroke-width="2.5" stroke-linecap="round"/>
-      <ellipse cx="46" cy="105" rx="9" ry="13" fill="#c08060"/>
-      <ellipse cx="154" cy="105" rx="9" ry="13" fill="#c08060"/>
-    </svg>
-    <p class="reveal-text" id="reveal-text">Ah. There you are.</p>
-    <p class="reveal-sub" id="reveal-sub">Good work on Turbo. Now let's build something real.<br>Good. You're ready. Let's build something.</p>
-    <button class="reveal-btn" onclick="goToChat()">Let's go →</button>
+  <div class="reveal-inner" style="text-align:center;">
+    <span class="brother-big">🧓</span>
+    <p class="reveal-text" id="reveal-text">Right. Sit down.</p>
+    <p class="reveal-sub" id="reveal-sub">Let's see what you've got.</p>
+    <button class="reveal-btn" type="button" onclick="goToCoach()">Let's go →</button>
+    <footer style="margin-top:24px;">© 2026 Synge Street Games: Imagination and Perseverance</footer>
   </div>
 </div>
 
-<!-- ============================================================
-     SCREEN 3: CHAT
-============================================================ -->
-<div id="screen-chat" class="screen">
-  <div class="chat-header">
-    <span class="chat-header-brother">🧓</span>
-    <div class="chat-header-info">
-      <div class="chat-header-name">The Brother</div>
-      <div class="chat-header-week" id="header-week-label">Week 1 · Spanish</div>
+<!-- SCREEN 3: COACH -->
+<div id="screen-coach" class="screen">
+  <div class="coach-header">
+    <span class="ch-brother">🧓</span>
+    <div class="ch-info">
+      <div class="ch-name">The Brother — JC Spanish</div>
+      <div class="ch-grade" id="header-grade">Written Production · Target: —</div>
     </div>
-    <div class="chat-header-actions">
-      <button class="header-btn" onclick="buildScript()">📄 Script</button>
-      <button class="header-btn" onclick="buildSlides()">🎞️ Slides</button>
-      <button class="header-btn" onclick="showReflect()">✍️ Reflect</button>
-      <button class="header-btn" onclick="goHome()">Home</button>
+    <div class="ch-actions">
+      <button class="q-btn" type="button" onclick="openCriteria()" title="How am I marked?">?</button>
+      <button class="hdr-btn" type="button" onclick="showScreen('screen-graph')">📈 Progress</button>
+      <button class="hdr-btn" type="button" onclick="showScreen('screen-welcome')">Home</button>
     </div>
   </div>
-
-  <div class="week-bar" id="week-bar">
-    <div class="week-pip active" data-week="1" onclick="changeWeek(1)">Week 1 — Explore</div>
-    <div class="week-pip" data-week="2" onclick="changeWeek(2)">Week 2 — Build</div>
-    <div class="week-pip" data-week="3" onclick="changeWeek(3)">Week 3 — Showtime</div>
+  <div class="task-bar">
+    <div class="task-pip active" data-task="q17" onclick="setTask('q17',this)">📝 Q17 Blog (30m)</div>
+    <div class="task-pip" data-task="q18" onclick="setTask('q18',this)">✉️ Q18 Response (40m)</div>
   </div>
-
-  <div class="chat-messages" id="chat-messages"></div>
-
-  <div class="chat-input-area">
-    <div class="input-row">
-      <button class="voice-btn" id="voice-btn" onclick="toggleVoice()" title="Speak your answer">🎤</button>
-      <textarea class="chat-input" id="chat-input" placeholder="Type here or tap the mic..." rows="1"
-        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="send-btn" id="send-btn" onclick="sendMessage()">➤</button>
-    </div>
-    <div class="input-hints" id="input-hints">
-      <button class="hint-chip" onclick="useHint('Tell me about yourself')">About me</button>
-      <button class="hint-chip" onclick="useHint('Help me with a sentence')">Help a sentence</button>
-      <button class="hint-chip" onclick="useHint('Give me a mad fact')">Mad fact! 🤯</button>
-      <button class="hint-chip" onclick="useHint('How am I doing?')">How am I doing?</button>
-    </div>
-  </div>
+  <div class="coach-body" id="coach-body"></div>
+  <footer class="light">© 2026 Synge Street Games: Imagination and Perseverance</footer>
 </div>
 
-<!-- ============================================================
-     SCREEN 4: SCRIPT
-============================================================ -->
-<div id="screen-script" class="screen">
-  <div class="script-header">
-    <h2>📄 Your Script</h2>
-    <button class="header-btn" onclick="showScreen('screen-chat')">← Back to chat</button>
+<!-- SCREEN 4: GRAPH -->
+<div id="screen-graph" class="screen">
+  <div class="graph-header">
+    <span style="font-size:1.3rem">📈</span>
+    <h2>Your Progress</h2>
+    <button class="hdr-btn" type="button" onclick="showScreen('screen-coach')">← Back</button>
   </div>
-  <div class="script-content" id="script-content">
-    <div class="loading-msg">Building your script... <span class="spinner"></span></div>
+  <div class="graph-body">
+    <div class="graph-box">
+      <div class="graph-box-title">Score per attempt — Q17 out of 30, Q18 out of 40</div>
+      <div id="stats-bar" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;"></div>
+      <canvas id="progress-chart" style="width:100%;height:220px;"></canvas>
+      <div class="graph-legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#2471a3"></div>Q17 /30</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#1a5c38"></div>Q18 /40</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#b45309"></div>Content</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#8e44ad"></div>Expression</div>
+      </div>
+    </div>
+    <div id="attempt-list" style="display:flex;flex-direction:column;gap:8px;"></div>
   </div>
+  <footer class="light">© 2026 Synge Street Games: Imagination and Perseverance</footer>
 </div>
 
 <script>
-// ============================================================
-// CONFIG — set your Worker URL here
-// ============================================================
 const WORKER_URL = 'https://patient-morning-62fc.seansynge.workers.dev';
+
+// ============================================================
+// Q17 PROMPTS — real JC blog scenarios, 5 sub-questions each
+// ============================================================
+const Q17_PROMPTS = [
+  {
+    scenario: 'You are staying with your Spanish friend Yago in La Coruña. You are really enjoying your Spanish classes in school and have decided to write about it.',
+    bullets: [
+      { label:'(a)', text:'Describe la ciudad de La Coruña.' },
+      { label:'(b)', text:'¿Cómo es tu amigo Yago?' },
+      { label:'(c)', text:'¿Qué comida española has probado?' },
+      { label:'(d)', text:'¿Cómo es el curso de español?' },
+      { label:'(e)', text:'¿Qué hacéis tu amigo Yago y tú después de las clases?' },
+    ]
+  },
+  {
+    scenario: 'You spent last summer in Barcelona as part of a language exchange. Write a blog post about your experience.',
+    bullets: [
+      { label:'(a)', text:'Describe la ciudad de Barcelona.' },
+      { label:'(b)', text:'¿Cómo era tu familia de acogida?' },
+      { label:'(c)', text:'¿Qué comida probaste en Barcelona?' },
+      { label:'(d)', text:'¿Qué hiciste durante el intercambio?' },
+      { label:'(e)', text:'¿Qué aprendiste de la experiencia?' },
+    ]
+  },
+  {
+    scenario: 'You recently took part in a school trip to Madrid. Write a blog for your school website about it.',
+    bullets: [
+      { label:'(a)', text:'¿Cómo es Madrid?' },
+      { label:'(b)', text:'¿Qué monumentos visitaste?' },
+      { label:'(c)', text:'¿Qué comiste en Madrid?' },
+      { label:'(d)', text:'¿Qué fue lo mejor del viaje?' },
+      { label:'(e)', text:'¿Te gustaría volver a Madrid? ¿Por qué?' },
+    ]
+  },
+  {
+    scenario: 'Your Spanish pen pal has asked you to write a blog about life in Ireland. Write the blog in Spanish.',
+    bullets: [
+      { label:'(a)', text:'Describe tu ciudad o pueblo.' },
+      { label:'(b)', text:'¿Cómo es tu familia?' },
+      { label:'(c)', text:'¿Qué te gusta comer?' },
+      { label:'(d)', text:'¿Cómo es tu rutina diaria?' },
+      { label:'(e)', text:'¿Qué haces en tu tiempo libre?' },
+    ]
+  },
+  {
+    scenario: 'You are taking part in a Spanish summer school in Salamanca. You decide to write a blog about your experience.',
+    bullets: [
+      { label:'(a)', text:'Describe la ciudad de Salamanca.' },
+      { label:'(b)', text:'¿Cómo son tus compañeros de clase?' },
+      { label:'(c)', text:'¿Qué comida española te gusta más?' },
+      { label:'(d)', text:'¿Cómo son tus clases de español?' },
+      { label:'(e)', text:'¿Qué haces por las tardes después de las clases?' },
+    ]
+  },
+  {
+    scenario: 'A Spanish magazine is running a competition for young European bloggers. You decide to enter and write about your school life in Ireland.',
+    bullets: [
+      { label:'(a)', text:'Describe tu instituto.' },
+      { label:'(b)', text:'¿Cuáles son tus asignaturas favoritas y por qué?' },
+      { label:'(c)', text:'¿Cómo son tus profesores?' },
+      { label:'(d)', text:'¿Qué haces en el recreo?' },
+      { label:'(e)', text:'¿Qué te gustaría cambiar de tu instituto?' },
+    ]
+  },
+  {
+    scenario: 'You have just returned from a weekend trip to Seville with your family. Write a blog about the visit.',
+    bullets: [
+      { label:'(a)', text:'¿Cómo es Sevilla?' },
+      { label:'(b)', text:'¿Qué visitaste con tu familia?' },
+      { label:'(c)', text:'¿Qué comida típica probaste?' },
+      { label:'(d)', text:'¿Qué fue lo más interesante del viaje?' },
+      { label:'(e)', text:'¿Recomendarías Sevilla a tus amigos? ¿Por qué?' },
+    ]
+  },
+  {
+    scenario: 'Your Spanish teacher has asked everyone in the class to write a blog about their favourite hobby. Write your blog in Spanish.',
+    bullets: [
+      { label:'(a)', text:'¿Cuál es tu pasatiempo favorito?' },
+      { label:'(b)', text:'¿Con quién practicas este pasatiempo?' },
+      { label:'(c)', text:'¿Dónde y cuándo lo practicas?' },
+      { label:'(d)', text:'¿Por qué te gusta tanto?' },
+      { label:'(e)', text:'¿Te gustaría practicarlo profesionalmente en el futuro?' },
+    ]
+  },
+];
+
+// ============================================================
+// Q18 PROMPTS — real JC style, prompts in Spanish, ~200 words
+// ============================================================
+const Q18_PROMPTS = [
+  {
+    intro: 'Your exchange student Ana has written to you. Write a response in SPANISH to her questions below. (Write approximately 200 words)',
+    points: [
+      'Descríbete a ti y a tu familia.',
+      '¿Cómo es tu rutina diaria?',
+      '¿Qué te gusta hacer en tu tiempo libre?',
+      '¿Cómo es tu instituto y cuáles son tus asignaturas favoritas?',
+      '¿Qué planes tienes para el verano?',
+      '¿Cuáles son tus comidas favoritas?',
+      '¿Cómo es el tiempo en Irlanda?',
+      '¿Qué te gustaría ver o hacer cuando yo venga a visitarte?',
+    ]
+  },
+  {
+    intro: 'Your Spanish friend Carlos has emailed you. Write a response in SPANISH to his questions below. (Write approximately 200 words)',
+    points: [
+      '¿Cómo eres físicamente y cómo es tu personalidad?',
+      '¿Con quién vives y cómo es tu familia?',
+      '¿Qué haces los fines de semana?',
+      '¿Qué deporte practicas y por qué te gusta?',
+      '¿Cómo es tu ciudad o pueblo?',
+      '¿Qué tipo de música te gusta escuchar?',
+      '¿Qué haces para ayudar en casa?',
+      '¿Cuáles son tus planes para cuando termines el colegio?',
+    ]
+  },
+  {
+    intro: 'You have received a message from your Spanish pen pal Sofia. Write a response in SPANISH to her questions below. (Write approximately 200 words)',
+    points: [
+      '¿Cuántos años tienes y dónde vives?',
+      '¿Cómo es un día normal en tu vida?',
+      '¿Qué asignaturas estudias y cuál es la más difícil?',
+      '¿Qué haces después del instituto?',
+      '¿Tienes animales en casa?',
+      '¿Qué comida te gusta y qué no te gusta?',
+      '¿Adónde fuiste de vacaciones el año pasado?',
+      '¿Qué te gustaría hacer cuando seas mayor?',
+    ]
+  },
+  {
+    intro: 'A Spanish student called Miguel is coming to stay with you next month. He has sent you some questions. Write a response in SPANISH. (Write approximately 200 words)',
+    points: [
+      '¿Cómo eres? Descríbete.',
+      '¿Cómo es tu familia?',
+      '¿Cómo es tu casa?',
+      '¿Qué comemos normalmente en tu casa?',
+      '¿Qué tiempo hace en Irlanda en otoño?',
+      '¿Qué podemos hacer en tu ciudad o pueblo?',
+      '¿Adónde vamos a ir durante su visita?',
+      '¿Cómo vamos al instituto desde tu casa?',
+    ]
+  },
+  {
+    intro: 'Your Spanish teacher has asked you to write a letter to a Spanish student your age introducing yourself. Write your letter in SPANISH. (Write approximately 200 words)',
+    points: [
+      '¿Cómo te llamas y cuántos años tienes?',
+      '¿Dónde vives y cómo es tu pueblo o ciudad?',
+      '¿Cómo es tu familia?',
+      '¿Qué te gusta hacer en tu tiempo libre?',
+      '¿Qué música, películas o series te gustan?',
+      '¿Cuál es tu asignatura favorita y por qué?',
+      '¿Qué hiciste el verano pasado?',
+      '¿Qué te gustaría hacer en el futuro?',
+    ]
+  },
+];
 
 // ============================================================
 // STATE
 // ============================================================
-let state = {
+const state = {
   name: '',
   lang: 'es',
-  week: 1,
-  history: [],
-  unlockedPhrases: [],
-  scriptData: null,
+  turboData: null, totalStars: 0,
+  currentTask: 'q17',
+  currentPrompt: null,
+  attempts: [],
+  firstVisit: true,
+  nudgeT1: null, nudgeT2: null,
+  usedQ17: [], usedQ18: [],
 };
 
-const LANG_NAMES = { es: 'Spanish', fr: 'French', de: 'German' };
-const WEEK_LABELS = { 1: 'Exploring', 2: 'Building', 3: 'Showtime 🎤' };
+const CAT_KEYS = ['places','people','food','freetime','opinions'];
 
 // ============================================================
-// MOTIVATIONAL QUOTES (shown occasionally)
+// INIT
 // ============================================================
-const QUOTES = [
-  { en: "The secret of getting ahead is getting started.", tl_es: "El secreto para avanzar es empezar.", tl_fr: "Le secret pour avancer, c'est de commencer.", tl_de: "Das Geheimnis des Fortschritts ist der Anfang." },
-  { en: "Every expert was once a beginner.", tl_es: "Todo experto fue alguna vez un principiante.", tl_fr: "Tout expert a été un jour débutant.", tl_de: "Jeder Experte war einmal Anfänger." },
-  { en: "You don't have to be great to start, but you have to start to be great.", tl_es: "No tienes que ser bueno para empezar, pero tienes que empezar para ser bueno.", tl_fr: "Il ne faut pas être bon pour commencer, mais il faut commencer pour être bon.", tl_de: "Du musst nicht gut sein, um anzufangen, aber du musst anfangen, um gut zu sein." },
-  { en: "Courage is speaking even when your voice shakes.", tl_es: "El valor es hablar aunque te tiemble la voz.", tl_fr: "Le courage, c'est parler même quand ta voix tremble.", tl_de: "Mut bedeutet zu sprechen, auch wenn deine Stimme zittert." },
-];
+window.addEventListener('DOMContentLoaded', function() {
+  const saved = localStorage.getItem('jc_attempts');
+  if (saved) state.attempts = JSON.parse(saved);
+  if (localStorage.getItem('jc_first_visit') === 'no') state.firstVisit = false;
+  const uq17 = localStorage.getItem('jc_used_q17');
+  if (uq17) state.usedQ17 = JSON.parse(uq17);
+  const uq18 = localStorage.getItem('jc_used_q18');
+  if (uq18) state.usedQ18 = JSON.parse(uq18);
+  state.turboData = JSON.parse(localStorage.getItem('jc_turbo_data') || 'null');
+  state.lang = localStorage.getItem('jc_turbo_lang') || 'es';
+  state.totalStars = countStars();
 
-// ============================================================
-// WELCOME SCREEN
-// ============================================================
-function selectLang(btn) {
-  document.querySelectorAll('.lang-choice').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  state.lang = btn.dataset.lang;
+  const note = document.getElementById('turbo-note');
+  if (state.totalStars >= 5) {
+    note.textContent = '⭐ ' + state.totalStars + ' Turbo star' + (state.totalStars !== 1 ? 's' : '') + ' — he\'ll know.';
+  } else {
+    note.textContent = '⚠️ You need 5 Turbo stars to earn The Brother. You have ' + state.totalStars + '. Go do the work first.';
+    note.style.color = '#e67e22';
+    note.style.fontStyle = 'normal';
+  }
+
+  const n = localStorage.getItem('jc_brother_name');
+  const g = localStorage.getItem('jc_brother_grade');
+  if (n) document.getElementById('inp-name').value = n;
+  if (g) document.querySelectorAll('.grade-btn').forEach(function(b) {
+    if (b.dataset.grade === g) { b.classList.add('selected'); state.grade = g; }
+  });
+});
+
+function countStars() {
+  let t = 0;
+  CAT_KEYS.forEach(function(cat) {
+    for (let lv = 1; lv <= 10; lv++) {
+      const s = localStorage.getItem('jc_turbo_best_' + cat + '_' + lv);
+      if (s) t += parseInt(s) || 0;
+    }
+  });
+  return t;
 }
 
-function selectWeek(btn) {
-  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('selected'));
+// ============================================================
+// WELCOME
+// ============================================================
+function selectGrade(btn) {
+  document.querySelectorAll('.grade-btn').forEach(function(b) { b.classList.remove('selected'); });
   btn.classList.add('selected');
-  state.week = parseInt(btn.dataset.week);
+  state.grade = btn.dataset.grade;
 }
+
+const STAR_GATE = 5;
 
 function enterBrother() {
   const name = document.getElementById('inp-name').value.trim();
   if (!name) { document.getElementById('inp-name').focus(); return; }
+
+  const liveStars = countStars();
+  state.totalStars = liveStars;
+
+  const note = document.getElementById('turbo-note');
+  if (liveStars < STAR_GATE) {
+    note.textContent = '⚠️ You need ' + STAR_GATE + ' Turbo stars to earn The Brother. You have ' + liveStars + '. Go do the work first.';
+    note.style.color = '#e67e22';
+    note.style.fontStyle = 'normal';
+    note.style.fontWeight = 'bold';
+    return;
+  }
+
   state.name = name;
-
-  // Load any unlocked phrases from Turbo localStorage
-  state.unlockedPhrases = getUnlockedPhrases();
-
-  // Save to localStorage
-  localStorage.setItem('brother_name', name);
-  localStorage.setItem('brother_lang', state.lang);
-  localStorage.setItem('brother_week', state.week);
-
-  // Load existing history if any
-  const saved = localStorage.getItem(`brother_history_${state.lang}`);
-  state.history = saved ? JSON.parse(saved) : [];
-
+  localStorage.setItem('jc_brother_name', name);
   showReveal();
 }
 
-function getUnlockedPhrases() {
-  // Pull best-scored phrases from Turbo localStorage
-  const phrases = [];
-  const cats = ['identity','family','likes','school','hobbies','opinions'];
-  cats.forEach(cat => {
-    for (let lv = 1; lv <= 5; lv++) {
-      const stars = localStorage.getItem(`turbo_best_${state.lang}_${cat}_${lv}`);
-      if (stars && parseInt(stars) >= 2) {
-        phrases.push(`[${cat}] Level ${lv} — strong performance`);
-      }
-    }
-  });
-  return phrases;
-}
-
 // ============================================================
-// REVEAL SCREEN
+// REVEAL
 // ============================================================
 function showReveal() {
-  const week = state.week;
   const name = state.name;
-  const revealText = document.getElementById('reveal-text');
-  const revealSub = document.getElementById('reveal-sub');
+  const stars = state.totalStars;
+  const attempts = state.attempts.length;
 
-  if (week === 3) {
-    revealText.textContent = `${name}. Week 3. Right.`;
-    revealSub.textContent = `No messing around now. Presentations are coming.\nLet's make sure you're ready.`;
-  } else if (week === 2) {
-    revealText.textContent = `Back again, ${name}.`;
-    revealSub.textContent = `Good. Week 2. Time to take what you have\nand make it into something real.`;
+  let main, sub;
+  if (attempts === 0) {
+    main = 'Right, ' + name + '. Sit down.';
+    sub = 'First time here. Good.\nI give you the real questions. You write. I mark it against the actual scheme and show you exactly what happened.\n\nOne rule before we start: never leave a point blank. Ever. Even a bad line gets 1 mark. A blank gets 0 — and it caps your expression mark on top of that. Write something for every point. Always.';
   } else {
-    revealText.textContent = `Ah. There you are, ${name}.`;
-    revealSub.textContent = `Good work on Turbo. Now let's build something real.\nGood. You're ready. Let's build something.`;
+    const best = Math.max.apply(null, state.attempts.map(function(a) { return a.total; }));
+    const avg = Math.round(state.attempts.reduce(function(s, a) { return s + a.total; }, 0) / state.attempts.length);
+    main = 'Good to see you back, ' + name + '.';
+    sub = attempts + ' attempt' + (attempts !== 1 ? 's' : '') + ' done. Best: ' + best + '/70. Average: ' + avg + '/70.\nLet\'s keep the graph moving.';
   }
+  if (stars > 0) sub += '\n\n' + stars + ' Turbo star' + (stars !== 1 ? 's' : '') + '. I know what you\'ve been practising.';
 
+  document.getElementById('reveal-text').textContent = main;
+  document.getElementById('reveal-sub').textContent = sub;
   showScreen('screen-reveal');
 }
 
-function goToChat() {
-  setupChatHeader();
-  showScreen('screen-chat');
-
-  // First message if no history
-  if (state.history.length === 0) {
-    openingMessage();
-  } else {
-    renderHistory();
-  }
+function goToCoach() {
+  document.getElementById('header-grade').textContent = 'Written Production · Q17 & Q18';
+  showScreen('screen-coach');
+  document.getElementById('coach-body').innerHTML = '';
+  openingGreeting();
 }
 
 // ============================================================
-// CHAT
+// OPENING
 // ============================================================
-function setupChatHeader() {
-  document.getElementById('header-week-label').textContent =
-    `Week ${state.week} · ${LANG_NAMES[state.lang]}`;
-
-  document.querySelectorAll('.week-pip').forEach(pip => {
-    pip.classList.toggle('active', parseInt(pip.dataset.week) === state.week);
-  });
-}
-
-async function openingMessage() {
+function openingGreeting() {
   const name = state.name;
-  const lang = LANG_NAMES[state.lang];
-  const week = state.week;
+  let msg = '';
 
-  let opener;
-  if (week === 1) {
-    opener = `Right, ${name}. Welcome. I'm The Brother — and I'm going to help you get through this CBA in one piece.\n\nHere's the deal: you've got three weeks. In that time we're going to build a presentation about you — your life, your interests, your opinions — in ${lang}. And it's going to be good.\n\nBut first things first. Tell me about yourself. Who is ${name}? Where are you from, what are you into, what do you actually care about? Don't be shy — this whole thing is about you.`;
-  } else if (week === 2) {
-    opener = `${name}. Week 2. Good — you're still here, that's something.\n\nBy now you should have a rough idea of what you want to talk about. Let's sharpen it up. Tell me what you've got so far — what topics, what phrases, what format are you thinking? And we'll turn it into something solid.\n\nCome on. What have you got?`;
+  if (state.firstVisit) {
+    msg = 'Right, ' + name + '. Here is how this works.\n\nTwo questions. Q17 is a blog — five bullet points, 30 marks. Q18 is a longer response — eight prompts, 40 marks. Together that is 70 marks.\n\nThe one thing that kills marks that nobody tells you: leave a bullet point blank and you do not just lose content marks — you cap your expression mark too. So the golden rule is always write something for every point. Even a line. A bad line can get 1 mark. A blank always gets 0.\n\nI give you the real questions. You write. I mark it against the actual scheme. Let\'s go.';
+    localStorage.setItem('jc_first_visit', 'no');
+    state.firstVisit = false;
+  } else if (state.attempts.length > 0) {
+    const best = Math.max.apply(null, state.attempts.map(function(a) { return a.total; }));
+    const avg = Math.round(state.attempts.reduce(function(s, a) { return s + a.total; }, 0) / state.attempts.length);
+    msg = name + '. ' + state.attempts.length + ' attempt' + (state.attempts.length !== 1 ? 's' : '') + ' done. Best: ' + best + '/70. Average: ' + avg + '/70.\n\nLet\'s keep going. Here is your next question.';
   } else {
-    opener = `${name}. Week 3. Right. I won't waste your time with pleasantries.\n\nPresentations are coming. Let's see where you are. Tell me — what are you opening with? First sentence of your presentation, go.`;
+    msg = name + '. Good. Let\'s get straight into it.';
   }
 
-  addMessage('brother', opener);
-  saveHistory();
-}
-
-function renderHistory() {
-  const container = document.getElementById('chat-messages');
-  container.innerHTML = '';
-  state.history.forEach(msg => {
-    renderMessage(msg.role, msg.content, false);
-  });
-  scrollToBottom();
-}
-
-function addMessage(role, content) {
-  state.history.push({ role, content });
-  saveHistory();
-  renderMessage(role, content, true);
-  scrollToBottom();
-}
-
-function renderMessage(role, content, animate) {
-  const container = document.getElementById('chat-messages');
-  const wrapper = document.createElement('div');
-  wrapper.className = `msg ${role}`;
-  if (!animate) wrapper.style.animation = 'none';
-
-  const avatar = document.createElement('div');
-  avatar.className = 'msg-avatar';
-  avatar.textContent = role === 'brother' ? '🧓' : '🧑';
-
-  const bubble = document.createElement('div');
-  bubble.className = 'msg-bubble';
-
-  // Format content — handle line breaks
-  const formatted = content.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
-  bubble.innerHTML = `<p>${formatted}</p>`;
-
-  wrapper.appendChild(avatar);
-  wrapper.appendChild(bubble);
-  container.appendChild(wrapper);
-}
-
-function showTyping() {
-  const container = document.getElementById('chat-messages');
-  const wrapper = document.createElement('div');
-  wrapper.className = 'msg brother';
-  wrapper.id = 'typing-indicator';
-
-  const avatar = document.createElement('div');
-  avatar.className = 'msg-avatar';
-  avatar.textContent = '🧓';
-
-  const bubble = document.createElement('div');
-  bubble.className = 'typing-indicator';
-  bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-
-  wrapper.appendChild(avatar);
-  wrapper.appendChild(bubble);
-  container.appendChild(wrapper);
-  scrollToBottom();
-}
-
-function hideTyping() {
-  const el = document.getElementById('typing-indicator');
-  if (el) el.remove();
-}
-
-async function sendMessage() {
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-
-  input.value = '';
-  autoResize(input);
-
-  addMessage('user', text);
-  showTyping();
-
-  document.getElementById('send-btn').disabled = true;
-
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        mode: 'chat',
-        name: state.name,
-        lang: state.lang,
-        week: state.week,
-        history: state.history,
-        unlocked_phrases: state.unlockedPhrases,
-      })
-    });
-    const data = await res.json();
-    hideTyping();
-
-    let reply = data.reply || "Sorry, something went wrong there. Try again.";
-
-    // Occasionally inject a quote (every ~5 messages)
-    if (state.history.length % 10 === 8) {
-      const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-      const tl = q[`tl_${state.lang}`] || q.tl_es;
-      reply += `\n\n💬 "${q.en}"\n${tl}`;
-    }
-
-    addMessage('brother', reply);
-  } catch (err) {
-    hideTyping();
-    addMessage('brother', `Hmm. I lost the connection there for a second. Try again — don't let it put you off.`);
-  }
-
-  document.getElementById('send-btn').disabled = false;
-}
-
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-}
-
-function useHint(text) {
-  document.getElementById('chat-input').value = text;
-  sendMessage();
-}
-
-function changeWeek(week) {
-  state.week = week;
-  localStorage.setItem('brother_week', week);
-  setupChatHeader();
-
-  const weekMsg = week === 3
-    ? `Right, ${state.name} — we're in Week 3 now. Time is nearly up. Let's see what you have and get this finished.`
-    : week === 2
-    ? `Week 2 now, ${state.name}. Good. Let's take what you have and build it into something solid.`
-    : `Back to Week 1 thinking — let's explore.`;
-
-  addMessage('brother', weekMsg);
-}
-
-function goHome() {
-  showScreen('screen-welcome');
+  addBMsg(msg);
+  setTimeout(function() { givePrompt(state.currentTask); }, 500);
 }
 
 // ============================================================
-// VOICE INPUT
+// TASK SELECTOR
 // ============================================================
-let recognition = null;
-let isListening = false;
+function setTask(task, btn) {
+  if (state.currentTask === task) return; // already on this task
+  state.currentTask = task;
+  document.querySelectorAll('.task-pip').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  // Clear and give a fresh prompt for the new task type
+  const body = document.getElementById('coach-body');
+  body.innerHTML = '';
+  clearTimeout(state.nudgeT1); clearTimeout(state.nudgeT2);
+  const label = task === 'q17' ? 'Q17 Blog' : 'Q18 Response';
+  addBMsg('Switching to ' + label + '. Here is your question.');
+  setTimeout(function() { givePrompt(task); }, 300);
+}
 
-function toggleVoice() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    alert('Voice input is not supported in this browser. Try Chrome.');
+// ============================================================
+// GIVE PROMPT
+// ============================================================
+function getNextPrompt(type) {
+  const pool = type === 'q17' ? Q17_PROMPTS : Q18_PROMPTS;
+  const used  = type === 'q17' ? state.usedQ17 : state.usedQ18;
+  if (used.length >= pool.length) {
+    if (type === 'q17') state.usedQ17 = []; else state.usedQ18 = [];
+    used.length = 0;
+  }
+  const available = pool.map(function(_, i) { return i; }).filter(function(i) { return !used.includes(i); });
+  const idx = available[Math.floor(Math.random() * available.length)];
+  used.push(idx);
+  localStorage.setItem('jc_used_' + type, JSON.stringify(used));
+  return pool[idx];
+}
+
+function givePrompt(task) {
+  const prompt = getNextPrompt(task);
+  state.currentPrompt = { task, prompt };
+  const body = document.getElementById('coach-body');
+
+  const card = document.createElement('div');
+  card.className = 'prompt-card';
+
+  if (task === 'q17') {
+    card.innerHTML =
+      '<div class="prompt-label">📝 Q17 — Blog <span class="marks-chip">30 marks</span></div>' +
+      '<div class="prompt-scenario">' + escHtml(prompt.scenario) + '</div>' +
+      '<div class="prompt-title">Write a blog in SPANISH giving answers to the following:</div>' +
+      '<ul class="prompt-bullets">' +
+      prompt.bullets.map(function(b) {
+        return '<li class="q17" data-label="' + b.label + '">' + escHtml(b.text) + '</li>';
+      }).join('') + '</ul>';
+  } else {
+    card.innerHTML =
+      '<div class="prompt-label">✉️ Q18 — Response <span class="marks-chip">40 marks</span></div>' +
+      '<div class="prompt-scenario">' + escHtml(prompt.intro) + '</div>' +
+      '<ul class="prompt-bullets">' +
+      prompt.points.map(function(p) {
+        return '<li class="q18">' + escHtml(p) + '</li>';
+      }).join('') + '</ul>';
+  }
+  body.appendChild(card);
+
+  const zone = document.createElement('div');
+  zone.className = 'write-zone';
+  zone.id = 'write-zone';
+  const wordTarget = task === 'q17' ? '~100 words' : '~200 words';
+  zone.innerHTML =
+    '<div class="write-label"><span>Your answer in Spanish</span><span class="word-count" id="wc">0 words — aim for ' + wordTarget + '</span></div>' +
+    '<textarea class="write-ta" id="write-ta" placeholder="Escribe aquí en español..." oninput="updateWC()"></textarea>' +
+    '<div class="write-footer"><button class="submit-btn" type="button" id="sub-btn" onclick="submitWriting()">Submit for marking →</button></div>';
+  body.appendChild(zone);
+  scrollBottom();
+
+  clearTimeout(state.nudgeT1); clearTimeout(state.nudgeT2);
+  state.nudgeT1 = setTimeout(function() {
+    if (document.getElementById('write-zone'))
+      addNudge('Still writing? Good. Remember — answer every point, even briefly. A line per point is enough to keep your expression marks safe.');
+  }, 4 * 60 * 1000);
+  state.nudgeT2 = setTimeout(function() {
+    if (document.getElementById('write-zone'))
+      addNudge('Right, ' + state.name + '. Come on now. Submit what you have. Even an unfinished answer teaches us something.');
+  }, 8 * 60 * 1000);
+}
+
+function updateWC() {
+  const t = document.getElementById('write-ta').value.trim();
+  const w = t ? t.split(/\s+/).length : 0;
+  const target = state.currentTask === 'q17' ? '~100' : '~200';
+  document.getElementById('wc').textContent = w + ' word' + (w !== 1 ? 's' : '') + ' — aim for ' + target;
+}
+
+function addNudge(msg) {
+  const el = document.createElement('div');
+  el.className = 'nudge';
+  el.innerHTML = '⏱ ' + escHtml(msg);
+  document.getElementById('coach-body').appendChild(el);
+  scrollBottom();
+}
+
+// ============================================================
+// SUBMIT & MARK
+// ============================================================
+async function submitWriting() {
+  const text = document.getElementById('write-ta').value.trim();
+  if (!text || text.split(/\s+/).length < 10) {
+    addNudge('Write a bit more first — even a few lines gives me something to mark.');
     return;
   }
 
-  if (isListening) {
-    recognition.stop();
-    return;
-  }
+  clearTimeout(state.nudgeT1); clearTimeout(state.nudgeT2);
+  document.getElementById('write-ta').disabled = true;
+  document.getElementById('sub-btn').disabled = true;
 
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SpeechRecognition();
-  recognition.lang = state.lang === 'es' ? 'es-ES' : state.lang === 'fr' ? 'fr-FR' : 'de-DE';
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
-  recognition.onstart = () => {
-    isListening = true;
-    document.getElementById('voice-btn').classList.add('listening');
-    document.getElementById('voice-btn').textContent = '🔴';
-  };
-
-  recognition.onresult = (e) => {
-    const transcript = e.results[0][0].transcript;
-    document.getElementById('chat-input').value = transcript;
-  };
-
-  recognition.onend = () => {
-    isListening = false;
-    document.getElementById('voice-btn').classList.remove('listening');
-    document.getElementById('voice-btn').textContent = '🎤';
-  };
-
-  recognition.start();
-}
-
-// Text to speech
-function speak(text) {
-  if (!('speechSynthesis' in window)) return;
-  const lang = state.lang === 'es' ? 'es-ES' : state.lang === 'fr' ? 'fr-FR' : 'de-DE';
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang;
-  utterance.rate = 0.9;
-  window.speechSynthesis.speak(utterance);
-}
-
-// ============================================================
-// SCRIPT BUILDING
-// ============================================================
-async function buildScript() {
-  showScreen('screen-script');
-  document.getElementById('script-content').innerHTML = '<div class="loading-msg">The Brother is building your script... <span class="spinner"></span></div>';
+  const typing = addTyping();
 
   try {
+    const task = state.currentTask;
+    const prompt = state.currentPrompt.prompt;
+    const turboSummary = buildTurboSummary();
+
     const res = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        mode: 'script_build',
+        mode: 'jc_mark',
         name: state.name,
         lang: state.lang,
-        history: state.history,
-        format: 'visual presentation',
+        task: task,
+        prompt_scenario: task === 'q17' ? prompt.scenario : prompt.intro,
+        prompt_points: task === 'q17'
+          ? prompt.bullets.map(function(b) { return b.label + ' ' + b.text; })
+          : prompt.points,
+        writing: text,
+        turbo_summary: turboSummary,
+        attempt_number: state.attempts.length + 1,
+        previous_total: state.attempts.length > 0 ? state.attempts[state.attempts.length-1].total : null,
+        recent_totals: state.attempts.slice(-4).map(function(a) { return a.total; }),
       })
     });
     const data = await res.json();
-
-    if (data.script) {
-      renderScript(data.script);
-      state.scriptData = data.script;
-    } else {
-      document.getElementById('script-content').innerHTML = '<div class="loading-msg">Hmm, could not build the script yet. Go back and chat a bit more first.</div>';
-    }
-  } catch {
-    document.getElementById('script-content').innerHTML = '<div class="loading-msg">Connection problem. Try again in a moment.</div>';
-  }
-}
-
-function renderScript(script) {
-  const content = document.getElementById('script-content');
-  const langFull = LANG_NAMES[state.lang];
-
-  let html = `
-    <h1 class="script-title">${escHtml(script.title || 'My Presentation')}</h1>
-    <p class="script-meta">${escHtml(state.name)} · ${langFull} CBA · Week ${state.week}</p>
-  `;
-
-  (script.sections || []).forEach(sec => {
-    html += `
-      <div class="script-section">
-        <div class="script-section-heading">${escHtml(sec.heading)}</div>
-        <div class="script-tl">${escHtml(sec.target_lang)}</div>
-        <div class="script-en">${escHtml(sec.english)}</div>
-        ${sec.tips ? `<div class="script-tip">💡 ${escHtml(sec.tips)}</div>` : ''}
-      </div>
-    `;
-  });
-
-  if (script.what_to_practice) {
-    html += `
-      <div class="script-footer">
-        <h4>Focus on</h4>
-        <p>${escHtml(script.what_to_practice)}</p>
-      </div>
-    `;
-  }
-
-  if (script.encouragement) {
-    html += `
-      <div class="script-footer" style="border-color:var(--brother); background:var(--brother-light);">
-        <h4 style="color:var(--brother);">The Brother says</h4>
-        <p style="color:var(--brother);">${escHtml(script.encouragement)}</p>
-      </div>
-    `;
-  }
-
-  html += `
-    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
-    <button class="back-to-chat" onclick="showScreen('screen-chat')">← Back to The Brother</button>
-  `;
-
-  content.innerHTML = html;
-}
-
-// ============================================================
-// REFLECTION NOTE
-// ============================================================
-async function showReflect() {
-  showScreen('screen-script');
-  document.getElementById('script-content').innerHTML = '<div class="loading-msg">Writing your reflection note... <span class="spinner"></span></div>';
-
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        mode: 'reflect',
-        name: state.name,
-        lang: state.lang,
-        history: state.history,
-      })
-    });
-    const data = await res.json();
-
-    if (data.reflect) {
-      renderReflection(data.reflect);
-    } else {
-      document.getElementById('script-content').innerHTML = '<div class="loading-msg">Not enough conversation yet. Chat more with The Brother first, then come back.</div>';
-    }
-  } catch {
-    document.getElementById('script-content').innerHTML = '<div class="loading-msg">Connection problem. Try again in a moment.</div>';
-  }
-}
-
-function renderReflection(reflect) {
-  const content = document.getElementById('script-content');
-  let html = `
-    <h1 class="script-title">Student Reflection Note</h1>
-    <p class="script-meta">${escHtml(state.name)} · ${LANG_NAMES[state.lang]} CBA</p>
-    <div class="script-section">
-      <div class="script-section-heading">My Reflection</div>
-      <div class="script-tl" style="font-family:'Nunito',sans-serif; font-size:0.95rem; line-height:1.7;">${escHtml(reflect.reflection)}</div>
-    </div>
-  `;
-
-  if (reflect.prompts && reflect.prompts.length) {
-    html += `
-      <div class="script-footer">
-        <h4>Add your own thoughts</h4>
-        ${reflect.prompts.map(p => `<p style="margin-bottom:8px;">• ${escHtml(p)}</p>`).join('')}
-      </div>
-    `;
-  }
-
-  html += `
-    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
-    <button class="back-to-chat" onclick="showScreen('screen-chat')">← Back to The Brother</button>
-  `;
-
-  content.innerHTML = html;
-}
-
-
-// ============================================================
-// SLIDES — calls worker for plan, builds real .pptx with PptxGenJS
-// ============================================================
-async function buildSlides() {
-  showScreen('screen-script');
-  document.getElementById('script-content').innerHTML = '<div class="loading-msg">The Brother is building your slides... <span class="spinner"></span></div>';
-
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        mode: 'pptx_plan',
-        name: state.name,
-        lang: state.lang,
-        history: state.history,
-      })
-    });
-    const data = await res.json();
-    if (!data.plan) throw new Error(data.error || 'No plan returned');
-    await makePptx(data.plan);
+    removeTyping(typing);
+    if (data.mark) showMark(data.mark, task);
+    else addBMsg('Something went wrong with the marking. Try submitting again.');
   } catch(e) {
-    document.getElementById('script-content').innerHTML =
-      '<div class="loading-msg">Could not build slides. Chat more with The Brother first, then try again.<br><small>' + e.message + '</small></div>';
+    removeTyping(typing);
+    addBMsg('Lost the connection. Check your signal and try again.');
   }
 }
 
-async function makePptx(plan) {
-  const LANG_COLORS = { es: '2471a3', fr: 'd4213d', de: '1a1a2e' };
-  const accent = LANG_COLORS[plan.lang] || '2471a3';
-  const pptx = new PptxGenJS();
+function showMark(mark, task) {
+  const body = document.getElementById('coach-body');
+  const maxTotal = task === 'q17' ? 30 : 40;
+  const maxContent = task === 'q17' ? 10 : 16;
+  const maxExpression = task === 'q17' ? 20 : 24;
+  const numPoints = task === 'q17' ? 5 : 8;
 
-  pptx.layout = 'LAYOUT_WIDE';
-  pptx.title = plan.title || (state.name + ' — CBA Presentation');
-  pptx.author = 'Synge Street CBS — The Brother';
+  state.attempts.push({
+    task: task,
+    taskLabel: task === 'q17' ? 'Q17 Blog' : 'Q18 Response',
+    contentTotal: mark.content_total,
+    expressionTotal: mark.expression_total,
+    total: mark.total,
+    feedback: mark.feedback,
+    date: new Date().toLocaleDateString('en-IE'),
+  });
+  localStorage.setItem('jc_attempts', JSON.stringify(state.attempts.slice(-20)));
 
-  // Define master slide colours
-  const BG = 'f8f9fa';
-  const DARK = '1a1a2e';
-  const ACCENT = accent;
+  const totalColor = mark.total >= maxTotal * 0.8 ? '#1a5c38'
+                   : mark.total >= maxTotal * 0.6 ? '#b45309'
+                   : '#c0392b';
 
-  plan.slides.forEach(function(slide, idx) {
-    const s = pptx.addSlide();
+  const card = document.createElement('div');
+  card.className = 'mark-card';
 
-    // Background
-    s.background = { color: idx === 0 ? DARK : BG };
+  let html = '<div class="mark-label">Your marks — ' + (task === 'q17' ? 'Q17 Blog' : 'Q18 Response') + '</div>';
 
-    // Top colour bar
-    s.addShape(pptx.ShapeType.rect, {
-      x: 0, y: 0, w: '100%', h: 0.18,
-      fill: { color: ACCENT }, line: { color: ACCENT }
+  // Individual bullet scores for Q17
+  if (task === 'q17' && mark.bullet_scores) {
+    html += '<div class="q17-bullets-mark">';
+    const prompt = state.currentPrompt.prompt;
+    mark.bullet_scores.forEach(function(score, i) {
+      const label = prompt.bullets[i] ? prompt.bullets[i].label : '(' + String.fromCharCode(97+i) + ')';
+      const text = prompt.bullets[i] ? prompt.bullets[i].text : '';
+      const col = score === 2 ? '#27ae60' : score === 1 ? '#b45309' : '#c0392b';
+      html += '<div class="q17-bullet-row">' +
+        '<div class="q17-bullet-letter">' + label + '</div>' +
+        '<div class="q17-bullet-text">' + escHtml(text) + '</div>' +
+        '<div class="q17-bullet-score" style="color:' + col + '">' + score + '/2</div>' +
+        '</div>';
     });
+    html += '</div>';
+  }
 
-    if (idx === 0) {
-      // Title slide
-      s.addText(plan.title || 'Mo Chur i Láthair', {
-        x: 0.5, y: 1.2, w: 9, h: 1.4,
-        fontSize: 40, bold: true, color: 'FFFFFF',
-        align: 'center', fontFace: 'Arial'
-      });
-      s.addText(plan.student || state.name, {
-        x: 0.5, y: 2.8, w: 9, h: 0.7,
-        fontSize: 24, color: 'ccddee',
-        align: 'center', fontFace: 'Arial'
-      });
-      s.addText('Synge Street CBS', {
-        x: 0.5, y: 3.6, w: 9, h: 0.5,
-        fontSize: 14, color: '8899aa',
-        align: 'center', fontFace: 'Arial'
-      });
-    } else {
-      // Heading
-      s.addText(slide.heading || '', {
-        x: 0.5, y: 0.28, w: 9, h: 0.72,
-        fontSize: 26, bold: true, color: ACCENT,
-        fontFace: 'Arial'
-      });
-      // Divider line
-      s.addShape(pptx.ShapeType.line, {
-        x: 0.5, y: 1.05, w: 9, h: 0,
-        line: { color: ACCENT, width: 1.5 }
-      });
-      // Bullets
-      if (slide.bullets && slide.bullets.length) {
-        const bulletText = slide.bullets.map(b => ({ text: b, options: { bullet: { type: 'bullet' }, paraSpaceAfter: 6 } }));
-        s.addText(bulletText, {
-          x: 0.5, y: 1.2, w: 8.8, h: 3.0,
-          fontSize: 20, color: DARK,
-          fontFace: 'Arial', valign: 'top'
-        });
-      }
-      // Speaker note
-      if (slide.speakerNote) {
-        s.addNotes(slide.speakerNote);
-      }
-    }
+  // Q18 content total
+  if (task === 'q18') {
+    html += '<div class="mark-section"><span class="mark-section-label">Content (' + numPoints + ' points × 2m)</span><span class="mark-section-val">' + mark.content_total + '/' + maxContent + '</span></div>';
+  }
 
-    // Slide number (not on title)
-    if (idx > 0) {
-      s.addText(String(idx) + ' / ' + (plan.slides.length - 1), {
-        x: 8.8, y: 4.9, w: 1, h: 0.3,
-        fontSize: 10, color: 'aabbcc', align: 'right', fontFace: 'Arial'
-      });
-    }
+  html += '<div class="mark-section"><span class="mark-section-label">Content total</span><span class="mark-section-val">' + mark.content_total + '/' + maxContent + '</span></div>';
+  html += '<div class="mark-section"><span class="mark-section-label">Expression</span><span class="mark-section-val">' + mark.expression_total + '/' + maxExpression + '</span></div>';
+  html += '<div class="mark-total" style="background:' + totalColor + '"><div class="mark-total-num">' + mark.total + '<span style="font-size:1rem;opacity:0.7">/' + maxTotal + '</span></div><div class="mark-total-sub">' + gradeEq(mark.total, maxTotal) + '</div></div>';
+  html += '<div class="mark-feedback">' + formatFeedback(mark.feedback) + '</div>';
 
-    // Footer watermark
-    s.addText('© Synge Street Games', {
-      x: 0.3, y: 4.9, w: 4, h: 0.3,
-      fontSize: 9, color: 'cccccc', fontFace: 'Arial'
-    });
+  card.innerHTML = html;
+  body.appendChild(card);
+
+  if (mark.improved_writing) {
+    const imp = document.createElement('div');
+    imp.className = 'improved-card';
+    imp.innerHTML =
+      '<div class="improved-label">✏️ Your answer — improved</div>' +
+      '<div class="improved-intro">Same ideas, same voice. Here\'s what it looks like with the gaps fixed.</div>' +
+      '<div class="improved-text">' + formatImproved(mark.improved_writing) + '</div>';
+    body.appendChild(imp);
+  }
+
+  if (mark.prescription) {
+    const presc = document.createElement('div');
+    presc.className = 'prescription';
+    presc.innerHTML =
+      '<div class="presc-label">🎯 Prescription</div>' +
+      '<div class="presc-text">' + escHtml(mark.prescription) + '</div>' +
+      (mark.turbo_needed ? '<a class="turbo-link" href="jc-turbo.html">Go to Turbo →</a>' : '');
+    body.appendChild(presc);
+  }
+
+  const actions = document.createElement('div');
+  actions.className = 'action-row';
+  actions.innerHTML =
+    '<button class="action-btn primary" type="button" onclick="nextAttempt()">Try another question →</button>' +
+    '<button class="action-btn" type="button" onclick="showScreen(\'screen-graph\')">📈 See progress</button>';
+  body.appendChild(actions);
+  scrollBottom();
+}
+
+function gradeEq(total, max) {
+  const pct = Math.round((total / max) * 100);
+  if (pct >= 90) return pct + '% — Distinction 🌟';
+  if (pct >= 80) return pct + '% — Higher Merit';
+  if (pct >= 70) return pct + '% — Merit';
+  if (pct >= 60) return pct + '% — Achieved';
+  if (pct >= 50) return pct + '% — Partially Achieved';
+  return pct + '% — keep going, it will come';
+}
+
+function nextAttempt() {
+  document.getElementById('coach-body').innerHTML = '';
+  addBMsg(state.name + '. Good. Next one. Here it is.');
+  setTimeout(function() { givePrompt(state.currentTask); }, 400);
+}
+
+// ============================================================
+// GRAPH
+// ============================================================
+function renderGraph() {
+  const attempts = state.attempts;
+  const list = document.getElementById('attempt-list');
+  list.innerHTML = '';
+
+  if (!attempts.length) {
+    list.innerHTML = '<p style="color:var(--muted);font-size:0.88rem;text-align:center;padding:20px">No attempts yet — go write something.</p>';
+    document.getElementById('stats-bar').innerHTML = '';
+    return;
+  }
+
+  // Stats bar
+  const totals = attempts.map(function(a) { return a.total; });
+  const best = Math.max.apply(null, totals);
+  const avg  = Math.round(totals.reduce(function(s,v){return s+v;},0) / totals.length);
+  const last = totals[totals.length-1];
+  const prev = totals.length > 1 ? totals[totals.length-2] : null;
+  const trend = prev !== null ? (last > prev ? '📈 +' + (last-prev) : last < prev ? '📉 ' + (last-prev) : '➡️ same') : null;
+
+  const statChip = function(label, val, color) {
+    return '<div style="flex:1;min-width:80px;background:white;border:1px solid var(--border);border-radius:10px;padding:10px 8px;text-align:center;">' +
+      '<div style="font-size:1.3rem;font-weight:900;color:' + color + '">' + val + '</div>' +
+      '<div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">' + label + '</div>' +
+      '</div>';
+  };
+  let statsHtml = statChip('Attempts', attempts.length, 'var(--brother)');
+  statsHtml += statChip('Best /70', best, '#1a5c38');
+  statsHtml += statChip('Average', avg, 'var(--gold)');
+  if (trend) statsHtml += statChip('Last vs prev', trend, 'var(--ink)');
+  document.getElementById('stats-bar').innerHTML = statsHtml;
+
+  const canvas = document.getElementById('progress-chart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.parentElement.clientWidth - 32 || 300;
+  const h = 220;
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  ctx.scale(dpr, dpr);
+
+  const pad = { t: 16, r: 16, b: 28, l: 32 };
+  const cw = w - pad.l - pad.r, ch = h - pad.t - pad.b;
+  const n = attempts.length;
+  const maxScore = 70; // Q17(30) + Q18(40)
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Grid
+  [0, 14, 28, 42, 56, 70].forEach(function(v) {
+    const y = pad.t + ch - (v / maxScore) * ch;
+    ctx.strokeStyle = '#eee'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + cw, y); ctx.stroke();
+    ctx.fillStyle = '#bbb'; ctx.font = '9px Nunito,sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(v, pad.l - 4, y + 3);
   });
 
-  // Download
-  const filename = (plan.student || state.name).replace(/[^a-zA-Z0-9]/g,'_') + '_CBA_Slides.pptx';
-  await pptx.writeFile({ fileName: filename });
+  const xPos = function(i) { return pad.l + (n === 1 ? cw / 2 : (i / (n - 1)) * cw); };
+  const yPos = function(v) { return pad.t + ch - (v / maxScore) * ch; };
 
-  // Show success in screen
-  const content = document.getElementById('script-content');
-  const note = plan.brotherNote || 'Now go show them what you can do.';
-  content.innerHTML =
-    '<div style="text-align:center;padding:40px 20px;">' +
-    '<div style="font-size:3rem;margin-bottom:16px;">🎞️</div>' +
-    '<h2 style="color:var(--brother);margin-bottom:8px;">Slides downloaded!</h2>' +
-    '<p style="color:#555;margin-bottom:6px;"><strong>' + filename + '</strong></p>' +
-    '<p style="color:#888;font-size:0.9rem;margin-bottom:24px;">' + note + '</p>' +
-    '<p style="color:#aaa;font-size:0.8rem;">Open in PowerPoint or Keynote. Add images. Make it yours.</p>' +
-    '<button class="print-btn" onclick="buildSlides()" style="margin-top:20px;">🔄 Rebuild Slides</button> ' +
-    '<button class="back-to-chat" onclick="showScreen(\'screen-chat\')">← Back to The Brother</button>' +
-    '</div>';
+  // Content + Expression lines (faint)
+  [
+    { key: 'contentTotal', color: '#b45309', max: 26 },
+    { key: 'expressionTotal', color: '#8e44ad', max: 44 },
+  ].forEach(function(s) {
+    ctx.strokeStyle = s.color; ctx.lineWidth = 1.5; ctx.globalAlpha = 0.45;
+    ctx.beginPath();
+    attempts.forEach(function(a, i) {
+      const v = ((a.contentTotal || 0) / (s.max)) * maxScore;
+      i === 0 ? ctx.moveTo(xPos(i), yPos(v)) : ctx.lineTo(xPos(i), yPos(v));
+    });
+    ctx.stroke(); ctx.globalAlpha = 1;
+  });
+
+  // Total line — Q17 blue, Q18 green
+  attempts.forEach(function(a, i) {
+    const color = a.task === 'q17' ? '#2471a3' : '#1a5c38';
+    if (i > 0) {
+      ctx.strokeStyle = color; ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(xPos(i-1), yPos(attempts[i-1].total));
+      ctx.lineTo(xPos(i), yPos(a.total));
+      ctx.stroke();
+    }
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(xPos(i), yPos(a.total), 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.beginPath(); ctx.arc(xPos(i), yPos(a.total), 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = color; ctx.font = 'bold 10px Nunito,sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(a.total, xPos(i), yPos(a.total) - 9);
+    ctx.fillStyle = '#bbb'; ctx.font = '9px Nunito,sans-serif';
+    ctx.fillText('#' + (i+1), xPos(i), h - 6);
+  });
+
+  // Attempt list
+  [...attempts].reverse().forEach(function(a, i) {
+    const num = attempts.length - i;
+    const row = document.createElement('div');
+    row.className = 'attempt-row';
+    const max = a.task === 'q17' ? 30 : 40;
+    row.innerHTML =
+      '<div class="att-num">#' + num + '</div>' +
+      '<div class="att-type"><div style="font-weight:700;font-size:0.8rem">' + a.taskLabel + '</div>' +
+      '<div style="font-size:0.7rem;color:var(--muted)">' + a.date + ' · Content: ' + a.contentTotal + ' · Expression: ' + a.expressionTotal + '</div></div>' +
+      '<div class="att-total">' + a.total + '<span style="font-size:0.68rem;color:var(--muted)">/' + max + '</span></div>';
+    list.appendChild(row);
+  });
+}
+
+// ============================================================
+// TYPING
+// ============================================================
+function addTyping() {
+  const body = document.getElementById('coach-body');
+  const w = document.createElement('div'); w.className = 'b-msg'; w.id = 'typing-el';
+  const av = document.createElement('div'); av.className = 'b-av'; av.textContent = '🧓';
+  const bub = document.createElement('div'); bub.className = 'typing-ind';
+  bub.innerHTML = '<div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>';
+  w.appendChild(av); w.appendChild(bub); body.appendChild(w);
+  scrollBottom(); return w;
+}
+function removeTyping(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+
+function addBMsg(text) {
+  const body = document.getElementById('coach-body');
+  const w = document.createElement('div'); w.className = 'b-msg';
+  const av = document.createElement('div'); av.className = 'b-av'; av.textContent = '🧓';
+  const bub = document.createElement('div'); bub.className = 'b-bub';
+  bub.innerHTML = '<p>' + escHtml(text).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+  w.appendChild(av); w.appendChild(bub); body.appendChild(w);
+  scrollBottom();
 }
 
 // ============================================================
 // UTILS
 // ============================================================
+function buildTurboSummary() {
+  if (!state.turboData) return 'No Turbo data.';
+  return Object.keys(state.turboData).map(function(cat) {
+    const d = state.turboData[cat];
+    const stars = Object.values(d.levels || {}).reduce(function(a,b){return a+b;}, 0);
+    return (d.label || cat) + ': ' + stars + ' stars';
+  }).join(' | ');
+}
+
+function formatImproved(text) {
+  if (!text) return '';
+  let escaped = escHtml(text);
+  escaped = escaped.replace(/\[NOTE:\s*(.*?)\]/g, '<span class="improved-note">💡 $1</span>');
+  return escaped.replace(/\n/g, '<br>');
+}
+
+function formatFeedback(text) {
+  if (!text) return '';
+  return '<p>' + escHtml(text).replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
+}
+
+function openCriteria() { document.getElementById('criteria-overlay').classList.add('open'); }
+function closeCriteria() { document.getElementById('criteria-overlay').classList.remove('open'); }
+
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
+  if (id === 'screen-graph') renderGraph();
 }
 
-function scrollToBottom() {
-  const msgs = document.getElementById('chat-messages');
-  if (msgs) msgs.scrollTop = msgs.scrollHeight;
+function scrollBottom() {
+  const b = document.getElementById('coach-body');
+  if (b) setTimeout(function() { b.scrollTop = b.scrollHeight; }, 60);
 }
 
-function autoResize(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
-
-function saveHistory() {
-  localStorage.setItem(`brother_history_${state.lang}`, JSON.stringify(state.history.slice(-40)));
-}
-
-function escHtml(str) {
-  return String(str || '')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-}
-
-// ============================================================
-// ============================================================
-// TURBO GATE — must earn access through the game
-// ============================================================
-function getTurboStars() {
-  let total = 0;
-  ['es','fr','de'].forEach(lang => {
-    ['identity','family','likes','school','hobbies','opinions'].forEach(cat => {
-      for (let lv = 1; lv <= 10; lv++) {
-        const b = localStorage.getItem(`turbo_best_${lang}_${cat}_${lv}`);
-        if (b) total += parseInt(b);
-      }
-    });
-  });
-  return total;
-}
-
-function checkTurboGate() {
-  const stars = getTurboStars();
-  const THRESHOLD = 10;
-  if (stars >= THRESHOLD) return; // all good
-
-  // Not enough stars — show locked screen
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const locked = document.getElementById('screen-locked');
-  if (locked) { locked.classList.add('active'); return; }
-
-  // Build the locked screen dynamically
-  const div = document.createElement('div');
-  div.id = 'screen-locked';
-  div.style.cssText = 'display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;background:#1c1917;padding:30px;text-align:center;';
-  div.innerHTML = `
-    <svg viewBox="0 0 200 260" width="130" height="169" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="100" cy="190" rx="58" ry="72" fill="#2d5a27"/>
-      <rect x="42" y="155" width="116" height="100" rx="20" fill="#2d5a27"/>
-      <rect x="84" y="155" width="32" height="90" rx="4" fill="#f0ead6"/>
-      <path d="M42 165 Q55 155 72 152 L84 155 L84 245 Q62 240 42 220Z" fill="#3d7a35"/>
-      <path d="M158 165 Q145 155 128 152 L116 155 L116 245 Q138 240 158 220Z" fill="#3d7a35"/>
-      <ellipse cx="28" cy="195" rx="20" ry="52" fill="#2d5a27"/>
-      <ellipse cx="172" cy="195" rx="20" ry="52" fill="#2d5a27"/>
-      <ellipse cx="28" cy="238" rx="16" ry="14" fill="#d4956a"/>
-      <ellipse cx="172" cy="238" rx="16" ry="14" fill="#d4956a"/>
-      <rect x="86" y="128" width="28" height="32" rx="8" fill="#d4956a"/>
-      <ellipse cx="100" cy="100" rx="54" ry="60" fill="#d4956a"/>
-      <ellipse cx="100" cy="52" rx="52" ry="28" fill="#e8e2d0"/>
-      <path d="M48 72 Q44 55 50 42 Q58 28 72 24 Q86 20 100 20 Q114 20 128 24 Q142 28 150 42 Q156 55 152 72" fill="#e8e2d0"/>
-      <path d="M48 85 Q42 95 44 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
-      <path d="M152 85 Q158 95 156 108" fill="none" stroke="#e8e2d0" stroke-width="10" stroke-linecap="round"/>
-      <ellipse cx="100" cy="80" rx="44" ry="22" fill="#d4956a"/>
-      <path d="M68 90 Q82 84 96 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
-      <path d="M104 90 Q118 84 132 90" fill="none" stroke="#a09080" stroke-width="4" stroke-linecap="round"/>
-      <ellipse cx="82" cy="102" rx="13" ry="10" fill="#f0ede6"/>
-      <ellipse cx="118" cy="102" rx="13" ry="10" fill="#f0ede6"/>
-      <ellipse cx="82" cy="103" rx="7" ry="8" fill="#5a3e28"/>
-      <ellipse cx="118" cy="103" rx="7" ry="8" fill="#5a3e28"/>
-      <ellipse cx="82" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
-      <ellipse cx="118" cy="103" rx="4" ry="4.5" fill="#1a1208"/>
-      <ellipse cx="84" cy="100" rx="2" ry="2" fill="white"/>
-      <ellipse cx="120" cy="100" rx="2" ry="2" fill="white"/>
-      <ellipse cx="82" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
-      <ellipse cx="118" cy="103" rx="15" ry="12" fill="rgba(200,220,255,0.12)" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M97 103 Q100 100 103 103" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M67 99 Q60 96 54 98" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <path d="M133 99 Q140 96 146 98" fill="none" stroke="#7a6a5a" stroke-width="2"/>
-      <ellipse cx="100" cy="118" rx="9" ry="7" fill="#c08060"/>
-      <path d="M84 130 Q100 138 116 130" fill="none" stroke="#8a5a3a" stroke-width="2.5" stroke-linecap="round"/>
-      <ellipse cx="46" cy="105" rx="9" ry="13" fill="#c08060"/>
-      <ellipse cx="154" cy="105" rx="9" ry="13" fill="#c08060"/>
-    </svg>
-    <h2 style="font-family:'Lora',serif;color:white;font-size:1.8rem;margin:20px 0 10px;">Not yet.</h2>
-    <p style="color:rgba(255,255,255,0.5);font-size:1rem;max-width:320px;line-height:1.7;margin-bottom:8px;">
-      You have <strong style="color:#ffd93d;">${stars} star${stars !== 1 ? 's' : ''}</strong> from Turbo.<br>
-      You need <strong style="color:white;">${THRESHOLD}</strong> to earn The Brother.
-    </p>
-    <p style="color:rgba(255,255,255,0.35);font-size:0.85rem;font-style:italic;margin-bottom:32px;">
-      "Go back and do the work first."
-    </p>
-    <a href="index.html" style="background:#2d5a27;color:white;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;padding:14px 32px;border-radius:12px;text-decoration:none;transition:all 0.2s;">
-      ← Back to Turbo
-    </a>
-  `;
-  document.body.appendChild(div);
-}
-
-// ============================================================
-// INIT — restore saved state
-// ============================================================
-window.addEventListener('DOMContentLoaded', () => {
-  checkTurboGate();
-
-  const savedName = localStorage.getItem('brother_name');
-  const savedLang = localStorage.getItem('brother_lang');
-  const savedWeek = localStorage.getItem('brother_week');
-
-  if (savedName) document.getElementById('inp-name').value = savedName;
-
-  if (savedLang) {
-    document.querySelectorAll('.lang-choice').forEach(b => {
-      b.classList.toggle('selected', b.dataset.lang === savedLang);
-    });
-    state.lang = savedLang;
-  }
-
-  if (savedWeek) {
-    const week = parseInt(savedWeek);
-    document.querySelectorAll('.week-btn').forEach(b => {
-      b.classList.toggle('selected', parseInt(b.dataset.week) === week);
-    });
-    state.week = week;
-  }
-});
 </script>
 </body>
 </html>
